@@ -1,0 +1,6 @@
+RewriteEngine On
+#
+# # Rewrite requests to the views directory
+# RewriteRule ^login$ views/login.php [L]
+
+php_value display_errors on
