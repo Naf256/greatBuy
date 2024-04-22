@@ -99,6 +99,20 @@ CREATE TABLE tasks (
     FOREIGN KEY (assigned_to) REFERENCES users(user_id)
 );
 
+
+INSERT INTO tasks (assigned_to, task_description, due_date, status) 
+VALUES (1, 'Complete project proposal', '2024-05-01', 'pending');
+
+INSERT INTO tasks (assigned_to, task_description, due_date, status) 
+VALUES (2, 'Review code changes', '2024-04-25', 'pending');
+
+INSERT INTO tasks (assigned_to, task_description, due_date, status) 
+VALUES (3, 'Prepare presentation slides', '2024-04-30', 'pending');
+
+INSERT INTO tasks (assigned_to, task_description, due_date, status) 
+VALUES (4, 'Test new software feature', '2024-04-28', 'pending');
+
+
 CREATE TABLE attendance (
     attendance_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -106,6 +120,11 @@ CREATE TABLE attendance (
     status ENUM('present', 'absent') NOT NULL DEFAULT 'present',
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+INSERT INTO attendance (user_id, status) VALUES (1, 'present');
+INSERT INTO attendance (user_id, status) VALUES (2, 'absent');
+INSERT INTO attendance (user_id, status) VALUES (3, 'present');
+INSERT INTO attendance (user_id, status) VALUES (4, 'absent');
 
 CREATE TABLE salary (
     salary_id INT AUTO_INCREMENT PRIMARY KEY,

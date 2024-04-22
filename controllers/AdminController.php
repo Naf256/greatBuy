@@ -3,19 +3,34 @@ require_once('../model/Product.php');
 require_once('../model/User.php');
 require_once('../model/Order.php');
 require_once('../model/Review.php');
+require_once('../model/Task.php');
+require_once('../model/Attendance.php');
 
 class AdminController {
     private $productModel;
 	private $userModel;
 	private $orderModel;
 	private $reviewModel;
+	private $taskModel;
+	private $attendanceModel;
 
     public function __construct() {
         $this->productModel = new ProductModel();
         $this->userModel = new UserModel();
         $this->orderModel = new OrderModel();
         $this->reviewModel = new ReviewModel();
+        $this->taskModel = new TaskModel();
+        $this->attendanceModel = new AttendanceModel();
     }
+
+
+	public function getAttendanceForAdmin() {
+		return $this->attendanceModel->getAttendanceForAdmin();
+	}
+
+	public function getTasksForAdmin() {
+		return $this->taskModel->getTasksForAdmin();
+	}
 
 	public function fetchAllReviews() {
 		return $this->reviewModel->getAllReviews();
@@ -122,6 +137,32 @@ class AdminController {
 						$updatedValues = json_decode($_POST['updated_values'], true);
 						// Call the updateProduct method to update the product
 						$this->reviewModel->updateReview($feedbackId, $updatedValues);
+					} else {
+						// Handle error if product_id or updated_values parameters are not set
+						echo "Product ID or updated values not provided.";
+					}
+					break;
+				case 'update_attendance_status':
+                // Check if product_id and updated_values parameters are set
+					if (isset($_POST['attendance_id'], $_POST['new_status'])) {
+						// Decode the JSON string to get the updated values
+						$taskId = $_POST['attendance_id'];
+						$status = $_POST['new_status'];
+						// Call the updateProduct method to update the product
+						$this->attendanceModel->changeStatusById($taskId, $status);
+					} else {
+						// Handle error if product_id or updated_values parameters are not set
+						echo "Product ID or updated values not provided.";
+					}
+					break;
+				case 'update_task_status':
+                // Check if product_id and updated_values parameters are set
+					if (isset($_POST['task_id'], $_POST['new_status'])) {
+						// Decode the JSON string to get the updated values
+						$taskId = $_POST['task_id'];
+						$status = $_POST['new_status'];
+						// Call the updateProduct method to update the product
+						$this->taskModel->changeStatusById($taskId, $status);
 					} else {
 						// Handle error if product_id or updated_values parameters are not set
 						echo "Product ID or updated values not provided.";
