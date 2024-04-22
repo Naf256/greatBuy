@@ -6,6 +6,19 @@ class ProductModel {
         $this->db = new mysqli('localhost', 'root', '', 'ecommerce');
     }
 
+	public function getAllAvailableProducts() {
+		$query = "SELECT * FROM products where stock_quantity > 0";
+		$stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+		$rows = [];
+
+		while ($row = $result->fetch_assoc()) {
+			$rows[] = $row;
+		}
+		
+		return $rows;
+	}
     public function getProductByName($name) {
         $query = "SELECT * FROM products WHERE name = ?";
         $stmt = $this->db->prepare($query);
