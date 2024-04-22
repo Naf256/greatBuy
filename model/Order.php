@@ -6,6 +6,15 @@ class OrderModel {
         $this->db = new mysqli('localhost', 'root', '', 'ecommerce');
     }
 
+	public function insertNewOrder($userId, $productId, $status, $total_amount) {
+		$query = "INSERT INTO orders (user_id, product_id, status, total_amount)
+				VALUES (?, ?, ?, ?)";
+		
+		$stmt = $this->db->prepare($query);
+		$stmt->bind_param('ssss', $userId, $productId, $status, $total_amount);
+		$stmt->execute();
+	}
+
 	public function getOrdersByUserId($userId) {
 		$query = "SELECT orders.order_id, orders.order_date, orders.status,
 						orders.total_amount, products.name as product_name 

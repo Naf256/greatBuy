@@ -33,11 +33,10 @@ class CustomerController {
 				$productId = $_POST['product_id'];
 				$username = $_POST['username'];
 				
-				$productInfo['product_id'] = $productId;
-				$productInfo['username'] = $username;
-
-
-				return "hello, world";
+				$this->productModel->updateProductQuantityById($productId);
+				$currUser = $this->userModel->getUserByUsername($username);
+				$price = $this->productModel->getPriceById($productId);
+				$this->orderModel->insertNewOrder($currUser['user_id'], $productId, "pending", $price['price']);
 			}
 		}
 	}

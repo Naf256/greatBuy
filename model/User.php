@@ -52,7 +52,7 @@ class UserModel {
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
-
+	
 	public function addUser($name, $username, $password, $role, $email, $phone_number, $address) {
 		$query = "INSERT INTO users (username, password, role, email, name, phone_number, address) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		$stmt = $this->db->prepare($query);

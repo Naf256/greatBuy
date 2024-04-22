@@ -6,6 +6,12 @@ class ProductModel {
         $this->db = new mysqli('localhost', 'root', '', 'ecommerce');
     }
 
+	public function updateProductQuantityById($productId) {
+		$query = "UPDATE products SET stock_quantity = stock_quantity - 1 WHERE product_id = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $productId);
+        $stmt->execute();
+	}
 	public function getAllAvailableProducts() {
 		$query = "SELECT * FROM products where stock_quantity > 0";
 		$stmt = $this->db->prepare($query);
@@ -27,6 +33,17 @@ class ProductModel {
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
+
+	public function getPriceById($productId) {
+
+		$query = "select price from products
+				where product_id = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $productId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+	}
 
 	public function getAll() {
         $query = "SELECT * FROM products";
