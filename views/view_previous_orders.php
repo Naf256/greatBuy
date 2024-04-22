@@ -29,7 +29,7 @@ $orders = $customer->findAllOrders($_SESSION['username']);
         <nav>
             <ul>
                 <li><a href="home_page.php">Home</a></li>
-                <li><a href="#">Products</a></li>
+                <li><a href="home_page.php">Products</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>

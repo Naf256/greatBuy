@@ -8,7 +8,9 @@ if (empty($_SESSION['username'])) {
 
 $customer = new CustomerController();
 
-$products = $customer->getAllAvailableProducts();
+$products = [];
+// $products = $customer->getAllAvailableProducts();
+$products = $customer->findCartProducts($_SESSION['user_id']);
 
 ?>
 
@@ -82,20 +84,31 @@ $products = $customer->getAllAvailableProducts();
             <!-- Display loyalty program details -->
             <!-- Implement loyalty program functionality -->
         </section>
-		<?php foreach ($products as $product): ?>
-			<section class="product">
-				<h2><?= $product['name'] ?></h2>
-				<p>Description: <?= $product['description'] ?></p>
-				<p class="price">Price: $<?= $product['price'] ?></p>
-				<p>Category: <?= $product['category'] ?></p>
-				<p class="stock-quantity">Stock Quantity: <?= $product['stock_quantity'] ?></p>
-				<!-- Add to cart button -->
-				<form action="#" method="post">
-					<input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
-					<button type="submit" name="add_to_cart">Add to Cart</button>
-				</form>
-			</section>
-		<?php endforeach; ?>
+
+		<h2 id="actual-header">Shopping Cart</h2>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Order ID</th>
+					<th>Product Name</th>
+					<th>Order Date</th>
+					<th>Status</th>
+					<th>Total Amount</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($products as $product): ?>
+					<tr>
+						<td><?= $product['order_id'] ?></td>
+						<td><?= $product['product_name'] ?></td>
+						<td><?= $product['order_date'] ?></td>
+						<td><?= $product['status'] ?></td>
+						<td><?= $product['total_amount'] ?></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
     </main>
 
     <footer>
@@ -104,101 +117,6 @@ $products = $customer->getAllAvailableProducts();
 
 </body>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const priceFilterForm = document.getElementById('price-filter-form');
-        const products = document.querySelectorAll('.product');
-
-        priceFilterForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission behavior
-
-			const minPrice = isNaN(parseFloat(document.getElementById('min-price').value)) 
-								? 0 
-								: parseFloat(document.getElementById('min-price').value);
-
-			const maxPrice = isNaN(parseFloat(document.getElementById('max-price').value)) 
-								? 0
-								: parseFloat(document.getElementById('max-price').value);
-			
-
-            products.forEach(function(product) {
-                const productPrice = parseFloat(product.querySelector('.price').textContent.replace('Price: $', ''));
-				
-				console.table({
-					minPrice: minPrice,
-					maxPrice: maxPrice,
-					productPrice: productPrice
-				})
-
-                // Reset display style for all products
-                product.style.display = 'block';
-
-                // Apply filter based on price range
-                if (productPrice < minPrice || productPrice > maxPrice) {
-                    product.style.display = 'none'; // Hide product if it falls outside the price range
-                }
-            });
-        });
-
-        const searchForm = document.getElementById('search-form');
-        const searchInput = document.getElementById('search-input');
-
-        searchForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission behavior
-
-            const searchQuery = searchInput.value.toLowerCase(); // Get search query and convert to lowercase
-
-            products.forEach(function(product) {
-                const productName = product.querySelector('h2').textContent.toLowerCase(); // Get product name and convert to lowercase
-
-                if (productName.includes(searchQuery)) {
-                    product.style.display = 'block'; // Show product if it matches the search query
-                } else {
-                    product.style.display = 'none'; // Hide product if it does not match the search query
-                }
-            });
-        });
-
-		document.querySelectorAll('button[name="add_to_cart"]').forEach(function(button) {
-            button.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default form submission behavior
-
-                const productContainer = event.target.closest('.product');
-                const productId = productContainer.querySelector('input[name="product_id"]').value;
-                const username = '<?php echo $_SESSION["username"]; ?>';
-
-                // Update stock quantity in the DOM
-                const stockQuantityElement = productContainer.querySelector('.stock-quantity');
-				// console.log(stockQuantityElement);
-                if (stockQuantityElement) {
-                    let stockQuantity = parseInt(stockQuantityElement.textContent.replace("Stock Quantity: ", ""));
-                    if (!isNaN(stockQuantity) && stockQuantity > 0) {
-                        stockQuantity--;
-                        stockQuantityElement.textContent = "Stock Quantity: " + stockQuantity;
-                    }
-                }
-
-				const formData = new FormData();
-				formData.append('product_id', productId);
-				formData.append('username', username);
-				formData.append('action', 'add_to_cart');
-
-				fetch('../controllers/CustomerController.php', {
-					method: 'POST',
-					body: formData,
-				})
-				.then(response => response.text())
-				.then(data => {
-					console.log('Response:', data);
-					// Handle response here
-				})
-				.catch(error => {
-					console.error('Error:', error);
-				});
-            });
-        });
-    });
-</script>
 <style>
 
 /* Reset default browser styles */
@@ -208,6 +126,10 @@ $products = $customer->getAllAvailableProducts();
     box-sizing: border-box;
 }
 
+.title {
+	margin-left: auto;
+	margin-right: auto;
+}
 /* Body styles */
 body {
     font-family: Arial, sans-serif;
@@ -338,22 +260,32 @@ footer {
     background-color: #555;
 }
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-}
+<!-- .section-header h2 { -->
+<!--             background-color: #333; -->
+<!--             color: #fff; -->
+<!--             padding: 10px 20px; -->
+<!--             margin-bottom: 20px; -->
+<!--         } -->
 
-section {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 20px;
-    width: calc(33.333% - 40px);
-}
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
 
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f2f2f2;
+        }
 a {
     color: inherit; /* Use the color of the parent element (white) */
     text-decoration: none;
@@ -361,6 +293,10 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+#actual-header {
+	text-align: center;
+	padding: 20px;
 }
 </style>
 </html>

@@ -15,6 +15,27 @@ class OrderModel {
 		$stmt->execute();
 	}
 
+	public function getPendingOrderByUserId($userId) {
+
+		$query = "SELECT orders.order_id, orders.order_date, orders.status,
+						orders.total_amount, products.name as product_name 
+				FROM orders
+				JOIN products ON orders.product_id = products.product_id
+				WHERE user_id = ? AND status = 'pending'";
+		
+		$stmt = $this->db->prepare($query);
+		$stmt->bind_param('s', $userId);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		
+		$orders = [];
+		while ($order = $result->fetch_assoc()) {
+			$orders[] = $order;
+		}
+
+		return $orders;
+	}
+
 	public function getOrdersByUserId($userId) {
 		$query = "SELECT orders.order_id, orders.order_date, orders.status,
 						orders.total_amount, products.name as product_name 

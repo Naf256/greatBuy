@@ -14,6 +14,10 @@ class CustomerController {
         $this->orderModel = new OrderModel();
     }
 	
+	public function findCartProducts($userId) {
+		return $this->orderModel->getPendingOrderByUserId($userId);
+	}
+
 	public function getAllAvailableProducts() {
 		return $this->productModel->getAllAvailableProducts();
 	}
