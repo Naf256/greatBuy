@@ -24,7 +24,7 @@ $products = $customer->getAllAvailableProducts();
 <body>
     <!-- Header section -->
     <header>
-        <h1>Welcome to My Ecommerce Store</h1>
+        <h1>Great Buy</h1>
         <!-- Navigation menu -->
         <nav>
             <ul>
@@ -60,11 +60,8 @@ $products = $customer->getAllAvailableProducts();
 			</form>
 		</section>
 
-        <!-- Shopping cart section -->
         <section id="shopping-cart">
-            <h2>Shopping Cart</h2>
-            <!-- Display shopping cart contents -->
-            <!-- Implement shopping cart functionality using JavaScript -->
+            <h2><a href="view_cart.php">Shopping Cart</a></h2>
         </section>
 
         <!-- Product review and question section -->
@@ -76,9 +73,7 @@ $products = $customer->getAllAvailableProducts();
 
         <!-- Previous orders section -->
         <section id="previous-orders">
-            <h2>Previous Orders</h2>
-            <!-- Display order history -->
-            <!-- Implement order history functionality -->
+            <h2><a href="view_previous_orders.php">Previous Orders</a></h2>
         </section>
 
         <!-- Loyalty programs section -->
@@ -93,7 +88,7 @@ $products = $customer->getAllAvailableProducts();
 				<p>Description: <?= $product['description'] ?></p>
 				<p class="price">Price: $<?= $product['price'] ?></p>
 				<p>Category: <?= $product['category'] ?></p>
-				<p>Stock Quantity: <?= $product['stock_quantity'] ?></p>
+				<p class="stock-quantity">Stock Quantity: <?= $product['stock_quantity'] ?></p>
 				<!-- Add to cart button -->
 				<form action="#" method="post">
 					<input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
@@ -103,13 +98,10 @@ $products = $customer->getAllAvailableProducts();
 		<?php endforeach; ?>
     </main>
 
-    <!-- Footer section -->
     <footer>
-        <p>&copy; 2024 My Ecommerce Store. All rights reserved.</p>
+        <p>&copy; 2024 Great Buy. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript scripts -->
-    <script src="script.js"></script>
 </body>
 
 <script>
@@ -120,11 +112,23 @@ $products = $customer->getAllAvailableProducts();
         priceFilterForm.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent default form submission behavior
 
-            const minPrice = parseFloat(document.getElementById('min-price').value);
-            const maxPrice = parseFloat(document.getElementById('max-price').value);
+			const minPrice = isNaN(parseFloat(document.getElementById('min-price').value)) 
+								? 0 
+								: parseFloat(document.getElementById('min-price').value);
+
+			const maxPrice = isNaN(parseFloat(document.getElementById('max-price').value)) 
+								? 0
+								: parseFloat(document.getElementById('max-price').value);
+			
 
             products.forEach(function(product) {
-                const productPrice = parseFloat(product.querySelector('.price').textContent.replace('$', ''));
+                const productPrice = parseFloat(product.querySelector('.price').textContent.replace('Price: $', ''));
+				
+				console.table({
+					minPrice: minPrice,
+					maxPrice: maxPrice,
+					productPrice: productPrice
+				})
 
                 // Reset display style for all products
                 product.style.display = 'block';
@@ -152,6 +156,45 @@ $products = $customer->getAllAvailableProducts();
                 } else {
                     product.style.display = 'none'; // Hide product if it does not match the search query
                 }
+            });
+        });
+
+		document.querySelectorAll('button[name="add_to_cart"]').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default form submission behavior
+
+                const productContainer = event.target.closest('.product');
+                const productId = productContainer.querySelector('input[name="product_id"]').value;
+                const username = '<?php echo $_SESSION["username"]; ?>';
+
+                // Update stock quantity in the DOM
+                const stockQuantityElement = productContainer.querySelector('.stock-quantity');
+				// console.log(stockQuantityElement);
+                if (stockQuantityElement) {
+                    let stockQuantity = parseInt(stockQuantityElement.textContent.replace("Stock Quantity: ", ""));
+                    if (!isNaN(stockQuantity) && stockQuantity > 0) {
+                        stockQuantity--;
+                        stockQuantityElement.textContent = "Stock Quantity: " + stockQuantity;
+                    }
+                }
+
+				const formData = new FormData();
+				formData.append('product_id', productId);
+				formData.append('username', username);
+				formData.append('action', 'add_to_cart');
+
+				fetch('../controllers/CustomerController.php', {
+					method: 'POST',
+					body: formData,
+				})
+				.then(response => response.text())
+				.then(data => {
+					console.log('Response:', data);
+					// Handle response here
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
             });
         });
     });
