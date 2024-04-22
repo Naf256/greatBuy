@@ -21,6 +21,7 @@ $attendances = $admin->getAttendanceForAdmin();
 </head>
 <body>
     <div class="sidebar">
+
         <h1>Admin Dashboard</h1>
         <h2>Product Management</h2>
         <ul>

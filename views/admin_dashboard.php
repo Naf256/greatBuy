@@ -21,6 +21,7 @@ $userinfo = $authController->fetchUserInfo($_SESSION['username'])
 </head>
 <body>
     <div class="sidebar">
+
         <h1>Admin Dashboard</h1>
         <h2>Product Management</h2>
         <ul>
@@ -37,10 +38,16 @@ $userinfo = $authController->fetchUserInfo($_SESSION['username'])
             <li><a href="edit_user.php">Edit User</a></li>
             <li><a href="view_users.php">View Users</a></li>
         </ul>
-        <!-- Add links for other functionalities like User Management, Orders, etc. -->
+		<h2>Work Management</h2>
+        <ul>
+            <li><a href="view_tasks.php">tasks</a></li>
+            <li><a href="view_attendence.php">attendence</a></li>
+        </ul>
+		<a href="calculator.php"><h2>Calculator</h2></a>
+		<a href="view_orders.php"><h2>Orders</h2></a>
+		<a href="review_admin.php"><h2>Reviews</h2></a>
     </div>
     <div class="container">
-        <!-- Content goes here -->
     <h1 id="profile">User Profile</h1>
     <table>
         <tr>
