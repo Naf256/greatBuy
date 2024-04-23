@@ -16,6 +16,10 @@ class EmployeeController {
 		return $tasks;
 	}
 
+	public function findNumbeOfCompletedTask($userId) {
+		$tasks = $this->taskModel->getCompletedTasksByUserId($userId);
+		return count($tasks);
+	}
 
 	public function handleRequest() {
         // Check if the action parameter is set

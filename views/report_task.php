@@ -35,6 +35,7 @@ $tasks = $employee->getTasksByUserId($_SESSION['user_id']);
 			<li><a href="report_task.php">report task</a></li>
 			<li><a href="#"></a></li>
         </ul>
+		<a href="employee_bonus.php"><h2>Employee Bonus</h2></a>
     </div>
     <div class="container">
 		<h1 class="profile">Tasks</h1>
