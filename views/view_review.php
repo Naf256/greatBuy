@@ -72,9 +72,8 @@ $products = $customer->getAllAvailableProducts();
             <h2><a href="view_previous_orders.php">Previous Orders</a></h2>
         </section>
 
-        <!-- Loyalty programs section -->
         <section id="loyalty-programs" class="section-header">
-            <h2>Loyalty Programs</h2>
+            <h2><a href="view_loyalty.php">Loyalty Points</a></h2>
         </section>
 
 		<div class="flex-container">

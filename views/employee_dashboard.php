@@ -8,7 +8,7 @@ if (empty($_SESSION['username'])) {
 
 $authController = new AuthenticationController();
 
-$userinfo = $authController->fetchUserInfo($_SESSION['username'])
+$userinfo = $authController->fetchUserInfo($_SESSION['username']);
 
 ?>
 
@@ -29,6 +29,11 @@ $userinfo = $authController->fetchUserInfo($_SESSION['username'])
 			<li><a href="view_attendance_employee.php">View attendance</a></li>
         </ul>
 
+        <h2>Task Management</h2>
+        <ul>
+			<li><a href="report_task.php">report task</a></li>
+			<li><a href="#"></a></li>
+        </ul>
     </div>
     <div class="container">
     <h1 id="profile">User Profile</h1>

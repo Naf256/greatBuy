@@ -20,6 +20,28 @@ class TaskModel {
         $stmt->execute();
 	}
 
+	public function getTasksByUserId($userId) {
+		$query = "select t.task_id, t.task_description,
+				t.due_date, t.status, u.username, u.role
+				from tasks as t 
+				join users as u on t.assigned_to = u.user_id
+				where t.assigned_to = ? and t.status = 'pending'";	
+
+		$stmt = $this->db->prepare($query);
+		$stmt->bind_param("s", $userId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+		
+		$rows = [];
+		
+		while ($row = $result->fetch_assoc()) {
+			$rows[] = $row;
+		}
+
+		return $rows;
+	}
+
 	public function getTasksForAdmin() {
 		$query = "select t.task_id, t.task_description, 
 				 t.due_date, t.status, u.username, u.role

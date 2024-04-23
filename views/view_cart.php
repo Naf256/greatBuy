@@ -75,11 +75,8 @@ $products = $customer->findCartProducts($_SESSION['user_id']);
             <h2><a href="view_previous_orders.php">Previous Orders</a></h2>
         </section>
 
-        <!-- Loyalty programs section -->
         <section id="loyalty-programs" class="section-header">
-            <h2>Loyalty Programs</h2>
-            <!-- Display loyalty program details -->
-            <!-- Implement loyalty program functionality -->
+            <h2><a href="view_loyalty.php">Loyalty Points</a></h2>
         </section>
 
 		<h2 id="actual-header">Shopping Cart</h2>
