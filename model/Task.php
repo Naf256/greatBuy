@@ -7,9 +7,12 @@ class TaskModel {
     }
 	
 	public function insertNewTask($description, $assigned_to) {
-		$query = "insert into tasks (task_description, assigned_to) values (?, ?)";
+
+		$dt = date('Y-m-d'); 
+
+		$query = "insert into tasks (task_description, assigned_to, due_date) values (?, ?, ?)";
 		$stmt = $this->db->prepare($query);
-		$stmt->bind_param("ss", $description, $assigned_to);
+		$stmt->bind_param("sss", $description, $assigned_to, $dt);
         return $stmt->execute();
 	}
 
@@ -18,6 +21,25 @@ class TaskModel {
 		$stmt = $this->db->prepare($query);
 		$stmt->bind_param("ss", $status, $taskId);
         $stmt->execute();
+	}
+
+	public function getCompletedTasksByUserId($userId) {
+		$dt = date('Y-m');
+		$query = "select * from tasks where due_date like CONCAT(?, '%')
+				and assigned_to = ? and status = 'completed'";
+		$stmt = $this->db->prepare($query);
+		$stmt->bind_param("ss", $dt, $userId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+		
+		$rows = [];
+		
+		while ($row = $result->fetch_assoc()) {
+			$rows[] = $row;
+		}
+
+		return $rows;
 	}
 
 	public function getTasksByUserId($userId) {
