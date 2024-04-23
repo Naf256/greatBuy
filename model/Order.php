@@ -70,6 +70,20 @@ class OrderModel {
 
 	}
 
+	public function findAllPendingOrderId() {
+		$query = "select order_id from orders where status = 'pending'";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+		
+		$orders = [];
+		while ($order = $result->fetch_assoc()) {
+			$orders[] = $order;
+		}
+		
+		return $orders;
+	}
+
 	public function findAllPendingOrders() {
 		$query = "select products.name as product_name,
 				  products.product_id as product_id,

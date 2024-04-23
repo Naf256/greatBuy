@@ -5,6 +5,34 @@ class UserModel {
     public function __construct() {
         $this->db = new mysqli('localhost', 'root', '', 'ecommerce');
     }
+	 
+	public function getAllEmployees() {
+		$query = "select user_id, username from users where role = 'employee'";
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		$users = [];
+		while ($user = $result->fetch_assoc()) {
+			$users[] = $user;
+		}
+
+		return $users;
+	}
+
+	public function findAllDeliveryMen() {
+		$query = "select user_id, username from users where role = 'delivery Man'";
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		$users = [];
+		while ($user = $result->fetch_assoc()) {
+			$users[] = $user;
+		}
+
+		return $users;
+	}
 
 	public function updateUser($user_id, $updatedValues) {
 		$query = "UPDATE users SET ";

@@ -10,6 +10,12 @@ $admin = new AdminController();
 
 $tasks = $admin->getTasksForAdmin();
 
+$orders = $admin->getPendingOrders();
+
+$mens = $admin->getDeliveryMen();
+
+$employees = $admin->getAllEmployees();
+
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +53,7 @@ $tasks = $admin->getTasksForAdmin();
 		<a href="review_admin.php"><h2>Reviews</h2></a>
     </div>
     <div class="container">
-		<h1 id="profile">Tasks</h1>
+		<h1 class="profile">Tasks</h1>
 		<table id="tasks-table">
             <tr>
                 <th>Task ID</th>
@@ -75,6 +81,41 @@ $tasks = $admin->getTasksForAdmin();
                 </tr>
             <?php endforeach; ?>
         </table>
+
+		<h1 class="profile">Create Task</h1>
+		<form id="task-form" action="../controllers/AdminController.php" method="post">
+			<label for="task-description">Task Description:</label><br>
+			<textarea id="task-description" name="task_description" rows="4" cols="50" required></textarea><br><br>
+
+			<label for="assigned-to">Assign To:</label><br>
+			<select id="assigned-to" name="assigned_to" required>
+				<?php foreach ($employees as $employee): ?>
+					<option value="<?= $employee['user_id'] ?>"><?= $employee['username'] ?></option>
+				<?php endforeach; ?>
+			</select><br><br>
+			<input type="hidden" name="action" value="new_task">
+			<button type="submit">Create Task</button>
+		</form>
+
+		<h1 class="profile">Set Delivery</h1>
+		<form id="delivery-form" action="../controllers/AdminController.php" method="post">
+			<label for="order-id">Select Order:</label>
+			<select id="order-id" name="order_id">
+				<?php foreach ($orders as $order): ?>
+					<option value="<?= $order['order_id'] ?>"><?= $order['order_id'] ?></option>
+				<?php endforeach; ?>
+			</select>
+
+			<label for="delivery-man">Select Delivery Man:</label>
+			<select id="delivery-man" name="delivery_man_id">
+				<?php foreach ($mens as $man): ?>
+					<option value="<?= $man['user_id'] ?>"><?= $man['username'] ?></option>
+				<?php endforeach; ?>
+			</select>
+
+			<input type="hidden" name="action" value="set_delivery">
+			<button type="submit">Set</button>
+		</form>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -139,7 +180,7 @@ $tasks = $admin->getTasksForAdmin();
 		padding: 20px;
 		<!-- background-color: red; -->
 	}
-	#profile {
+	.profile {
 		<!-- border-bottom: 1px solid #ddd; -->
 		padding: 10px;
 		padding-bottom: 20px;
@@ -167,6 +208,56 @@ $tasks = $admin->getTasksForAdmin();
 	a:hover {
 		text-decoration: underline;
 	}
+	body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
 </style>
 </html>

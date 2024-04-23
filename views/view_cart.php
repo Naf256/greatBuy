@@ -66,11 +66,8 @@ $products = $customer->findCartProducts($_SESSION['user_id']);
             <h2><a href="view_cart.php">Shopping Cart</a></h2>
         </section>
 
-        <!-- Product review and question section -->
         <section id="product-feedback" class="section-header">
-            <h2>Product Reviews & Questions</h2>
-            <!-- Display product reviews and questions -->
-            <!-- Implement review and question submission functionality -->
+            <h2><a href="view_review.php">Product Reviews</a></h2>
         </section>
 
         <!-- Previous orders section -->

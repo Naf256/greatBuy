@@ -5,6 +5,7 @@ require_once('../model/Order.php');
 require_once('../model/Review.php');
 require_once('../model/Task.php');
 require_once('../model/Attendance.php');
+require_once('../model/Delivery.php');
 
 class AdminController {
     private $productModel;
@@ -13,6 +14,7 @@ class AdminController {
 	private $reviewModel;
 	private $taskModel;
 	private $attendanceModel;
+	private $deliveryModel;
 
     public function __construct() {
         $this->productModel = new ProductModel();
@@ -21,9 +23,25 @@ class AdminController {
         $this->reviewModel = new ReviewModel();
         $this->taskModel = new TaskModel();
         $this->attendanceModel = new AttendanceModel();
+        $this->deliveryModel = new DeliveryModel();
     }
 
 
+	public function getAllEmployees() {
+		$employees = $this->userModel->getAllEmployees();
+		return $employees;
+	}
+
+	public function getDeliveryMen() {
+		$delivery_men = $this->userModel->findAllDeliveryMen();
+		return $delivery_men;
+	}
+
+	public function getPendingOrders() {
+		$orders = $this->orderModel->findAllPendingOrderId();
+		return $orders;	
+	}
+ 
 	public function getAttendanceForAdmin() {
 		return $this->attendanceModel->getAttendanceForAdmin();
 	}
@@ -67,6 +85,46 @@ class AdminController {
         if (isset($_POST['action'])) {
             // Perform corresponding action based on the action parameter
             switch ($_POST['action']) {
+                case 'new_task':
+                    // Check if product_id parameter is set
+                    if (isset($_POST['task_description']) && isset($_POST['assigned_to'])) {
+                        // Call the deleteProductById method to delete the product
+                        $result = $this->taskModel->insertNewTask($_POST['task_description'], $_POST['assigned_to']);
+                        // Check if deletion was successful
+                        if ($result) {
+                            // Return success message or handle any other logic
+                            // echo "shiped successfully.";
+							header('Location: ../views/view_tasks.php');
+							exit();
+                        } else {
+                            // Return error message or handle any other logic
+                            echo "Error deleting user.";
+                        }
+                    } else {
+                        // Handle error if product_id parameter is not set
+                        echo "User ID not provided.";
+                    }
+                    break;
+                case 'set_delivery':
+                    // Check if product_id parameter is set
+                    if (isset($_POST['order_id']) && isset($_POST['delivery_man_id'])) {
+                        // Call the deleteProductById method to delete the product
+                        $result = $this->deliveryModel->insertNewDelivery($_POST['order_id'], $_POST['delivery_man_id']);
+                        // Check if deletion was successful
+                        if ($result) {
+                            // Return success message or handle any other logic
+                            // echo "shiped successfully.";
+							header('Location: ../views/view_tasks.php');
+							exit();
+                        } else {
+                            // Return error message or handle any other logic
+                            echo "Error deleting user.";
+                        }
+                    } else {
+                        // Handle error if product_id parameter is not set
+                        echo "User ID not provided.";
+                    }
+                    break;
                 case 'delete_user':
                     // Check if product_id parameter is set
                     if (isset($_POST['user_id'])) {

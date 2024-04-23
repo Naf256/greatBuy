@@ -6,6 +6,13 @@ class TaskModel {
         $this->db = new mysqli('localhost', 'root', '', 'ecommerce');
     }
 	
+	public function insertNewTask($description, $assigned_to) {
+		$query = "insert into tasks (task_description, assigned_to) values (?, ?)";
+		$stmt = $this->db->prepare($query);
+		$stmt->bind_param("ss", $description, $assigned_to);
+        return $stmt->execute();
+	}
+
 	public function changeStatusById($taskId, $status) {
 		$query = "update tasks set status = ? where task_id = ?";
 		$stmt = $this->db->prepare($query);

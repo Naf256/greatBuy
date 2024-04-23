@@ -61,9 +61,9 @@ $orders = $customer->findAllOrders($_SESSION['username']);
 		</table>
     </main>
 
-    <footer>
-        <p>&copy; 2024 Great Buy. All rights reserved.</p>
-    </footer>
+    <!-- <footer> -->
+    <!--     <p>&copy; 2024 Great Buy. All rights reserved.</p> -->
+    <!-- </footer> -->
 
 </body>
 <style>

@@ -13,6 +13,45 @@ class AttendanceModel {
         $stmt->execute();
 	}
 
+	public function getAttendanceHistoryByUserId($userId) {
+		$query = "select * from attendance where user_id = ?";
+		$stmt = $this->db->prepare($query);		
+		$stmt->bind_param("s", $userId);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		
+		$rows = [];
+		while ($row = $result->fetch_assoc()) {
+			$rows[] = $row;
+		}
+		
+		return $rows;
+	}
+
+	public function isMarkedToday($userId) {
+		$today = date('Y-m-d');
+		$query = "select * from attendance where date like CONCAT(?, '%') and user_id = ?";
+		$stmt = $this->db->prepare($query);		
+		$stmt->bind_param("ss", $today, $userId);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		
+		if ($result->num_rows > 0) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	public function markAttendanceByUserId($userId) {
+		$query = "insert into attendance (user_id, status) values (?, ?)";
+		$stmt = $this->db->prepare($query);		
+
+		$status = 'present';
+		$stmt->bind_param("is", $userId, $status);
+        $stmt->execute();
+	}
+
 	public function getAttendanceForAdmin() {
 		$query = "select a.attendance_id, u.username,
 				a.status, a.date from attendance a

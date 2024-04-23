@@ -32,6 +32,9 @@ VALUES ('tokyo', 'fjfj', 'customer', 'tokyo@example.com', 'Tokyo Customer', '+11
 INSERT INTO users (username, password, role, email, name, phone_number, address) 
 VALUES ('ramen', 'fjfj', 'delivery Man', 'ramen@example.com', 'Ramen Delivery Man', '+9988776655', '321 Pine St, County');
 
+INSERT INTO users (username, password, role, email, name, phone_number, address) 
+VALUES ('soju', 'fjfj', 'delivery Man', 'soju@example.com', 'Soju Delivery Man', '+9988776656', '321 Gomez St, Japan');
+
 CREATE TABLE products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -157,4 +160,18 @@ CREATE TABLE loyaltyPrograms (
     discount_percentage INT,
     expiration_date DATE,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+INSERT INTO loyaltyPrograms (user_id, loyalty_points, discount_percentage, expiration_date) VALUES (1, 100, 10, '2024-12-31');
+INSERT INTO loyaltyPrograms (user_id, loyalty_points, discount_percentage, expiration_date) VALUES (2, 150, 15, '2024-12-31');
+INSERT INTO loyaltyPrograms (user_id, loyalty_points, discount_percentage, expiration_date) VALUES (3, 200, 20, '2024-12-31');
+INSERT INTO loyaltyPrograms (user_id, loyalty_points, discount_percentage, expiration_date) VALUES (4, 250, 25, '2024-12-31');
+
+
+CREATE TABLE delivery (
+    delivery_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    order_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
