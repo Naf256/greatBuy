@@ -6,6 +6,7 @@ require_once('../model/Review.php');
 require_once('../model/Task.php');
 require_once('../model/Attendance.php');
 require_once('../model/Delivery.php');
+require_once('../model/Rating.php');
 
 class AdminController {
     private $productModel;
@@ -15,6 +16,7 @@ class AdminController {
 	private $taskModel;
 	private $attendanceModel;
 	private $deliveryModel;
+	private $ratingModel;
 
     public function __construct() {
         $this->productModel = new ProductModel();
@@ -24,8 +26,17 @@ class AdminController {
         $this->taskModel = new TaskModel();
         $this->attendanceModel = new AttendanceModel();
         $this->deliveryModel = new DeliveryModel();
+        $this->ratingModel = new RatingModel();
     }
 
+
+	public function fetchDelivsInfo() {
+		return $this->ratingModel->getDelivsRatings();
+	}
+
+	public function fetchEmployeeInfo() {
+		return $this->ratingModel->getEmployeeRatings();
+	}
 
 	public function getAllEmployees() {
 		$employees = $this->userModel->getAllEmployees();
