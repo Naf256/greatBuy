@@ -83,7 +83,7 @@ $employees = $admin->getAllEmployees();
         </table>
 
 		<h1 class="profile">Create Task</h1>
-		<form id="task-form" action="../controllers/AdminController.php" method="post">
+		<form id="task-form" action="../controllers/AdminController.php" method="post" novalidate>
 			<label for="task-description">Task Description:</label><br>
 			<textarea id="task-description" name="task_description" rows="4" cols="50"></textarea><br><br>
 			<p id="description-error" class="error-message"></p><br>
@@ -98,15 +98,15 @@ $employees = $admin->getAllEmployees();
 			<input type="hidden" name="action" value="new_task">
 			<button type="submit">Create Task</button>
 		</form>
-
 		<h1 class="profile">Set Delivery</h1>
-		<form id="delivery-form" action="../controllers/AdminController.php" method="post">
+		<form id="delivery-form" action="../controllers/AdminController.php" method="post" onvalidate>
 			<label for="order-id">Select Order:</label>
 			<select id="order-id" name="order_id">
 				<?php foreach ($orders as $order): ?>
 				<option value="<?= $order['order_id'] ?>"><?= $order['name']?></option>
 				<?php endforeach; ?>
 			</select>
+			<p id="order-id-error" class="error-message"></p>
 
 			<label for="delivery-man">Select Delivery Man:</label>
 			<select id="delivery-man" name="delivery_man_id">
@@ -114,6 +114,7 @@ $employees = $admin->getAllEmployees();
 					<option value="<?= $man['user_id'] ?>"><?= $man['username'] ?></option>
 				<?php endforeach; ?>
 			</select>
+			<p id="delivery-man-error" class="error-message"></p>
 
 			<input type="hidden" name="action" value="set_delivery">
 			<button type="submit">Set</button>
@@ -171,6 +172,32 @@ $employees = $admin->getAllEmployees();
 
         if (assignedTo === '') {
             assignedToError.textContent = 'Please select an employee to assign the task.';
+            isValid = false;
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+
+	document.getElementById('delivery-form').addEventListener('submit', function(event) {
+        var order = document.getElementById('order-id').value.trim();
+        var deliveryMan = document.getElementById('delivery-man').value.trim();
+        var orderError = document.getElementById('order-id-error');
+        var deliveryManError = document.getElementById('delivery-man-error');
+        var isValid = true;
+
+        // Reset error messages
+        orderError.textContent = '';
+        deliveryManError.textContent = '';
+
+        if (order === '') {
+            orderError.textContent = 'Please select an order.';
+            isValid = false;
+        }
+
+        if (deliveryMan === '') {
+            deliveryManError.textContent = 'Please select a delivery man.';
             isValid = false;
         }
 
