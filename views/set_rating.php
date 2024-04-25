@@ -5,11 +5,13 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 	exit();
 }
 
-require_once('../controllers/AuthenticationController.php');
+require_once('../controllers/AdminController.php');
 
-$authController = new AuthenticationController();
+$admin = new AdminController();
 
-$userinfo = $authController->fetchUserInfo($_SESSION['username'])
+$employees = $admin->fetchEmployeeInfo();
+
+$delivs = $admin->fetchDelivsInfo();
 
 ?>
 
@@ -50,29 +52,18 @@ $userinfo = $authController->fetchUserInfo($_SESSION['username'])
 		<a href="review_admin.php"><h2>Reviews</h2></a>
     </div>
     <div class="container">
-    <h1 id="profile">User Profile</h1>
-    <table>
-        <tr>
-            <th>User ID</th>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Role</th>
-            <th>Email</th>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Address</th>
-        </tr>
-        <tr>
-			<td><?= $userinfo['user_id'] ?></td>
-            <td><?= $userinfo['username'] ?></td>
-            <td><?= $userinfo['password'] ?></td>
-            <td><?= $userinfo['role'] ?></td>
-            <td><?= $userinfo['email'] ?></td>
-            <td><?= $userinfo['name'] ?></td>
-            <td><?= $userinfo['phone_number'] ?></td>
-            <td><?= $userinfo['address'] ?></td>
-        </tr>
-    </table>
+
+    <h1 class="profile">Rate Employees</h1>
+		<?php foreach ($employees as $emp): ?>
+			<p>name: <?= $emp['username'] ?></p>
+			<p>rating: <?= $emp['rating'] ?></p>
+		<?php endforeach; ?>
+
+	<h1 class="profile">Rate DeliveryMan</h1>
+		<?php foreach ($delivs as $dlv): ?>
+			<p>name: <?= $dlv['username'] ?></p>
+			<p>rating: <?= $dlv['rating'] ?></p>
+		<?php endforeach; ?>
     </div>
 </body>
 <style>
@@ -110,7 +101,7 @@ $userinfo = $authController->fetchUserInfo($_SESSION['username'])
 		padding: 20px;
 		<!-- background-color: red; -->
 	}
-	#profile {
+	.profile {
 		<!-- border-bottom: 1px solid #ddd; -->
 		padding: 10px;
 		padding-bottom: 20px;
