@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS salary;
 DROP TABLE IF EXISTS promotions;
 DROP TABLE IF EXISTS expenses;
 DROP TABLE IF EXISTS loyaltyPrograms;
+DROP TABLE IF EXISTS delivery;
+DROP TABLE IF EXISTS performances;
 
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -175,3 +177,16 @@ CREATE TABLE delivery (
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
+
+CREATE TABLE performances (
+    performance_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    rating INT, 
+    date DATE, 
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+INSERT INTO performances (user_id, rating, date) VALUES
+(2, 4, '2024-04-25'),
+(3, 3, '2024-04-25'),
+(4, 5, '2024-04-25');
