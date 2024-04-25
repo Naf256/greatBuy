@@ -63,8 +63,8 @@ CREATE TABLE orders (
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status ENUM('pending', 'shipped', 'delivered') NOT NULL DEFAULT 'pending',
     total_amount DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (product_id) REFERENCES products(product_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
 
 INSERT INTO orders (user_id, product_id, status, total_amount) VALUES (1, 1, 'pending', 25.99);
@@ -79,8 +79,8 @@ CREATE TABLE productFeedback (
     rating INT,
     comment TEXT,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES products(product_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 INSERT INTO productFeedback (product_id, user_id, rating, comment)
@@ -101,7 +101,7 @@ CREATE TABLE tasks (
     task_description TEXT,
     due_date DATE,
     status ENUM('pending', 'completed') NOT NULL DEFAULT 'pending',
-    FOREIGN KEY (assigned_to) REFERENCES users(user_id)
+    FOREIGN KEY (assigned_to) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 
@@ -123,7 +123,7 @@ CREATE TABLE attendance (
     user_id INT,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status ENUM('present', 'absent') NOT NULL DEFAULT 'present',
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 INSERT INTO attendance (user_id, status) VALUES (1, 'present');
@@ -137,7 +137,7 @@ CREATE TABLE salary (
     month INT,
     year INT,
     salary_amount DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE promotions (
@@ -145,7 +145,7 @@ CREATE TABLE promotions (
     product_id INT,
     discount_percentage INT,
     delivery_charge INT,
-    FOREIGN KEY (product_id) REFERENCES products(product_id)
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
 
 CREATE TABLE expenses (
@@ -161,7 +161,7 @@ CREATE TABLE loyaltyPrograms (
     loyalty_points INT NOT NULL DEFAULT 0,
     discount_percentage INT,
     expiration_date DATE,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 INSERT INTO loyaltyPrograms (user_id, loyalty_points, discount_percentage, expiration_date) VALUES (1, 100, 10, '2024-12-31');
@@ -174,8 +174,8 @@ CREATE TABLE delivery (
     delivery_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     order_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
 );
 
 CREATE TABLE performances (
@@ -183,7 +183,7 @@ CREATE TABLE performances (
     user_id INT,
     rating INT, 
     date DATE, 
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 INSERT INTO performances (user_id, rating, date) VALUES
