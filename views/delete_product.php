@@ -24,7 +24,6 @@ while ($row = $result->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="sidebar">
@@ -76,32 +75,36 @@ while ($row = $result->fetch_assoc()) {
 				<td><button class="delete-btn" data-product-id="<?= $product['product_id'] ?>">Delete</button></td>
 			</tr>
 			<?php endforeach; ?>
-		</table>       <!-- Content goes here -->
+		</table> 
     </div>
 	<script>
-	 $(document).ready(function() {
-            // Add event listener to delete buttons
-            $('.delete-btn').click(function() {
-                // Get the product ID
-                var productId = $(this).data('product-id');
-                // Send AJAX request to delete the product
-                $.ajax({
-                    url: '../controllers/AdminController.php',
-                    type: 'POST',
-                    data: { action: 'delete_product', product_id: productId },
-                    success: function(response) {
-                        // Remove the deleted product row from the table
-                        $('button[data-product-id="' + productId + '"]').closest('tr').remove();
-                        // Show a success message or handle any other logic
-                        console.log('Product deleted successfully.');
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle errors
-                        console.error(xhr.responseText);
-                    }
-                });
-            });
+	document.addEventListener('DOMContentLoaded', function() {
+		document.addEventListener('click', function(event) {
+			if (event.target && event.target.classList.contains('delete-btn')) {
+				var productId = event.target.getAttribute('data-product-id');
+
+				var formData = new FormData();
+				formData.append('action', 'delete_product');
+				formData.append('product_id', productId);
+
+				fetch('../controllers/AdminController.php', {
+					method: 'POST',
+					body: formData
+				})
+				.then(function(response) {
+					if (response.ok) {
+						event.target.closest('tr').remove();
+						console.log('Product deleted successfully.');
+					} else {
+						console.error('Error deleting product:', response.statusText);
+					}
+				})
+				.catch(function(error) {
+					console.error('Error deleting product:', error);
+				});
+			}
 		});
+	});
 	</script>
 </body>
 <style>
