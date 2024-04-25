@@ -85,14 +85,16 @@ $employees = $admin->getAllEmployees();
 		<h1 class="profile">Create Task</h1>
 		<form id="task-form" action="../controllers/AdminController.php" method="post">
 			<label for="task-description">Task Description:</label><br>
-			<textarea id="task-description" name="task_description" rows="4" cols="50" required></textarea><br><br>
+			<textarea id="task-description" name="task_description" rows="4" cols="50"></textarea><br><br>
+			<p id="description-error" class="error-message"></p><br>
 
 			<label for="assigned-to">Assign To:</label><br>
-			<select id="assigned-to" name="assigned_to" required>
+			<select id="assigned-to" name="assigned_to">
 				<?php foreach ($employees as $employee): ?>
 					<option value="<?= $employee['user_id'] ?>"><?= $employee['username'] ?></option>
 				<?php endforeach; ?>
 			</select><br><br>
+			<p id="assigned-to-error" class="error-message"></p><br>
 			<input type="hidden" name="action" value="new_task">
 			<button type="submit">Create Task</button>
 		</form>
@@ -102,7 +104,7 @@ $employees = $admin->getAllEmployees();
 			<label for="order-id">Select Order:</label>
 			<select id="order-id" name="order_id">
 				<?php foreach ($orders as $order): ?>
-				<option value="<?= $order['order_id'] ?>"><?= $order['order_id'] ?>    Product Name: <?= $order['name']?></option>
+				<option value="<?= $order['order_id'] ?>"><?= $order['name']?></option>
 				<?php endforeach; ?>
 			</select>
 
@@ -118,31 +120,64 @@ $employees = $admin->getAllEmployees();
 		</form>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#tasks-table').on('click', '.save-btn', function() {
-                var $row = $(this).closest('tr');
-                var taskId = $row.data('task-id');
-                var newStatus = $row.find('select').val();
+	document.addEventListener('DOMContentLoaded', function() {
+		var saveButtons = document.querySelectorAll('#tasks-table .save-btn');
 
-                $.ajax({
-                    url: '../controllers/AdminController.php',
-                    type: 'POST',
-                    data: {
-                        action: 'update_task_status',
-                        task_id: taskId,
-                        new_status: newStatus
-                    },
-                    success: function(response) {
-                        console.log('Task status updated successfully.');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error updating task status:', error);
-                    }
-                });
-            });
-        });
+		saveButtons.forEach(function(saveButton) {
+			saveButton.addEventListener('click', function() {
+				var row = this.closest('tr');
+				var taskId = row.getAttribute('data-task-id');
+				var newStatus = row.querySelector('select').value;
+
+				var formData = new FormData();
+				formData.append('action', 'update_task_status');
+				formData.append('task_id', taskId);
+				formData.append('new_status', newStatus);
+
+				fetch('../controllers/AdminController.php', {
+					method: 'POST',
+					body: formData
+				})
+				.then(function(response) {
+					if (response.ok) {
+						console.log('Task status updated successfully.');
+					} else {
+						console.error('Error updating task status:', response.statusText);
+					}
+				})
+				.catch(function(error) {
+					console.error('Error updating task status:', error);
+				});
+			});
+		});
+	});
+
+	 document.getElementById('task-form').addEventListener('submit', function(event) {
+        var description = document.getElementById('task-description').value.trim();
+        var assignedTo = document.getElementById('assigned-to').value.trim();
+        var descriptionError = document.getElementById('description-error');
+        var assignedToError = document.getElementById('assigned-to-error');
+        var isValid = true;
+
+        // Reset error messages
+        descriptionError.textContent = '';
+        assignedToError.textContent = '';
+
+        if (description === '') {
+            descriptionError.textContent = 'Task Description cannot be empty.';
+            isValid = false;
+        }
+
+        if (assignedTo === '') {
+            assignedToError.textContent = 'Please select an employee to assign the task.';
+            isValid = false;
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
     </script>
 </body>
 <style>
