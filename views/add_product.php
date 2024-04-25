@@ -7,51 +7,11 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 
 require_once('../controllers/AdminController.php');
 
-$errors = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate each form field
-    $name = $_POST["name"];
-    if (empty($name)) {
-        $errors["name"] = "Name is required";
-    }
-
-    $description = $_POST["description"];
-    if (empty($description)) {
-        $errors["description"] = "Description is required";
-    }
-
-    $price = $_POST["price"];
-    if (empty($price)) {
-        $errors["price"] = "Price is required";
-    } elseif (!is_numeric($price) || $price <= 0) {
-        $errors["price"] = "Price must be a valid positive number";
-    }
-
-    $category = $_POST["category"];
-    if (empty($category)) {
-        $errors["category"] = "Category is required";
-    }
-
-    $stock_quantity = $_POST["stock_quantity"];
-    if (empty($stock_quantity)) {
-        $errors["stock_quantity"] = "Stock Quantity is required";
-    } elseif (!ctype_digit($stock_quantity) || $stock_quantity <= 0) {
-        $errors["stock_quantity"] = "Stock Quantity must be a valid positive integer";
-    }
-
-    // If there are no validation errors, proceed to add the product
-    if (empty($errors)) {
-        // Add the product to the database
-        // Your database insertion code here
-        // Redirect to a success page or display a success message
-        // header("Location: success.php");
-        // exit();
 		$admin = new AdminController();
 		$admin->addProduct($name, $description, $price, $category, $stock_quantity);
-		//
 		header('Location: view_products.php');
 		exit();
-    }
 }
 
 ?>
@@ -93,31 +53,81 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 	<div class="container">
 		<h1 id="heading">Add New Product</h1>
-		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+		<form id="product-form" novalidate>
 			<label for="name">Name:</label><br>
-			<input type="text" id="name" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : ''; ?>" required><br>
-			<?php if (isset($errors['name'])) echo "<p class='error'>" . $errors['name'] . "</p>"; ?>
-			
+			<input type="text" id="name" name="name" value=""><br>
+			<p id="name-error" class="error"></p>
+
 			<label for="description">Description:</label><br>
-			<textarea id="description" name="description" rows="4" cols="50" required><?php echo isset($_POST['description']) ? $_POST['description'] : ''; ?></textarea><br>
-			<?php if (isset($errors['description'])) echo "<p class='error'>" . $errors['description'] . "</p>"; ?>
+			<textarea id="description" name="description" rows="4" cols="50"></textarea><br>
+			<p id="description-error" class="error"></p>
 
 			<label for="price">Price:</label><br>
-			<input type="number" id="price" name="price" min="0" step="0.01" value="<?php echo isset($_POST['price']) ? $_POST['price'] : ''; ?>" required><br>
-			<?php if (isset($errors['price'])) echo "<p class='error'>" . $errors['price'] . "</p>"; ?>
+			<input type="number" id="price" name="price" min="0" step="0.01" value=""><br>
+			<p id="price-error" class="error"></p>
 
-		<label for="category">Category:</label><br>
-		<input type="text" id="category" name="category" value="<?php echo isset($_POST['category']) ? $_POST['category'] : ''; ?>" required><br>
-		<?php if (isset($errors['category'])) echo "<p class='error'>" . $errors['category'] . "</p>"; ?>
+			<label for="category">Category:</label><br>
+			<input type="text" id="category" name="category" value=""><br>
+			<p id="category-error" class="error"></p>
 
 			<label for="stock_quantity">Stock Quantity:</label><br>
-			<input type="number" id="stock_quantity" name="stock_quantity" min="0" value="<?php echo isset($_POST['stock_quantity']) ? $_POST['stock_quantity'] : ''; ?>" required><br>
-			<?php if (isset($errors['stock_quantity'])) echo "<p class='error'>" . $errors['stock_quantity'] . "</p>"; ?>
+			<input type="number" id="stock_quantity" name="stock_quantity" min="0" value=""><br>
+			<p id="stock_quantity-error" class="error"></p>
 
 			<button type="submit">Add Product</button>
 		</form>
 	</div>
 </body>
+<script>
+document.getElementById('product-form').addEventListener('submit', function(event) {
+		event.preventDefault();
+
+		clearErrors();
+
+		let isValid = true;
+
+		const name = document.getElementById('name').value.trim();
+		if (name === '') {
+			isValid = false;
+			document.getElementById('name-error').textContent = 'Name is required';
+		}
+
+		const description = document.getElementById('description').value.trim();
+		if (description === '') {
+			isValid = false;
+			document.getElementById('description-error').textContent = 'Description is required';
+		}
+
+		const price = document.getElementById('price').value.trim();
+		if (price === '' || isNaN(price) || parseFloat(price) <= 0) {
+			isValid = false;
+			document.getElementById('price-error').textContent = 'Price must be a positive number';
+		}
+
+		const category = document.getElementById('category').value.trim();
+		if (category === '') {
+			isValid = false;
+			document.getElementById('category-error').textContent = 'Category is required';
+		}
+
+		const stockQuantity = document.getElementById('stock_quantity').value.trim();
+		if (stockQuantity === '' || isNaN(stockQuantity) || parseInt(stockQuantity) < 0) {
+			isValid = false;
+			document.getElementById('stock_quantity-error').textContent = 'Stock Quantity must be a non-negative integer';
+		}
+
+		if (isValid) {
+			event.target.submit();
+		}
+	});
+
+	function clearErrors() {
+		const errorElements = document.querySelectorAll('.error');
+		errorElements.forEach(function(element) {
+			element.textContent = '';
+		});
+	}
+</script>
 <style>
 	table {
 		width: 100%;
