@@ -1,11 +1,11 @@
 <?php
 session_start();
-require_once('../controllers/AdminController.php');
-if (empty($_SESSION['username'])) {
+if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 	header('Location: login.php');
 	exit();
 }
 
+require_once('../controllers/AdminController.php');
 $admin = new AdminController();
 
 $tasks = $admin->getTasksForAdmin();
@@ -102,7 +102,7 @@ $employees = $admin->getAllEmployees();
 			<label for="order-id">Select Order:</label>
 			<select id="order-id" name="order_id">
 				<?php foreach ($orders as $order): ?>
-					<option value="<?= $order['order_id'] ?>"><?= $order['order_id'] ?></option>
+				<option value="<?= $order['order_id'] ?>"><?= $order['order_id'] ?>    Product Name: <?= $order['name']?></option>
 				<?php endforeach; ?>
 			</select>
 

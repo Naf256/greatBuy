@@ -71,7 +71,9 @@ class OrderModel {
 	}
 
 	public function findAllPendingOrderId() {
-		$query = "select order_id from orders where status = 'pending'";
+		$query = "select orders.order_id, products.name from orders 
+				 join products on products.product_id = orders.product_id
+				 where orders.status = 'pending'";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
