@@ -82,43 +82,97 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="container">
         <h1 id="heading">Add New User</h1>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-            <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username" value="<?php echo isset($_POST['username']) ? $_POST['username'] : ''; ?>" required><br>
-            <?php if (isset($errors['username'])) echo "<p class='error'>" . $errors['username'] . "</p>"; ?>
+		<form id="myForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" novalidate>
+			<label for="username">Username:</label><br>
+			<input type="text" id="username" name="username" value="<?php echo isset($_POST['username']) ? $_POST['username'] : ''; ?>"><br>
+			<p id="usernameError" class="error"></p>
 
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password" required><br>
-            <?php if (isset($errors['password'])) echo "<p class='error'>" . $errors['password'] . "</p>"; ?>
+			<label for="password">Password:</label><br>
+			<input type="password" id="password" name="password"><br>
+			<p id="passwordError" class="error"></p>
 
-            <label for="role">Role:</label><br>
-            <select id="role" name="role" required>
-                <option value="" disabled selected>Select role</option>
-                <option value="admin">Admin</option>
-                <option value="employee">Employee</option>
-                <option value="customer">Customer</option>
-                <option value="delivery Man">Delivery Man</option>
-            </select><br>
-            <?php if (isset($errors['role'])) echo "<p class='error'>" . $errors['role'] . "</p>"; ?>
+			<label for="role">Role:</label><br>
+			<select id="role" name="role">
+				<option value="" disabled selected>Select role</option>
+				<option value="admin">Admin</option>
+				<option value="employee">Employee</option>
+				<option value="customer">Customer</option>
+				<option value="delivery Man">Delivery Man</option>
+			</select><br>
+			<p id="roleError" class="error"></p>
 
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>" required><br>
-            <?php if (isset($errors['email'])) echo "<p class='error'>" . $errors['email'] . "</p>"; ?>
+			<label for="email">Email:</label><br>
+			<input type="email" id="email" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>"><br>
+			<p id="emailError" class="error"></p>
 
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : ''; ?>"><br>
+			<label for="name">Name:</label><br>
+			<input type="text" id="name" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : ''; ?>"><br>
 
-            <label for="phone_number">Phone Number:</label><br>
-            <input type="text" id="phone_number" name="phone_number" value="<?php echo isset($_POST['phone_number']) ? $_POST['phone_number'] : ''; ?>"><br>
+			<label for="phone_number">Phone Number:</label><br>
+			<input type="text" id="phone_number" name="phone_number" value="<?php echo isset($_POST['phone_number']) ? $_POST['phone_number'] : ''; ?>"><br>
 
-            <label for="address">Address:</label><br>
-            <textarea id="address" name="address" rows="4" cols="50"><?php echo isset($_POST['address']) ? $_POST['address'] : ''; ?></textarea><br>
+			<label for="address">Address:</label><br>
+			<textarea id="address" name="address" rows="4" cols="50"><?php echo isset($_POST['address']) ? $_POST['address'] : ''; ?></textarea><br>
 
-            <button type="submit">Add User</button>
-        </form>
+			<button type="submit">Add User</button>
+		</form>
     </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('myForm');
 
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            if (validateForm()) {
+                form.submit();
+            }
+        });
+
+        function validateForm() {
+            var usernameInput = document.getElementById('username');
+            var passwordInput = document.getElementById('password');
+            var roleInput = document.getElementById('role');
+            var emailInput = document.getElementById('email');
+
+            var usernameValue = usernameInput.value.trim();
+            var passwordValue = passwordInput.value.trim();
+            var roleValue = roleInput.value;
+            var emailValue = emailInput.value.trim();
+
+            if (usernameValue === '') {
+                document.getElementById('usernameError').textContent = 'Please enter a username.';
+                return false;
+            } else {
+                document.getElementById('usernameError').textContent = '';
+            }
+
+            if (passwordValue === '') {
+                document.getElementById('passwordError').textContent = 'Please enter a password.';
+                return false;
+            } else {
+                document.getElementById('passwordError').textContent = '';
+            }
+
+            if (roleValue === '') {
+                document.getElementById('roleError').textContent = 'Please select a role.';
+                return false;
+            } else {
+                document.getElementById('roleError').textContent = '';
+            }
+
+            if (emailValue === '') {
+                document.getElementById('emailError').textContent = 'Please enter an email address.';
+                return false;
+            } else {
+                document.getElementById('emailError').textContent = '';
+            }
+
+            return true;
+        }
+    });
+</script>
 <style>
 	table {
 		width: 100%;
