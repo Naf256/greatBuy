@@ -25,7 +25,6 @@ while ($row = $result->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="sidebar">
@@ -174,75 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-	// $(document).ready(function() {
-	// 	// Add click event listener to edit button
-	// 	$('#product-table').on('click', '.editable', function() {
-	// 		// Convert the table cell into an input field
-	// 		$(this).attr('contenteditable', 'true').focus();
-	// 	});
-	//
-	//
- //        $('#product-table').on('click', '.save-btn', function() {
- //            // Get the row containing the edited content
- //            var $row = $(this).closest('tr');
- //            // Get the product ID
- //            var productId = $row.data('product-id');
- //            // Create an object to store the updated values
- //            var updatedValues = {};
- //            // Iterate through each editable field in the row
- //            var isValid = true; // Flag to track validation
-	//
- //            $row.find('.editable').each(function() {
- //                // Get the field name (e.g., name, description, price, etc.)
- //                var fieldName = $(this).data('field');
- //                // Get the edited value
- //                var editedValue = $(this).text().trim();
-	//
- //                // Perform validation for each field
- //                if (fieldName === 'name' || fieldName === 'description' || fieldName === 'category') {
- //                    // Validate non-empty strings
- //                    if (editedValue === '') {
- //                        isValid = false;
- //                        alert(fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' cannot be empty.');
- //                        return false; // Exit the loop if validation fails
- //                    }
- //                } else if (fieldName === 'price' || fieldName === 'stock_quantity') {
- //                    // Validate numeric values greater than 0
- //                    if (isNaN(editedValue) || parseFloat(editedValue) <= 0) {
- //                        isValid = false;
- //                        alert(fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' must be a number greater than 0.');
- //                        return false; // Exit the loop if validation fails
- //                    }
- //                }
-	//
- //                // Add the field name and value to the updatedValues object
- //                updatedValues[fieldName] = editedValue;
- //            });
-	//
- //            // If all fields are valid, proceed with AJAX request
- //            if (isValid) {
- //                var jsonData = JSON.stringify(updatedValues);
- //                // Send AJAX request to update the product
- //                $.ajax({
- //                    url: '../controllers/AdminController.php',
- //                    type: 'POST',
- //                    data: {
- //                        action: 'update_product',
- //                        product_id: productId,
- //                        updated_values: jsonData
- //                    },
- //                    success: function(response) {
- //                        // Handle success response
- //                        console.log('Product updated successfully.');
- //                    },
- //                    error: function(xhr, status, error) {
- //                        // Handle error response
- //                        console.error('Error updating product:', error);
- //                    }
- //                });
- //            }
- //        });
-	// });
 	</script>
 </body>
 <style>
