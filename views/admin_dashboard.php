@@ -1,10 +1,11 @@
 <?php
 session_start();
-require_once('../controllers/AuthenticationController.php');
-if (empty($_SESSION['username'])) {
+if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 	header('Location: login.php');
 	exit();
 }
+
+require_once('../controllers/AuthenticationController.php');
 
 $authController = new AuthenticationController();
 

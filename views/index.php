@@ -17,7 +17,7 @@
 			header('Location: deliveryMan_dashboard.php');
 			break;
 		case "customer":
-			header('Location: customer_dashboard.php');
+			header('Location: home_page.php');
 			break;
 		default:
 			header('Location: login.php');

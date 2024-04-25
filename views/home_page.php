@@ -1,11 +1,11 @@
 <?php
 session_start();
-require_once('../controllers/CustomerController.php');
-if (empty($_SESSION['username'])) {
+if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'customer' ) {
 	header('Location: login.php');
 	exit();
 }
 
+require_once('../controllers/CustomerController.php');
 $customer = new CustomerController();
 
 $products = $customer->getAllAvailableProducts();

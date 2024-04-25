@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <?php endif; ?>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
     <label for="username">Username:</label>
-    <input type="text" name="username" id="username" required><br>
+	<input type="text" name="username" id="username" value="<?= isset($_SESSION['username']) ? $_SESSION['username'] : '' ?>" required><br>
     <label for="password">Password:</label>
     <input type="password" name="password" id="password" required><br>
     <button type="submit">Login</button> or <a href="register.php">Register</a> / <a href="forget_password.php">Forgot password</a>

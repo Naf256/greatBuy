@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (empty($_SESSION['username'])) {
+if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'employee' ) {
 	header('Location: login.php');
 	exit();
 }

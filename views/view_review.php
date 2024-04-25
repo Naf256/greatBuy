@@ -1,7 +1,8 @@
 <?php
 session_start();
 require_once('../controllers/CustomerController.php');
-if (empty($_SESSION['username'])) {
+
+if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'customer' ) {
 	header('Location: login.php');
 	exit();
 }

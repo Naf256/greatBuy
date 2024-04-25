@@ -55,7 +55,8 @@ class AttendanceModel {
 	public function getAttendanceForAdmin() {
 		$query = "select a.attendance_id, u.username,
 				a.status, a.date from attendance a
-				join users u on u.user_id = a.user_id";
+				join users u on u.user_id = a.user_id
+				order by a.date desc";
 	
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();

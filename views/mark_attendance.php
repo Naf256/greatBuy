@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('../controllers/AuthenticationController.php');
-if (empty($_SESSION['username'])) {
+if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'employee' ) {
 	header('Location: login.php');
 	exit();
 }

@@ -1,8 +1,8 @@
 <?php
 session_start();
-if (empty($_SESSION['username'])) {
-    header('Location: login.php');
-    exit();
+if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
+	header('Location: login.php');
+	exit();
 }
 
 require_once('../controllers/AdminController.php');

@@ -1,11 +1,11 @@
 <?php
 session_start();
-require_once('../controllers/AdminController.php');
-if (empty($_SESSION['username'])) {
+if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 	header('Location: login.php');
 	exit();
 }
 
+require_once('../controllers/AdminController.php');
 $admin = new AdminController();
 
 $attendances = $admin->getAttendanceForAdmin();
