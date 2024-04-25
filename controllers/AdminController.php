@@ -239,11 +239,15 @@ class AdminController {
 					break;
 				case 'update_product':
                 // Check if product_id and updated_values parameters are set
-					if (isset($_POST['product_id'], $_POST['updated_values'])) {
+					if (isset($_POST['product_id'], $_POST['description'])) {
 						// Decode the JSON string to get the updated values
 						$productId = $_POST['product_id'];
-						$updatedValues = json_decode($_POST['updated_values'], true);
-						// Call the updateProduct method to update the product
+						$updatedValues['name'] = $_POST['name'];
+						$updatedValues['description'] = $_POST['description'];
+						$updatedValues['price'] = $_POST['price'];
+						$updatedValues['category'] = $_POST['category'];
+						$updatedValues['stock_quantity'] = $_POST['stock_quantity'];
+
 						$this->productModel->updateProduct($productId, $updatedValues);
 					} else {
 						// Handle error if product_id or updated_values parameters are not set

@@ -64,9 +64,10 @@ class ProductModel {
 
 
 	public function updateProduct($product_id, $updatedValues) {
+		var_dump($updatedValues);
 		$query = "UPDATE products SET name = ?, description = ?, price = ?, category = ?, stock_quantity = ? WHERE product_id = ?";
 		$stmt = $this->db->prepare($query);
-		$stmt->bind_param('ssssss', $updatedValues['name'], $updatedValues['description'], $updatedValues['price'], $updatedValues['category'], $updatedValues['stock_quantity'], $product_id);
+		$stmt->bind_param('sssssi', $updatedValues['name'], $updatedValues['description'], $updatedValues['price'], $updatedValues['category'], $updatedValues['stock_quantity'], $product_id);
 		$stmt->execute();
 	}
 

@@ -57,6 +57,7 @@ while ($row = $result->fetch_assoc()) {
     </div>
     <div class="container">
 		<h1 id="heading">Products</h1>
+		<div id="error"></div>
 		<table id="product-table">
 			<tr>
 				<th>Product ID</th>
@@ -81,75 +82,167 @@ while ($row = $result->fetch_assoc()) {
     </div>
 
 	<script>
-	$(document).ready(function() {
-		// Add click event listener to edit button
-		$('#product-table').on('click', '.editable', function() {
-			// Convert the table cell into an input field
-			$(this).attr('contenteditable', 'true').focus();
-		});
 
+document.addEventListener('DOMContentLoaded', function() {
+    var editButtons = document.querySelectorAll('#product-table .editable');
+    editButtons.forEach(function(editButton) {
+        editButton.addEventListener('click', function() {
+            this.setAttribute('contenteditable', 'true');
+            this.focus();
+        });
+    });
 
-        $('#product-table').on('click', '.save-btn', function() {
-            // Get the row containing the edited content
-            var $row = $(this).closest('tr');
-            // Get the product ID
-            var productId = $row.data('product-id');
-            // Create an object to store the updated values
+    var saveButtons = document.querySelectorAll('#product-table .save-btn');
+    saveButtons.forEach(function(saveButton) {
+        saveButton.addEventListener('click', function() {
+            var row = this.closest('tr');
+            var productId = row.getAttribute('data-product-id');
             var updatedValues = {};
-            // Iterate through each editable field in the row
-            var isValid = true; // Flag to track validation
+            var isValid = true;
 
-            $row.find('.editable').each(function() {
-                // Get the field name (e.g., name, description, price, etc.)
-                var fieldName = $(this).data('field');
-                // Get the edited value
-                var editedValue = $(this).text().trim();
+            row.querySelectorAll('.editable').forEach(function(editable) {
+                var fieldName = editable.getAttribute('data-field');
+                var editedValue = editable.textContent.trim();
 
-                // Perform validation for each field
-                if (fieldName === 'name' || fieldName === 'description' || fieldName === 'category') {
-                    // Validate non-empty strings
-                    if (editedValue === '') {
-                        isValid = false;
-                        alert(fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' cannot be empty.');
-                        return false; // Exit the loop if validation fails
-                    }
-                } else if (fieldName === 'price' || fieldName === 'stock_quantity') {
-                    // Validate numeric values greater than 0
-                    if (isNaN(editedValue) || parseFloat(editedValue) <= 0) {
-                        isValid = false;
-                        alert(fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' must be a number greater than 0.');
-                        return false; // Exit the loop if validation fails
-                    }
-                }
+				if (fieldName === 'name' || fieldName === 'description' || fieldName === 'category') {
+					if (editedValue === '') {
+						isValid = false;
+						console.log(fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' cannot be empty.')
+						displayErrorMessage(fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' cannot be empty.');
+						return; // Exit the loop if validation fails
+					} 
+				} else if (fieldName === 'price' || fieldName === 'stock_quantity') {
+					if (isNaN(editedValue) || parseFloat(editedValue) <= 0) {
+						isValid = false;
+						displayErrorMessage(fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' must be a number greater than 0.');
+						return; // Exit the loop if validation fails
+					} 
+				} else {
+					removeErrorMessage(); // Remove error message if validation passes
+				}
 
-                // Add the field name and value to the updatedValues object
                 updatedValues[fieldName] = editedValue;
             });
 
+			function displayErrorMessage(message) {
+				// Clear existing error messages
+				document.getElementById('error').innerHTML = '';
+
+				// Create a new paragraph element for the error message
+				var errorMessage = document.createElement('p');
+				errorMessage.classList.add('error-message');
+				errorMessage.textContent = message;
+
+				// Append the error message to the error div
+				document.getElementById('error').appendChild(errorMessage);
+			}
+
+			// Function to remove error message
+			function removeErrorMessage() {
+				// Clear error messages
+				document.getElementById('error').innerHTML = '';
+			}
             // If all fields are valid, proceed with AJAX request
             if (isValid) {
-                var jsonData = JSON.stringify(updatedValues);
-                // Send AJAX request to update the product
-                $.ajax({
-                    url: '../controllers/AdminController.php',
-                    type: 'POST',
-                    data: {
-                        action: 'update_product',
-                        product_id: productId,
-                        updated_values: jsonData
-                    },
-                    success: function(response) {
+				const formData = new FormData();
+				formData.append('action', 'update_product');
+				formData.append('product_id', productId);
+				formData.append('name', updatedValues['name']);
+				formData.append('description', updatedValues['description']);
+				formData.append('category', updatedValues['category']);
+				formData.append('price', updatedValues['price']);
+				formData.append('stock_quantity', updatedValues['stock_quantity']);
+
+				console.table(updatedValues)
+				fetch('../controllers/AdminController.php', {
+                    method: 'POST',
+					body: formData,
+				 })
+                .then(function(response) {
+                    if (response.ok) {
                         // Handle success response
                         console.log('Product updated successfully.');
-                    },
-                    error: function(xhr, status, error) {
+                    } else {
                         // Handle error response
-                        console.error('Error updating product:', error);
+                        console.error('Error updating product:', response.statusText);
                     }
+                })
+                .catch(function(error) {
+                    console.error('Error updating product:', error);
                 });
             }
         });
-	});
+    });
+});
+	// $(document).ready(function() {
+	// 	// Add click event listener to edit button
+	// 	$('#product-table').on('click', '.editable', function() {
+	// 		// Convert the table cell into an input field
+	// 		$(this).attr('contenteditable', 'true').focus();
+	// 	});
+	//
+	//
+ //        $('#product-table').on('click', '.save-btn', function() {
+ //            // Get the row containing the edited content
+ //            var $row = $(this).closest('tr');
+ //            // Get the product ID
+ //            var productId = $row.data('product-id');
+ //            // Create an object to store the updated values
+ //            var updatedValues = {};
+ //            // Iterate through each editable field in the row
+ //            var isValid = true; // Flag to track validation
+	//
+ //            $row.find('.editable').each(function() {
+ //                // Get the field name (e.g., name, description, price, etc.)
+ //                var fieldName = $(this).data('field');
+ //                // Get the edited value
+ //                var editedValue = $(this).text().trim();
+	//
+ //                // Perform validation for each field
+ //                if (fieldName === 'name' || fieldName === 'description' || fieldName === 'category') {
+ //                    // Validate non-empty strings
+ //                    if (editedValue === '') {
+ //                        isValid = false;
+ //                        alert(fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' cannot be empty.');
+ //                        return false; // Exit the loop if validation fails
+ //                    }
+ //                } else if (fieldName === 'price' || fieldName === 'stock_quantity') {
+ //                    // Validate numeric values greater than 0
+ //                    if (isNaN(editedValue) || parseFloat(editedValue) <= 0) {
+ //                        isValid = false;
+ //                        alert(fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' must be a number greater than 0.');
+ //                        return false; // Exit the loop if validation fails
+ //                    }
+ //                }
+	//
+ //                // Add the field name and value to the updatedValues object
+ //                updatedValues[fieldName] = editedValue;
+ //            });
+	//
+ //            // If all fields are valid, proceed with AJAX request
+ //            if (isValid) {
+ //                var jsonData = JSON.stringify(updatedValues);
+ //                // Send AJAX request to update the product
+ //                $.ajax({
+ //                    url: '../controllers/AdminController.php',
+ //                    type: 'POST',
+ //                    data: {
+ //                        action: 'update_product',
+ //                        product_id: productId,
+ //                        updated_values: jsonData
+ //                    },
+ //                    success: function(response) {
+ //                        // Handle success response
+ //                        console.log('Product updated successfully.');
+ //                    },
+ //                    error: function(xhr, status, error) {
+ //                        // Handle error response
+ //                        console.error('Error updating product:', error);
+ //                    }
+ //                });
+ //            }
+ //        });
+	// });
 	</script>
 </body>
 <style>
@@ -231,6 +324,9 @@ while ($row = $result->fetch_assoc()) {
 
 	.save-btn:hover {
 		background-color: #45a049; /* Darker green */
+	}
+	.error-message {
+		color: red;	
 	}
 </style>
 </html>
