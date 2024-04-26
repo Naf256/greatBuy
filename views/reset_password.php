@@ -1,20 +1,7 @@
 <?php
-require_once('../controllers/AuthenticationController.php');
 session_start();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Handle form submission
-    $newPassword = $_POST['new_password'];
-    $username = $_SESSION['username'];
-
-	$authController = new AuthenticationController();
-
-	$authController->changePassword($username, $newPassword);
-    // Verify token and update password in the database
-    // Redirect to login page
-} else {
-	$username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
-}
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+$errorMessage = isset($_SESSION['error']) ? $_SESSION['error'] : '';
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <h1>Reset Password</h1>
-	<form id="resetPasswordForm" action="reset_password.php" method="post" novalidate>
+	<?php if (isset($errorMessage)): ?>
+		<p class="error-message" style="color: red;"><?php echo $errorMessage; ?></p>
+	<?php endif; ?>
+	<form id="resetPasswordForm" action="../controllers/reset_password_controller.php" method="post" novalidate>
 		<label for="username">Username:</label>
 		<input type="text" name="username" id="username" value="<?php echo $username; ?>"><br>
 		<span id="usernameError" style="color: red;"></span><br>

@@ -1,17 +1,8 @@
 <?php
-require_once('../controllers/AuthenticationController.php');
 session_start();
 
 $errorMessage = isset($_SESSION['error_email']) ? $_SESSION['error_email'] : null;
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Handle form submission
-    $email = $_POST['email'];
-
-	$authController = new AuthenticationController();
-
-	$authController->emailExists($email);
-}
 
 ?>
 <!DOCTYPE html>
@@ -24,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	<?php if (isset($errorMessage)): ?>
 		<p class="error-message" style="color: red;"><?php echo $errorMessage; ?></p>
 	<?php endif; ?>
-	<form id="passwordResetForm" action="forget_password.php" method="post" novalidate>
+	<form id="passwordResetForm" action="../controllers/forget_password_controller.php" method="post" novalidate>
 		<label for="email">Email:</label>
 		<input type="email" name="email" id="email"><br>
 		<span id="emailError" style="color: red;"></span><br>

@@ -13,7 +13,7 @@
 		case "employee":
 			header('Location: employee_dashboard.php');
 			break;
-		case "delivery_man":
+		case "delivery Man":
 			header('Location: deliveryMan_dashboard.php');
 			break;
 		case "customer":

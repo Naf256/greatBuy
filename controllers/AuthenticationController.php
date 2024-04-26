@@ -24,11 +24,13 @@ class AuthenticationController {
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
             // Redirect to dashboard or homepage
-            header('Location: index.php');
+            header('Location: ../views/index.php');
             exit();
         } else {
             // Handle invalid credentials
 			$_SESSION['error_login'] = "invalid username or password";
+            header('Location: ../views/login.php');
+            exit();
         }
     }
 
@@ -47,10 +49,11 @@ class AuthenticationController {
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
 
-			header('Location: index.php');
+			header('Location: ../views/index.php');
 			exit();
 		} else {
 			$_SESSION['error_register'] = "invalid credentials or username not unique";
+			header('Location: ../views/register.php');
 		}
 	}
 	
@@ -66,11 +69,13 @@ class AuthenticationController {
 			$_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
-			header('Location: reset_password.php');
+			header('Location: ../views/reset_password.php');
 			exit();
 		} else {
 
 			$_SESSION['error_email'] = "Email Not Found";
+			header('Location: ../views/forget_password.php');
+			exit();
 		}
 	}
 
@@ -88,10 +93,12 @@ class AuthenticationController {
 			$_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
-			header('Location: index.php');
+			header('Location: ../views/index.php');
 			exit();
 		} else {
 			$_SESSION['error'] = "Error Changing Password";
+			header('Location: ../views/reset_password.php');
+			exit();
 		}
 	}
 

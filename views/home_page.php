@@ -18,14 +18,10 @@ $products = $customer->getAllAvailableProducts();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Ecommerce Store</title>
-    <!-- CSS stylesheets -->
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header section -->
     <header>
         <h1>Great Buy</h1>
-        <!-- Navigation menu -->
         <nav>
             <ul>
                 <li><a href="home_page.php">Home</a></li>
@@ -36,12 +32,9 @@ $products = $customer->getAllAvailableProducts();
         </nav>
     </header>
 
-    <!-- Main content section -->
     <main>
-        <!-- Product filter and sorting section -->
 		<section id="filter-sort">
 			<h2>Filter and Sort</h2>
-			<!-- Price range filter -->
 			<form id="price-filter-form">
 				<label for="min-price">Min Price:</label>
 				<input type="number" id="min-price" name="min-price" min="0"><br>

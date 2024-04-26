@@ -1,23 +1,7 @@
 <?php
-require_once('../controllers/AuthenticationController.php');
 session_start();
 
 $errorMessage = isset($_SESSION['error_register']) ? $_SESSION['error_register'] : null;
-// echo "errorMessage: " . $errorMessage;
-// unset($_SESSION['error_login']);
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$name = $_POST['name'];
-	$username = $_POST['username'];
-    $password = $_POST['password'];
-	$role = $_POST['role'];
-	$email = $_POST['email'];
-	$phone_number = $_POST['phone_number'];
-	$address = $_POST['address'];
-     
-    $authController = new AuthenticationController();
-    $authController->register($name, $username, $password, $role, $email, $phone_number, $address);
-}
 
 ?>
 <!DOCTYPE html>
@@ -30,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <?php if (isset($errorMessage)): ?>
     <p style="color: red;"><?php echo $errorMessage; ?></p>
   <?php endif; ?>
-  <form id="registrationForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" novalidate>
+  <form id="registrationForm" action="../controllers/register_controller.php" method="post" novalidate>
     <label for="name">Name:</label>
     <input type="text" name="name" id="name" ><br>
 
@@ -45,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <option value="">Select Role</option>
       <option value="customer">Customer</option>
       <option value="employee">Employee</option>
-      <option value="delivery_man">Delivery Man</option>
+      <option value="delivery Man">Delivery Man</option>
     </select><br>
 
     <label for="email">Email:</label>

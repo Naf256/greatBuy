@@ -1,15 +1,7 @@
 <?php
-require_once('../controllers/AuthenticationController.php');
 session_start();
 
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$username = $_POST['username'];
-    $password = $_POST['password'];
-     
-    $authController = new AuthenticationController();
-    $authController->login($username, $password);
-}
+$errorMessage = isset($_SESSION['error_login']) ? $_SESSION['error_login'] : null;
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
   <h1>Login</h1>
-<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" novalidate>
+  <?php if (isset($errorMessage)): ?>
+    <p id="error-message" style="color: red;"><?php echo $errorMessage; ?></p>
+  <?php endif; ?>
+<form action="../controllers/login_controller.php" method="post" novalidate>
   <label for="username">Username:</label>
   <input type="text" name="username" id="username" value="<?= isset($_SESSION['username']) ? $_SESSION['username'] : '' ?>">
   <span id="username-error" style="color: red;"></span><br>
@@ -126,6 +121,10 @@ button[type="submit"] {
 /* Hover effect for submit button */
 button[type="submit"]:hover {
   background-color: #0056b3;
+}
+
+#error-message {
+  margin-left: 40%;
 }
 </style>
 </html>
