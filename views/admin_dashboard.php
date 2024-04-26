@@ -38,7 +38,6 @@ $userinfo = $authController->fetchUserInfo($_SESSION['username'])
             <li><a href="delete_user.php">Delete User</a></li>
             <li><a href="edit_user.php">Edit User</a></li>
             <li><a href="view_users.php">View Users</a></li>
-            <li><a href="set_rating.php">rating</a></li>
         </ul>
 		<h2>Work Management</h2>
         <ul>
