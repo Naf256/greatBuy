@@ -134,11 +134,29 @@ INSERT INTO attendance (user_id, status) VALUES (4, 'absent');
 CREATE TABLE salary (
     salary_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
-    month INT,
-    year INT,
+    deposit_date DATE,
     salary_amount DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
+
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-01-01', 5000.00);
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-02-01', 5000.00);
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-03-01', 5000.00);
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-04-01', 5000.00);
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-05-01', 5000.00);
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-06-01', 5000.00);
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-07-01', 5000.00);
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-08-01', 5000.00);
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-09-01', 5000.00);
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-10-01', 5000.00);
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-11-01', 5000.00);
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-12-01', 5000.00);
+
+select year, month, salary_amount from salary
+where user_id = 2 and month = 4
+
+select COUNT(*) from tasks
+where assigned_to = 2
 
 CREATE TABLE promotions (
     promotion_id INT AUTO_INCREMENT PRIMARY KEY,

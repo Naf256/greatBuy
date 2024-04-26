@@ -45,7 +45,7 @@ $taskNum = $employee->findNumbeOfCompletedTask($_SESSION['user_id']);
 		</div>
 		<div class="info">
 			<p>Bonus per task:</p>
-			<p >$ 50</p>
+			<p >$50</p>
 		</div>
 		<div>
 			<p>Total Bonus:</p>
@@ -57,7 +57,7 @@ $taskNum = $employee->findNumbeOfCompletedTask($_SESSION['user_id']);
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
 		const taskNum = <?php echo $taskNum; ?>;
-		document.getElementById('total-bonus').innerText = '$ ' + taskNum * 50;
+		document.getElementById('total-bonus').innerText = '$' + taskNum * 50;
 	})
 </script>
 <style>

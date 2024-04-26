@@ -179,7 +179,7 @@ $isMarked = $attendance->isMarkedToday($_SESSION['user_id']);
 #title {
 	font-size: 2em;
 	padding: 10px;
-	margin-left: 35%;
+	margin-left: 39%;
 }
 </style>
 </html>

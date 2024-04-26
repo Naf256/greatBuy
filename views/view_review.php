@@ -82,8 +82,9 @@ $products = $customer->getAllAvailableProducts();
 		<div id="product-feedback" class="section-header">
 			<h2>Product Reviews & Questions</h2>
 
+			<div id="error"></div>
 			<!-- Review form -->
-			<form id="review-form">
+			<form id="review-form" novalidate>
 				<!-- <h3>Write a Review</h3> -->
 				<textarea id="review-text" placeholder="Write your review here..."></textarea>
 				<select id="product-id">
@@ -93,10 +94,16 @@ $products = $customer->getAllAvailableProducts();
 					<?php endforeach; ?>
 				</select>
 				<label for="rating">Rating:</label>
-				<input type="number" id="rating" name="rating" min="1" max="5" required>
+				<select id="rating" name="rating">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+				</select>
 				<button type="submit">Submit Review</button>
-			</form>
 
+			</form>
 			<!-- Display product reviews -->
 			<div id="reviews-container">
 				<!-- Reviews will be dynamically added here -->
@@ -105,11 +112,6 @@ $products = $customer->getAllAvailableProducts();
 		</div>
 
     </main>
-
-    <!-- <footer> -->
-    <!--     <p>&copy; 2024 Great Buy. All rights reserved.</p> -->
-    <!-- </footer> -->
-
 </body>
 
 <script>
@@ -174,6 +176,7 @@ document.getElementById('review-form').addEventListener('submit', function(event
     if (reviewText !== '') {
         // Code to submit review to backend
         // After successful submission, add the review to the DOM
+		removeErrorMessage();
         const formData = new FormData();
         formData.append('product_id', productId);
         formData.append('comment', reviewText);
@@ -202,9 +205,19 @@ document.getElementById('review-form').addEventListener('submit', function(event
             console.error('Error:', error);
         });
     } else {
-        alert('Please enter a review before submitting.');
+		displayErrorMessage();
     }
 });
+
+function removeErrorMessage() {
+	document.getElementById('error').textContent = '';
+}
+
+function displayErrorMessage() {
+	document.getElementById('error').textContent = 'review message is missing';
+}
+
+
 </script>
 <style>
 
@@ -440,6 +453,9 @@ a:hover {
 
 #review-form button:hover {
     background-color: #555;
+}
+#error {
+	color: red;
 }
 </style>
 </html>
