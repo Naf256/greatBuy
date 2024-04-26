@@ -30,84 +30,157 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <?php if (isset($errorMessage)): ?>
     <p style="color: red;"><?php echo $errorMessage; ?></p>
   <?php endif; ?>
-	<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-		<label for="name">Name:</label>
-		<input type="text" name="name" id="name" required><br>
-		
-		<label for="username">Username:</label>
-		<input type="text" name="username" id="username" required><br>
-		
-		<label for="password">Password:</label>
-		<input type="password" name="password" id="password" required><br>
-		
-		<label for="role">Role:</label>
-		<select name="role" id="role" required>
-			<option value="customer">Customer</option>
-			<option value="employee">Employee</option>
-			<option value="delivery_man">Delivery Man</option>
-		</select><br>
+  <form id="registrationForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" novalidate>
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" ><br>
 
-		<label for="email">Email:</label>
-		<input type="email" name="email" id="email" required><br>
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" ><br>
 
-		<label for="phone_number">Phone Number:</label>
-		<input type="tel" name="phone_number" id="phone_number" required><br>
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" ><br>
 
-		<label for="address">Address:</label>
-		<input type="text" name="address" id="address" required><br>
-		
-		<button type="submit">Register</button>
-	</form>
+    <label for="role">Role:</label>
+    <select name="role" id="role" >
+      <option value="">Select Role</option>
+      <option value="customer">Customer</option>
+      <option value="employee">Employee</option>
+      <option value="delivery_man">Delivery Man</option>
+    </select><br>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" ><br>
+
+    <label for="phone_number">Phone Number:</label>
+    <input type="tel" name="phone_number" id="phone_number" ><br>
+
+    <label for="address">Address:</label>
+    <input type="text" name="address" id="address" ><br>
+
+    <button type="submit">Register</button>
+  </form>
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var form = document.getElementById('registrationForm');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    var name = document.getElementById('name');
+    var username = document.getElementById('username');
+    var password = document.getElementById('password');
+    var role = document.getElementById('role');
+    var email = document.getElementById('email');
+    var phone_number = document.getElementById('phone_number');
+    var address = document.getElementById('address');
+
+    var isValid = true;
+
+    // Reset previous error messages
+    var errorMessages = document.querySelectorAll('.error-message');
+    errorMessages.forEach(function(errorMessage) {
+      errorMessage.textContent = '';
+    });
+
+    if (name.value.trim() === '') {
+      showError(name, 'Name is required');
+      isValid = false;
+	  return;
+    }
+
+    if (username.value.trim() === '') {
+      showError(username, 'Username is required');
+      isValid = false;
+	  return;
+    }
+
+    if (password.value.trim() === '') {
+      showError(password, 'Password is required');
+      isValid = false;
+	  return;
+    }
+
+    if (role.value === '') {
+      showError(role, 'Please select a role');
+      isValid = false;
+	  return;
+    }
+
+    if (email.value.trim() === '') {
+      showError(email, 'Email is required');
+      isValid = false;
+	  return;
+    }
+
+    if (phone_number.value.trim() === '') {
+      showError(phone_number, 'Phone Number is required');
+      isValid = false;
+	  return;
+    }
+
+    if (address.value.trim() === '') {
+      showError(address, 'Address is required');
+      isValid = false;
+	  return;
+    }
+
+    if (isValid) {
+      form.submit();
+    }
+  });
+
+	function showError(input, message) {
+		var parent = input.parentElement;
+		var errorMessage = parent.querySelector('.error-message');
+
+		if (!errorMessage) {
+			errorMessage = document.createElement('span');
+			errorMessage.className = 'error-message';
+			parent.appendChild(errorMessage);
+		}
+
+		errorMessage.textContent = message;
+	}
+});
+
+</script>
 <style>
-/* Style for the form container */
-h1 {
-  margin-top: 100px;
-  margin-left: 40%;
-
+body {
+  font-family: Arial, sans-serif;
 }
-.form-container {
+
+form {
   width: 300px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  margin: 0 auto;
 }
 
-/* Style for form labels */
 label {
   display: block;
-  margin-left: 40%;
   margin-bottom: 5px;
 }
 
-/* Style for form inputs */
-input[type="text"],
-input[type="password"],
-select {
-  width: 15%;
+input,
+select,
+button {
+  width: 100%;
   padding: 8px;
-  margin-left: 40%;
   margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-/* Style for submit button */
-button[type="submit"] {
-  width: 15%;
-  padding: 10px;
-  background-color: #007bff;
-  margin-left: 40%;
-  color: #fff;
+button {
+  background-color: #4CAF50;
+  color: white;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
 }
 
-/* Hover effect for submit button */
-button[type="submit"]:hover {
-  background-color: #0056b3;
+button:hover {
+  background-color: #45a049;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
 }
 </style>
 </html>
