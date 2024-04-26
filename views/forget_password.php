@@ -22,66 +22,89 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <h1>Forget Password</h1>
 	<?php if (isset($errorMessage)): ?>
-		<p id="error-message" style="color: red;"><?php echo $errorMessage; ?></p>
+		<p class="error-message" style="color: red;"><?php echo $errorMessage; ?></p>
 	<?php endif; ?>
-    <form action="forget_password.php" method="post" novalidate>
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required><br>
-        <button type="submit">Reset Password</button>
-    </form>
+	<form id="passwordResetForm" action="forget_password.php" method="post" novalidate>
+		<label for="email">Email:</label>
+		<input type="email" name="email" id="email"><br>
+		<span id="emailError" style="color: red;"></span><br>
+		<button type="submit">Reset Password</button>
+	</form>
 </body>
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+      var form = document.getElementById('passwordResetForm');
+      form.addEventListener('submit', function(event) {
+		event.preventDefault();
+        var emailInput = document.getElementById('email');
+        var emailError = document.getElementById('emailError');
+        var emailValue = emailInput.value.trim();
+
+        // Reset previous error messages
+        emailError.textContent = '';
+
+        // Check if email is empty
+        if (emailValue === '') {
+          event.preventDefault(); // Prevent form submission
+          emailError.textContent = 'Email is required';
+          return;
+        }
+
+		event.target.submit();
+      });
+    });
+</script>
 <style>
-/* Style for the form container */
-h1 {
-  margin-top: 100px;
-  margin-left: 40%;
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4;
 }
 
-#error-message {
-  margin-left: 40%;
+form {
+	max-width: 300px;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-container {
-  width: 300px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-/* Style for form labels */
 label {
-  display: block;
-  margin-left: 40%;
-  margin-bottom: 5px;
+	display: block;
+	margin-bottom: 5px;
 }
 
-/* Style for form inputs */
-input[type="email"],
-select {
-  width: 15%;
-  padding: 8px;
-  margin-left: 40%;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+input[type="email"] {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	box-sizing: border-box;
 }
 
-/* Style for submit button */
 button[type="submit"] {
-  width: 15%;
-  padding: 10px;
-  background-color: #007bff;
-  margin-left: 40%;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: background-color 0.3s;
 }
 
-/* Hover effect for submit button */
 button[type="submit"]:hover {
-  background-color: #0056b3;
+	background-color: #0056b3;
+}
+
+.error-message {
+	color: red;
+	font-size: 20px;
+	text-align: center;
+}
+
+h1 {
+  text-align: center;
 }
 </style>
 </html>
