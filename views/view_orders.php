@@ -24,7 +24,6 @@ while ($row = $result->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="sidebar">
@@ -79,46 +78,48 @@ while ($row = $result->fetch_assoc()) {
     	</table> 
 	</div>
 	<script>
-		$(document).ready(function() {
-			var totalAmount = parseFloat(document.getElementById("total_amount").textContent);
-			// console.log(totalAmount);
-			$('#product-table').on('input', 'td[data-field="discount_percentage"]', function() {
-				var $row = $(this).closest('tr');
-				var discountPercentage = isNaN(parseFloat($(this).text())) ? 0 : parseFloat($(this).text());
-				// console.log(discountPercentage);
-				var discountedAmount = totalAmount - (totalAmount * (discountPercentage / 100));
-				$row.find('td[data-field="total_amount"]').text(discountedAmount.toFixed(2));
-				// console.log(totalAmount);
-			});
 
-			$('#product-table').on('click', '.save-btn', function() {
-				var $row = $(this).closest('tr');
-				var productId = $row.data('product-id');
+	document.addEventListener('DOMContentLoaded', function() {
+		var totalAmount = parseFloat(document.getElementById("total_amount").textContent);
+		
+		document.getElementById('product-table').addEventListener('input', function(event) {
+			if (event.target && event.target.dataset.field === 'discount_percentage') {
+				var row = event.target.closest('tr');
+				var discountPercentage = isNaN(parseFloat(event.target.textContent)) ? 0 : parseFloat(event.target.textContent);
+				var discountedAmount = totalAmount - (totalAmount * (discountPercentage / 100));
+				row.querySelector('td[data-field="total_amount"]').textContent = discountedAmount.toFixed(2);
+			}
+		});
+
+		document.getElementById('product-table').addEventListener('click', function(event) {
+			if (event.target && event.target.classList.contains('save-btn')) {
+				var row = event.target.closest('tr');
+				var productId = row.dataset.productId;
 				var updatedValues = {};
-				$row.find('.editable').each(function() {
-					var fieldName = $(this).data('field');
-					var editedValue = $(this).text();
+				row.querySelectorAll('.editable').forEach(function(element) {
+					var fieldName = element.dataset.field;
+					var editedValue = element.textContent;
 					updatedValues[fieldName] = editedValue;
 				});
 
 				var jsonData = JSON.stringify(updatedValues);
-				$.ajax({
-					url: '../controllers/AdminController.php',
-					type: 'POST',
-					data: {
-						action: 'update_order',
-						product_id: productId,
-						updated_values: jsonData
-					},
-					success: function(response) {
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', '../controllers/AdminController.php');
+				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				xhr.onload = function() {
+					if (xhr.status === 200) {
 						console.log('Product updated successfully.');
-					},
-					error: function(xhr, status, error) {
-						console.error('Error updating product:', error);
+					} else {
+						console.error('Error updating product:', xhr.statusText);
 					}
-				});
-			});
+				};
+				xhr.onerror = function() {
+					console.error('Error updating product:', xhr.statusText);
+				};
+				xhr.send('action=update_order&product_id=' + encodeURIComponent(productId) + '&updated_values=' + encodeURIComponent(jsonData));
+			}
 		});
+	});
 	</script>
 </body>
 <style>

@@ -48,7 +48,7 @@ $authController = new AuthenticationController();
     <div class="container">
 		<div class="expense-calculator">
 		<h2 id="profile">Expense Calculator</h2>
-		<form id="expense-form">
+		<form id="expense-form" novalidate>
 			<label for="category1">Salary:</label>
 			<input type="number" id="salary" name="salary" placeholder="Enter expense for salary"><br>
 
@@ -69,18 +69,13 @@ $authController = new AuthenticationController();
 </body>
 <script>
 document.getElementById("calculate-btn").addEventListener("click", function() {
-  // Get expense inputs for each category
   var expense1 = parseFloat(document.getElementById("salary").value) || 0;
   var expense2 = parseFloat(document.getElementById("bonus").value) || 0;
   var expense3 = parseFloat(document.getElementById("maintainance").value) || 0;
   var expense4 = parseFloat(document.getElementById("tax").value) || 0;
 
-  // Add more variables for additional categories if needed
+  var totalExpense = expense1 + expense2 + expense3 + expense4;
 
-  // Calculate total expense
-  var totalExpense = expense1 + expense2 + expense3 + expense4; // Add expenses for additional categories as needed
-
-  // Display total expense
   document.getElementById("total-amount").textContent = totalExpense.toFixed(2);
 });
 </script>
