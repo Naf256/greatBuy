@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	<?php if (isset($errorMessage)): ?>
 		<p id="error-message" style="color: red;"><?php echo $errorMessage; ?></p>
 	<?php endif; ?>
-    <form action="forget_password.php" method="post">
+    <form action="forget_password.php" method="post" novalidate>
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" required><br>
         <button type="submit">Reset Password</button>
