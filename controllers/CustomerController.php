@@ -79,7 +79,7 @@ class CustomerController {
 				$productId = $_POST['product_id'];
 				$username = $_POST['username'];
 				
-				$this->productModel->updateProductQuantityById($productId);
+				echo $this->productModel->updateProductQuantityById($productId);
 				$currUser = $this->userModel->getUserByUsername($username);
 				$price = $this->productModel->getPriceById($productId);
 				$this->orderModel->insertNewOrder($currUser['user_id'], $productId, "pending", $price['price']);

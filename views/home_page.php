@@ -5,11 +5,7 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'customer' ) {
 	exit();
 }
 
-require_once('../controllers/CustomerController.php');
-$customer = new CustomerController();
-
-$products = $customer->getAllAvailableProducts();
-
+$products = $_SESSION['products'];
 ?>
 
 <!DOCTYPE html>
@@ -20,12 +16,13 @@ $products = $customer->getAllAvailableProducts();
     <title>My Ecommerce Store</title>
 </head>
 <body>
+
     <header>
         <h1>Great Buy</h1>
         <nav>
             <ul>
-                <li><a href="home_page.php">Home</a></li>
-                <li><a href="home_page.php">Products</a></li>
+                <li><a href="../controllers/home_page_controller.php">Home</a></li>
+                <li><a href="../controllers/home_page_controller.php">Products</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
@@ -54,21 +51,20 @@ $products = $customer->getAllAvailableProducts();
 		</section>
 
         <section id="shopping-cart" class="section-header">
-            <h2><a href="view_cart.php">Shopping Cart</a></h2>
+            <h2><a href="../controllers/view_cart_controller.php">Shopping Cart</a></h2>
         </section>
 
         <!-- Product review and question section -->
         <section id="product-feedback" class="section-header">
-            <h2><a href="view_review.php">Product Reviews</a></h2>
+            <h2><a href="../controllers/view_review_controller.php">Product Reviews</a></h2>
         </section>
 
-        <!-- Previous orders section -->
         <section id="previous-orders" class="section-header">
-            <h2><a href="view_previous_orders.php">Previous Orders</a></h2>
+            <h2><a href="../controllers/view_previous_orders_controller.php">Previous Orders</a></h2>
         </section>
 
         <section id="loyalty-programs" class="section-header">
-            <h2><a href="view_loyalty.php">Loyalty Points</a></h2>
+            <h2><a href="../controllers/view_loyalty_controller.php">Loyalty Points</a></h2>
         </section>
 
 		<?php foreach ($products as $product): ?>

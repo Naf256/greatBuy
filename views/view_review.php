@@ -1,15 +1,7 @@
 <?php
 session_start();
-require_once('../controllers/CustomerController.php');
 
-if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'customer' ) {
-	header('Location: login.php');
-	exit();
-}
-
-$customer = new CustomerController();
-
-$products = $customer->getAllAvailableProducts();
+$products = $_SESSION['products'];
 
 ?>
 
@@ -20,29 +12,25 @@ $products = $customer->getAllAvailableProducts();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Ecommerce Store</title>
     <!-- CSS stylesheets -->
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Header section -->
+
     <header>
         <h1>Great Buy</h1>
-        <!-- Navigation menu -->
         <nav>
             <ul>
-                <li><a href="home_page.php">Home</a></li>
-                <li><a href="home_page.php">Products</a></li>
+                <li><a href="../controllers/home_page_controller.php">Home</a></li>
+                <li><a href="../controllers/home_page_controller.php">Products</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main content section -->
     <main>
-        <!-- Product filter and sorting section -->
 		<section id="filter-sort">
 			<h2>Filter and Sort</h2>
-			<!-- Price range filter -->
 			<form id="price-filter-form">
 				<label for="min-price">Min Price:</label>
 				<input type="number" id="min-price" name="min-price" min="0"><br>
@@ -62,19 +50,21 @@ $products = $customer->getAllAvailableProducts();
 		</section>
 
         <section id="shopping-cart" class="section-header">
-            <h2><a href="view_cart.php">Shopping Cart</a></h2>
+            <h2><a href="../controllers/view_cart_controller.php">Shopping Cart</a></h2>
         </section>
 
-        <section class="section-header">
-            <h2><a href="view_review.php">Product Reviews</a></h2>
+        <!-- Product review and question section -->
+        <section id="productFeedback" class="section-header">
+            <h2><a href="../controllers/view_review_controller.php">Product Reviews</a></h2>
         </section>
 
+        <!-- Previous orders section -->
         <section id="previous-orders" class="section-header">
-            <h2><a href="view_previous_orders.php">Previous Orders</a></h2>
+            <h2><a href="../controllers/view_previous_orders_controller.php">Previous Orders</a></h2>
         </section>
 
         <section id="loyalty-programs" class="section-header">
-            <h2><a href="view_loyalty.php">Loyalty Points</a></h2>
+            <h2><a href="../controllers/view_loyalty_controller.php">Loyalty Points</a></h2>
         </section>
 
 		<div class="flex-container">
@@ -132,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	})
 	.then(response => response.json())
 	.then(data => {
-		console.log(data);
+		// console.log(data);
 		data.forEach(r => {
             const reviewElement = document.createElement('div');
             reviewElement.classList.add('review');

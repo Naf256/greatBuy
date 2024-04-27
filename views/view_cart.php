@@ -1,18 +1,14 @@
 <?php
 session_start();
-require_once('../controllers/CustomerController.php');
-
 if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'customer' ) {
 	header('Location: login.php');
 	exit();
 }
 
-$customer = new CustomerController();
 
 $products = [];
-// $products = $customer->getAllAvailableProducts();
-$products = $customer->findCartProducts($_SESSION['user_id']);
 
+$products = $_SESSION['products'];
 ?>
 
 <!DOCTYPE html>
@@ -26,25 +22,22 @@ $products = $customer->findCartProducts($_SESSION['user_id']);
 </head>
 <body>
     <!-- Header section -->
+
     <header>
         <h1>Great Buy</h1>
-        <!-- Navigation menu -->
         <nav>
             <ul>
-                <li><a href="home_page.php">Home</a></li>
-                <li><a href="home_page.php">Products</a></li>
+                <li><a href="../controllers/home_page_controller.php">Home</a></li>
+                <li><a href="../controllers/home_page_controller.php">Products</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main content section -->
     <main>
-        <!-- Product filter and sorting section -->
 		<section id="filter-sort">
 			<h2>Filter and Sort</h2>
-			<!-- Price range filter -->
 			<form id="price-filter-form">
 				<label for="min-price">Min Price:</label>
 				<input type="number" id="min-price" name="min-price" min="0"><br>
@@ -64,20 +57,20 @@ $products = $customer->findCartProducts($_SESSION['user_id']);
 		</section>
 
         <section id="shopping-cart" class="section-header">
-            <h2><a href="view_cart.php">Shopping Cart</a></h2>
+            <h2><a href="../controllers/view_cart_controller.php">Shopping Cart</a></h2>
         </section>
 
+        <!-- Product review and question section -->
         <section id="product-feedback" class="section-header">
-            <h2><a href="view_review.php">Product Reviews</a></h2>
+            <h2><a href="../controllers/view_review_controller.php">Product Reviews</a></h2>
         </section>
 
-        <!-- Previous orders section -->
         <section id="previous-orders" class="section-header">
-            <h2><a href="view_previous_orders.php">Previous Orders</a></h2>
+            <h2><a href="../controllers/view_previous_orders_controller.php">Previous Orders</a></h2>
         </section>
 
         <section id="loyalty-programs" class="section-header">
-            <h2><a href="view_loyalty.php">Loyalty Points</a></h2>
+            <h2><a href="../controllers/view_loyalty_controller.php">Loyalty Points</a></h2>
         </section>
 
 		<h2 id="actual-header">Shopping Cart</h2>

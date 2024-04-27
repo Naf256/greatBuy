@@ -10,7 +10,7 @@ class ProductModel {
 		$query = "UPDATE products SET stock_quantity = stock_quantity - 1 WHERE product_id = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $productId);
-        $stmt->execute();
+        return $stmt->execute();
 	}
 	public function getAllAvailableProducts() {
 		$query = "SELECT * FROM products where stock_quantity > 0";

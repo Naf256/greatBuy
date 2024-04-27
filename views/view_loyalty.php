@@ -1,15 +1,13 @@
 <?php
 session_start();
-require_once('../controllers/CustomerController.php');
-
 if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'customer' ) {
 	header('Location: login.php');
 	exit();
 }
 
-$customer = new CustomerController();
+$loyaltyInfo = [];
 
-$loyaltyInfo = $customer->findLoyaltyInfo($_SESSION['user_id']);
+$loyaltyInfo = $_SESSION['loyaltyInfo'];
 
 ?>
 
@@ -29,8 +27,8 @@ $loyaltyInfo = $customer->findLoyaltyInfo($_SESSION['user_id']);
         <!-- Navigation menu -->
         <nav>
             <ul>
-                <li><a href="home_page.php">Home</a></li>
-                <li><a href="home_page.php">Products</a></li>
+                <li><a href="../controllers/home_page_controller.php">Home</a></li>
+                <li><a href="../controllers/home_page_controller.php">Products</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
