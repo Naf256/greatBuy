@@ -74,7 +74,7 @@ class ProductModel {
 	public function deleteProductById($product_id) {
 		$query = "DELETE FROM products WHERE product_id = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i', $product_id);
+        $stmt->bind_param('s', $product_id);
         return $stmt->execute();
 	}
 

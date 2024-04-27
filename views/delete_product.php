@@ -5,17 +5,8 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 	exit();
 }
 
-require_once('../controllers/AdminController.php');
+$products = $_SESSION['deletable-products'];
 
-$adminController = new AdminController();
-
-$products = [];
-
-$result = $adminController->fetchAllProducts();
-
-while ($row = $result->fetch_assoc()) {
-    $products[] = $row;
-}
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +23,7 @@ while ($row = $result->fetch_assoc()) {
         <h2>Product Management</h2>
         <ul>
             <li><a href="add_product.php">Add Product</a></li>
-			<li><a href="delete_product.php">Delete Product</a></li>
+			<li><a href="../controllers/delete_product_controller.php">Delete Product</a></li>
             <li><a href="edit_product.php">Edit Product</a></li>
             <li><a href="view_products.php">View Products</a></li>
         </ul>

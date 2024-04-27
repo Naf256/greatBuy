@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once('../model/Product.php');
 require_once('../model/User.php');
 require_once('../model/Order.php');
@@ -84,11 +86,13 @@ class AdminController {
 
 	public function addProduct($name, $description, $price, $category, $stock_quantity) {
 		$success = $this->productModel->insertProduct($name, $description, $price, $category, $stock_quantity);
-		if ($success) {
-			echo "product added successfully";
-		} else {
-			echo "error adding the product";
-		}
+
+		// echo something would write to body before setting header location
+		// if ($success) {
+		// 	echo "product added successfully";
+		// } else {
+		// 	echo "error adding the product";
+		// }
 	}
 
 	public function handleRequest() {
@@ -158,8 +162,15 @@ class AdminController {
                     // Check if product_id parameter is set
                     if (isset($_POST['product_id'])) {
                         // Call the deleteProductById method to delete the product
+						$product_id = $_POST['product_id'];
                         $result = $this->productModel->deleteProductById($_POST['product_id']);
-                        // Check if deletion was successful
+						//
+						foreach ($_SESSION['deletable-products'] as $key => $value) {
+							if ($_SESSION['deletable-products'][$key]['product_id'] == $product_id) {
+								unset($_SESSION['deletable-products'][$key]);
+							}
+						}
+							// Check if deletion was successful
                         if ($result) {
                             // Return success message or handle any other logic
                             echo "Product deleted successfully.";
@@ -279,6 +290,8 @@ class AdminController {
 	public function delete_product($product_id) {
         // Call the deleteProduct method from the ProductModel
         $result = $this->productModel->deleteProductById($product_id);
+
+
         
         // Check if the deletion was successful
         if ($result) {

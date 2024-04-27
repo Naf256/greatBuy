@@ -5,11 +5,7 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 	exit();
 }
 
-require_once('../controllers/AuthenticationController.php');
-
-$authController = new AuthenticationController();
-
-$userinfo = $authController->fetchUserInfo($_SESSION['username'])
+$userinfo = $_SESSION['userinfo'];
 
 ?>
 
@@ -27,7 +23,7 @@ $userinfo = $authController->fetchUserInfo($_SESSION['username'])
         <h2>Product Management</h2>
         <ul>
             <li><a href="add_product.php">Add Product</a></li>
-			<li><a href="delete_product.php">Delete Product</a></li>
+			<li><a href="../controllers/delete_product_controller.php">Delete Product</a></li>
             <li><a href="edit_product.php">Edit Product</a></li>
             <li><a href="view_products.php">View Products</a></li>
         </ul>

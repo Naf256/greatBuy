@@ -5,15 +5,6 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 	exit();
 }
 
-require_once('../controllers/AdminController.php');
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		$admin = new AdminController();
-		$admin->addProduct($name, $description, $price, $category, $stock_quantity);
-		header('Location: view_products.php');
-		exit();
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Product Management</h2>
         <ul>
             <li><a href="add_product.php">Add Product</a></li>
-			<li><a href="delete_product.php">Delete Product</a></li>
+			<li><a href="../controllers/delete_product_controller.php">Delete Product</a></li>
             <li><a href="edit_product.php">Edit Product</a></li>
             <li><a href="view_products.php">View Products</a></li>
         </ul>
@@ -53,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 	<div class="container">
 		<h1 id="heading">Add New Product</h1>
-		<form id="product-form" novalidate>
+		<form id="product-form" action="../controllers/add_product_controller.php" method="post" novalidate>
 			<label for="name">Name:</label><br>
 			<input type="text" id="name" name="name" value=""><br>
 			<p id="name-error" class="error"></p>
