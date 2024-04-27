@@ -17,15 +17,16 @@ $users = $_SESSION['users'];
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+
     <div class="sidebar">
 
         <h1>Admin Dashboard</h1>
         <h2>Product Management</h2>
         <ul>
             <li><a href="add_product.php">Add Product</a></li>
-			<li><a href="delete_product.php">Delete Product</a></li>
-            <li><a href="edit_product.php">Edit Product</a></li>
-            <li><a href="view_products.php">View Products</a></li>
+			<li><a href="../controllers/delete_product_controller.php">Delete Product</a></li>
+            <li><a href="../controllers/edit_product_controller.php">Edit Product</a></li>
+            <li><a href="../controllers/view_products_controller.php">View Products</a></li>
         </ul>
 
 		<h2>User Management</h2>
@@ -37,12 +38,12 @@ $users = $_SESSION['users'];
         </ul>
 		<h2>Work Management</h2>
         <ul>
-            <li><a href="view_tasks.php">tasks</a></li>
-            <li><a href="view_attendence.php">attendence</a></li>
+            <li><a href="../controllers/view_tasks_controller.php">tasks</a></li>
+            <li><a href="../controllers/view_attendence_controller.php">attendance</a></li>
         </ul>
 		<a href="calculator.php"><h2>Calculator</h2></a>
-		<a href="view_orders.php"><h2>Orders</h2></a>
-		<a href="review_admin.php"><h2>Reviews</h2></a>
+		<a href="../controllers/view_orders_controller.php"><h2>Orders</h2></a>
+		<a href="../controllers/review_admin_controller.php"><h2>Reviews</h2></a>
     </div>
     <div class="container">
         <h1 id="heading">Users</h1>

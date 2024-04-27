@@ -67,10 +67,25 @@ CREATE TABLE orders (
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
 
-INSERT INTO orders (user_id, product_id, status, total_amount) VALUES (1, 1, 'pending', 25.99);
-INSERT INTO orders (user_id, product_id, status, total_amount) VALUES (2, 2, 'shipped', 19.99);
-INSERT INTO orders (user_id, product_id, status, total_amount) VALUES (3, 3, 'delivered', 15.99);
-INSERT INTO orders (user_id, product_id, status, total_amount) VALUES (4, 4, 'pending', 29.99);
+
+INSERT INTO orders (user_id, product_id, total_amount)
+VALUES (3, 19, 50.00);
+
+INSERT INTO orders (user_id, product_id, total_amount)
+VALUES (3, 19, 65.75);
+
+INSERT INTO orders (user_id, product_id, total_amount)
+VALUES (3, 19, 42.99);
+
+INSERT INTO orders (user_id, product_id, total_amount)
+VALUES (3, 19, 75.50);
+
+INSERT INTO orders (user_id, product_id, total_amount)
+VALUES (3, 19, 89.25);
+
+INSERT INTO orders (user_id, product_id, total_amount)
+VALUES (3, 19, 55.00);
+
 
 CREATE TABLE productFeedback (
     feedback_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -84,16 +99,53 @@ CREATE TABLE productFeedback (
 );
 
 INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (1, 1, 4, 'Great product! Really satisfied with my purchase.');
+VALUES (19, 1, 5, 'Excellent product, highly recommended.');
 
 INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (2, 2, 5, 'Excellent quality! Will definitely buy again.');
+VALUES (20, 2, 4, 'Good product, satisfied with the purchase.');
 
 INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (3, 3, 3, 'Good product, but delivery was a bit slow.');
+VALUES (21, 3, 3, 'Average product, could be better.');
 
 INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (4, 4, 2, 'Not satisfied with the product. It arrived damaged.');
+VALUES (22, 4, 2, 'Below average quality, not satisfied.');
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment)
+VALUES (19, 2, 4, 'Great value for money.');
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment)
+VALUES (20, 3, 5, 'Amazing product, exceeded expectations.');
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment)
+VALUES (21, 4, 3, 'Decent product, but delivery was slow.');
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment)
+VALUES (22, 1, 1, 'Poor quality, wouldn''t recommend.');
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment)
+VALUES (19, 3, 3, 'Not bad, but could improve.');
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment)
+VALUES (20, 4, 2, 'Disappointed with the product.');
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment)
+VALUES (21, 1, 5, 'Excellent quality and fast delivery.');
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment)
+VALUES (22, 2, 4, 'Satisfied with the product.');
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment)
+VALUES (19, 4, 5, 'Very happy with my purchase.');
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment)
+VALUES (20, 1, 3, 'Average product, nothing special.');
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment)
+VALUES (21, 2, 2, 'Not satisfied, expected better quality.');
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment)
+VALUES (22, 3, 4, 'Good product, met my expectations.');
+
 
 CREATE TABLE tasks (
     task_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -165,6 +217,18 @@ CREATE TABLE promotions (
     delivery_charge INT,
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
+
+INSERT INTO promotions (product_id, discount_percentage, delivery_charge)
+VALUES (19, 10, 5);
+
+INSERT INTO promotions (product_id, discount_percentage, delivery_charge)
+VALUES (20, 15, 3);
+
+INSERT INTO promotions (product_id, discount_percentage, delivery_charge)
+VALUES (21, 20, 6);
+
+INSERT INTO promotions (product_id, discount_percentage, delivery_charge)
+VALUES (22, 25, 4);
 
 CREATE TABLE expenses (
     expense_id INT AUTO_INCREMENT PRIMARY KEY,

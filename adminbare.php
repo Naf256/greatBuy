@@ -1,12 +1,11 @@
 <?php
 session_start();
-require_once('../controllers/AdminController.php');
-if (empty($_SESSION['username'])) {
+if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 	header('Location: login.php');
 	exit();
 }
 
-$admin = new AdminController();
+$userinfo = $_SESSION['userinfo'];
 
 ?>
 
@@ -19,31 +18,58 @@ $admin = new AdminController();
 </head>
 <body>
     <div class="sidebar">
+
         <h1>Admin Dashboard</h1>
         <h2>Product Management</h2>
         <ul>
             <li><a href="add_product.php">Add Product</a></li>
-			<li><a href="delete_product.php">Delete Product</a></li>
-            <li><a href="edit_product.php">Edit Product</a></li>
-            <li><a href="view_products.php">View Products</a></li>
+			<li><a href="../controllers/delete_product_controller.php">Delete Product</a></li>
+            <li><a href="../controllers/edit_product_controller.php">Edit Product</a></li>
+            <li><a href="../controllers/view_products_controller.php">View Products</a></li>
         </ul>
 
 		<h2>User Management</h2>
         <ul>
             <li><a href="add_user.php">Add User</a></li>
-            <li><a href="delete_user.php">Delete User</a></li>
-            <li><a href="edit_user.php">Edit User</a></li>
-            <li><a href="view_users.php">View Users</a></li>
+            <li><a href="../controllers/delete_user_controller.php">Delete User</a></li>
+            <li><a href="../controllers/edit_user_controller.php">Edit User</a></li>
+            <li><a href="../controllers/view_users_controller.php">View Users</a></li>
+        </ul>
+		<h2>Work Management</h2>
+        <ul>
+            <li><a href="../controllers/view_tasks_controller.php">tasks</a></li>
+            <li><a href="../controllers/view_attendence_controller.php">attendance</a></li>
         </ul>
 		<a href="calculator.php"><h2>Calculator</h2></a>
-		<a href="view_orders.php"><h2>Orders</h2></a>
-		<a href="review_admin.php"><h2>Reviews</h2></a>
+		<a href="../controllers/view_orders_controller.php"><h2>Orders</h2></a>
+		<a href="../controllers/review_admin_controller.php"><h2>Reviews</h2></a>
     </div>
     <div class="container">
+    <h1 id="profile">User Profile</h1>
+    <table>
+        <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+        </tr>
+        <tr>
+			<td><?= $userinfo['user_id'] ?></td>
+            <td><?= $userinfo['username'] ?></td>
+            <td><?= $userinfo['password'] ?></td>
+            <td><?= $userinfo['role'] ?></td>
+            <td><?= $userinfo['email'] ?></td>
+            <td><?= $userinfo['name'] ?></td>
+            <td><?= $userinfo['phone_number'] ?></td>
+            <td><?= $userinfo['address'] ?></td>
+        </tr>
+    </table>
     </div>
 </body>
-<script>
-</script>
 <style>
 	table {
 		width: 100%;
@@ -107,6 +133,5 @@ $admin = new AdminController();
 	a:hover {
 		text-decoration: underline;
 	}
-
 </style>
 </html>

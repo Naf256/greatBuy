@@ -109,7 +109,7 @@ class AdminController {
                         if ($result) {
                             // Return success message or handle any other logic
                             // echo "shiped successfully.";
-							header('Location: ../views/view_tasks.php');
+							header('Location: ../controllers/view_tasks_controller.php');
 							exit();
                         } else {
                             // Return error message or handle any other logic
@@ -129,7 +129,7 @@ class AdminController {
                         if ($result) {
                             // Return success message or handle any other logic
                             // echo "shiped successfully.";
-							header('Location: ../views/view_tasks.php');
+							header('Location: ../controllers/view_tasks_controller.php');
 							exit();
                         } else {
                             // Return error message or handle any other logic

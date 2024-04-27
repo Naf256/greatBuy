@@ -37,12 +37,12 @@ $userinfo = $_SESSION['userinfo'];
         </ul>
 		<h2>Work Management</h2>
         <ul>
-            <li><a href="view_tasks.php">tasks</a></li>
-            <li><a href="view_attendence.php">attendence</a></li>
+            <li><a href="../controllers/view_tasks_controller.php">tasks</a></li>
+            <li><a href="../controllers/view_attendence_controller.php">attendance</a></li>
         </ul>
 		<a href="calculator.php"><h2>Calculator</h2></a>
-		<a href="view_orders.php"><h2>Orders</h2></a>
-		<a href="review_admin.php"><h2>Reviews</h2></a>
+		<a href="../controllers/view_orders_controller.php"><h2>Orders</h2></a>
+		<a href="../controllers/review_admin_controller.php"><h2>Reviews</h2></a>
     </div>
     <div class="container">
     <h1 id="profile">User Profile</h1>
