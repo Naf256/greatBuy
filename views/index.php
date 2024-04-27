@@ -11,7 +11,7 @@
 			header('Location: ../controllers/admin_dashboard_controller.php');
 			break;
 		case "employee":
-			header('Location: employee_dashboard.php');
+			header('Location: ../controllers/employee_dashboard_controller.php');
 			break;
 		case "delivery Man":
 			header('Location: deliveryMan_dashboard.php');

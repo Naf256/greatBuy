@@ -5,11 +5,9 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'employee' ) {
 	exit();
 }
 
-require_once('../controllers/EmployeeController.php');
+$tasks = [];
 
-$employee = new EmployeeController();
-
-$tasks = $employee->getTasksByUserId($_SESSION['user_id']);
+$tasks = $_SESSION['tasks'];
 
 ?>
 
@@ -21,21 +19,21 @@ $tasks = $employee->getTasksByUserId($_SESSION['user_id']);
     <title>Employee Dashboard</title>
 </head>
 <body>
-    <div class="sidebar">
 
-        <h1>Employee Dashboard</h1>
+    <div class="sidebar">
+		<a href="../controllers/employee_dashboard_controller.php"><h1>Employee Dashboard</h1></a>
         <h2>Attendance Management</h2>
         <ul>
-			<li><a href="mark_attendance.php">Mark attendance</a></li>
-			<li><a href="view_attendance_employee.php">View attendance</a></li>
+			<li><a href="../controllers/mark_attendance_controller.php">Mark attendance</a></li>
+			<li><a href="../controllers/view_attendance_employee_controller.php">View attendance</a></li>
         </ul>
 
         <h2>Task Management</h2>
         <ul>
-			<li><a href="report_task.php">report task</a></li>
+			<li><a href="../controllers/report_task_controller.php">report task</a></li>
 			<li><a href="#"></a></li>
         </ul>
-		<a href="employee_bonus.php"><h2>Employee Bonus</h2></a>
+		<a href="../controllers/employee_bonus_controller.php"><h2>Employee Bonus</h2></a>
     </div>
     <div class="container">
 		<h1 class="profile">Tasks</h1>

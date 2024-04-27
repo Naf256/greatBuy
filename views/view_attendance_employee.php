@@ -1,19 +1,13 @@
 <?php
 session_start();
-require_once('../controllers/AuthenticationController.php');
 if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'employee' ) {
 	header('Location: login.php');
 	exit();
 }
 
-require_once('../model/Attendance.php');
-
-$model = new AttendanceModel();
-
-
 $attendances = [];
 
-$attendances = $model->getAttendanceHistoryByUserId($_SESSION['user_id']);
+$attendances = $_SESSION['attendances'];
 
 ?>
 
@@ -25,15 +19,21 @@ $attendances = $model->getAttendanceHistoryByUserId($_SESSION['user_id']);
     <title>Employee Dashboard</title>
 </head>
 <body>
-    <div class="sidebar">
 
-        <h1>Employee Dashboard</h1>
+    <div class="sidebar">
+		<a href="../controllers/employee_dashboard_controller.php"><h1>Employee Dashboard</h1></a>
         <h2>Attendance Management</h2>
         <ul>
-			<li><a href="mark_attendance.php">Mark attendance</a></li>
-			<li><a href="view_attendance_employee.php">View attendance</a></li>
+			<li><a href="../controllers/mark_attendance_controller.php">Mark attendance</a></li>
+			<li><a href="../controllers/view_attendance_employee_controller.php">View attendance</a></li>
         </ul>
 
+        <h2>Task Management</h2>
+        <ul>
+			<li><a href="../controllers/report_task_controller.php">report task</a></li>
+			<li><a href="#"></a></li>
+        </ul>
+		<a href="../controllers/employee_bonus_controller.php"><h2>Employee Bonus</h2></a>
     </div>
     <div class="container">
 		<h1 id="profile">Attendance History</h1>
