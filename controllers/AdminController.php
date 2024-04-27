@@ -80,7 +80,7 @@ class AdminController {
 
 	public function addUser($name, $username, $password, $role, $email, $phone_number, $address) {
 		$this->userModel->addUser($name, $username, $password, $role, $email, $phone_number, $address);
-        header('Location: view_users.php');
+        header('Location: view_users_controller.php');
 		exit();
 	}
 
@@ -146,6 +146,11 @@ class AdminController {
                         // Call the deleteProductById method to delete the product
                         $result = $this->userModel->deleteUser($_POST['user_id']);
                         // Check if deletion was successful
+						foreach ($_SESSION['users'] as $key => $value) {
+							if ($_SESSION['users'][$key]['user_id'] == $_POST['user_id']) {
+								unset($_SESSION['users'][$key]);
+							}
+						}
                         if ($result) {
                             // Return success message or handle any other logic
                             echo "User deleted successfully.";

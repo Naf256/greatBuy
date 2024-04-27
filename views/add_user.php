@@ -5,44 +5,7 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 	header('Location: login.php');
 	exit();
 }
-require_once('../controllers/AdminController.php');
 
-$errors = [];
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate each form field
-    $username = $_POST["username"];
-    if (empty($username)) {
-        $errors["username"] = "Username is required";
-    }
-
-    $password = $_POST["password"];
-    if (empty($password)) {
-        $errors["password"] = "Password is required";
-    }
-
-    $role = $_POST["role"];
-    if (empty($role)) {
-        $errors["role"] = "Role is required";
-    }
-
-    $email = $_POST["email"];
-    if (empty($email)) {
-        $errors["email"] = "Email is required";
-    }
-
-    $name = $_POST["name"];
-
-    $phone_number = $_POST["phone_number"];
-
-    $address = $_POST["address"];
-
-    // If there are no validation errors, proceed to add the user
-    if (empty($errors)) {
-        $admin = new AdminController();
-        $admin->addUser($name, $username, $password, $role, $email, $phone_number, $address);
-        exit();
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -67,9 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		<h2>User Management</h2>
         <ul>
             <li><a href="add_user.php">Add User</a></li>
-            <li><a href="delete_user.php">Delete User</a></li>
-            <li><a href="edit_user.php">Edit User</a></li>
-            <li><a href="view_users.php">View Users</a></li>
+            <li><a href="../controllers/delete_user_controller.php">Delete User</a></li>
+            <li><a href="../controllers/edit_user_controller.php">Edit User</a></li>
+            <li><a href="../controllers/view_users_controller.php">View Users</a></li>
         </ul>
 		<h2>Work Management</h2>
         <ul>
@@ -82,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="container">
         <h1 id="heading">Add New User</h1>
-		<form id="myForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" novalidate>
+		<form id="myForm" action="../controllers/add_user_controller.php" method="POST" novalidate>
 			<label for="username">Username:</label><br>
 			<input type="text" id="username" name="username" value="<?php echo isset($_POST['username']) ? $_POST['username'] : ''; ?>"><br>
 			<p id="usernameError" class="error"></p>

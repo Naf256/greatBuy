@@ -31,9 +31,9 @@ $userinfo = $_SESSION['userinfo'];
 		<h2>User Management</h2>
         <ul>
             <li><a href="add_user.php">Add User</a></li>
-            <li><a href="delete_user.php">Delete User</a></li>
-            <li><a href="edit_user.php">Edit User</a></li>
-            <li><a href="view_users.php">View Users</a></li>
+            <li><a href="../controllers/delete_user_controller.php">Delete User</a></li>
+            <li><a href="../controllers/edit_user_controller.php">Edit User</a></li>
+            <li><a href="../controllers/view_users_controller.php">View Users</a></li>
         </ul>
 		<h2>Work Management</h2>
         <ul>
