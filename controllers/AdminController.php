@@ -165,9 +165,9 @@ class AdminController {
 						$product_id = $_POST['product_id'];
                         $result = $this->productModel->deleteProductById($_POST['product_id']);
 						//
-						foreach ($_SESSION['deletable-products'] as $key => $value) {
-							if ($_SESSION['deletable-products'][$key]['product_id'] == $product_id) {
-								unset($_SESSION['deletable-products'][$key]);
+						foreach ($_SESSION['products'] as $key => $value) {
+							if ($_SESSION['products'][$key]['product_id'] == $product_id) {
+								unset($_SESSION['products'][$key]);
 							}
 						}
 							// Check if deletion was successful

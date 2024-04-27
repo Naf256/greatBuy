@@ -17,7 +17,7 @@ while ($row = $result->fetch_assoc()) {
     $products[] = $row;
 }
 
-$_SESSION['deletable-products'] = $products;
+$_SESSION['products'] = $products;
 
 header('Location: ../views/delete_product.php');
 exit();

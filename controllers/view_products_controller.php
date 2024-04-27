@@ -1,16 +1,9 @@
 <?php
 session_start();
 if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
-	header('Location: login.php');
+	header('Location: ../views/login.php');
 	exit();
 }
-
-require_once('../controllers/AuthenticationController.php');
-
-$authController = new AuthenticationController();
-
-$_SESSION['userinfo'] = $authController->fetchUserInfo($_SESSION['username']);
-
 require_once('../controllers/AdminController.php');
 
 $adminController = new AdminController();
@@ -23,6 +16,9 @@ while ($row = $result->fetch_assoc()) {
     $products[] = $row;
 }
 
-header('Location: ../views/admin_dashboard.php');
+$_SESSION['products'] = $products;
+
+header('Location: ../views/view_products.php');
+exit();
 
 ?>

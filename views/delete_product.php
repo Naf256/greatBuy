@@ -5,7 +5,7 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 	exit();
 }
 
-$products = $_SESSION['deletable-products'];
+$products = $_SESSION['products'];
 
 ?>
 
@@ -24,8 +24,8 @@ $products = $_SESSION['deletable-products'];
         <ul>
             <li><a href="add_product.php">Add Product</a></li>
 			<li><a href="../controllers/delete_product_controller.php">Delete Product</a></li>
-            <li><a href="edit_product.php">Edit Product</a></li>
-            <li><a href="view_products.php">View Products</a></li>
+            <li><a href="../controllers/edit_product_controller.php">Edit Product</a></li>
+            <li><a href="../controllers/view_products_controller.php">View Products</a></li>
         </ul>
 
 		<h2>User Management</h2>

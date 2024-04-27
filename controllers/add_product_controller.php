@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 
 		$admin->addProduct($name, $description, $price, $category, $stock_quantity);
-		header('Location: ../views/view_products.php');
+		header('Location: ../controllers/view_products_controller.php');
 		exit();
 }
 
