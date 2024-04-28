@@ -6,6 +6,33 @@ class AttendanceModel {
         $this->db = new mysqli('localhost', 'root', '', 'ecommerce');
     }
 
+	public function getNumberOfAbsenceByUserId($userId) {
+		$dt = date('Y-m');
+		
+		$query = "SELECT * 
+				 FROM attendance 
+				 WHERE user_id = ? 
+				 AND DATE_FORMAT(`date`, '%Y-%m') = ? 
+				 AND status = 'absent'";
+
+		$stmt = $this->db->prepare($query);
+
+		$stmt->bind_param("ss", $userId, $dt);
+
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+
+		$rows = [];
+		
+		while ($row = $result->fetch_assoc()) {
+			$rows[] = $row;
+		}
+
+		return count($rows);
+		
+	}
+
 	public function changeStatusById($attendanceId, $status) {
 		$query = "update attendance set status = ? where attendance_id = ?";
 		$stmt = $this->db->prepare($query);

@@ -183,7 +183,7 @@ INSERT INTO attendance (user_id, status) VALUES (2, 'absent');
 INSERT INTO attendance (user_id, status) VALUES (3, 'present');
 INSERT INTO attendance (user_id, status) VALUES (4, 'absent');
 
-CREATE TABLE salary (
+CREATE TABLE IF NOT EXISTS salary (
     salary_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     deposit_date DATE,
@@ -191,18 +191,7 @@ CREATE TABLE salary (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-01-01', 5000.00);
-INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-02-01', 5000.00);
-INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-03-01', 5000.00);
-INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-04-01', 5000.00);
-INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-05-01', 5000.00);
-INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-06-01', 5000.00);
-INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-07-01', 5000.00);
-INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-08-01', 5000.00);
-INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-09-01', 5000.00);
-INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-10-01', 5000.00);
-INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-11-01', 5000.00);
-INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES (2, '2024-12-01', 5000.00);
+INSERT INTO salary (user_id, salary_amount) VALUES (2, 15000.00);
 
 select year, month, salary_amount from salary
 where user_id = 2 and month = 4

@@ -5,7 +5,12 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'employee' ) {
 	exit();
 }
 
-$taskNum = $_SESSION['taskNum'];
+
+$absent = $_SESSION['absent'];
+
+$completed_tasks = $_SESSION['completed_tasks'];
+
+$salary = $_SESSION['salary'];
 
 ?>
 
@@ -17,7 +22,6 @@ $taskNum = $_SESSION['taskNum'];
     <title>Employee Dashboard</title>
 </head>
 <body>
-
     <div class="sidebar">
 		<a href="../controllers/employee_dashboard_controller.php"><h1>Employee Dashboard</h1></a>
         <h2>Attendance Management</h2>
@@ -34,30 +38,46 @@ $taskNum = $_SESSION['taskNum'];
 		<a href="../controllers/employee_bonus_controller.php"><h2>Employee Bonus</h2></a>
 		<a href="../controllers/salary_sheet_controller.php"><h2>Salary Sheet</h2></a>
     </div>
-    <div class="container">
-		<h1 class="profile">Employee Bonus</h1>
-		<div class="info">
-			<p>Number of completed task:</p>
-			<p><?= $taskNum ?></p>
-		</div>
-		<div class="info">
-			<p>Bonus per task:</p>
-			<p >$50</p>
-		</div>
-		<div>
-			<p>Total Bonus:</p>
-			<p class="bonus" id="total-bonus"></p>
-		</div>
+	<div class="container">
+        <h1 class="title">Salary Sheet</h1>
+        <div class="info">
+            <label>Absent:</label>
+            <span><?= $absent ?></span>
+        </div>
+        <div class="info">
+            <label>Completed Tasks:</label>
+            <span><?= $completed_tasks ?></span>
+        </div>
+        <div class="info">
+            <label>Salary:</label>
+            <span>$<?= number_format($salary, 2) ?></span>
+        </div>
+        <div class="info">
+            <label>Deductions (Absent):</label>
+            <span>$<?= number_format($absent * 30, 2) ?></span>
+        </div>
+        <div class="info">
+            <label>Additions (Completed Tasks):</label>
+            <span>$<?= number_format($completed_tasks * 50, 2) ?></span>
+        </div>
+        <div class="total">
+            Total Amount: $<?= number_format($salary + ($completed_tasks * 50) - ($absent * 30), 2) ?>
+        </div>
     </div>
 </body>
-
-<script>
-	document.addEventListener('DOMContentLoaded', () => {
-		const taskNum = <?php echo $taskNum; ?>;
-		document.getElementById('total-bonus').innerText = '$' + taskNum * 50;
-	})
-</script>
 <style>
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+	th, td {
+		padding: 8px;
+		text-align: left;
+		border-bottom: 1px solid #ddd;
+	}
+	th {
+		background-color: #f2f2f2;
+	}
 	body {
 		font-family: Arial, sans-serif;
 		background-color: #f4f4f4;
@@ -78,9 +98,10 @@ $taskNum = $_SESSION['taskNum'];
 		margin-top: 5%;
 		margin-left: 30%;
 		padding: 20px;
+		
 		<!-- background-color: red; -->
 	}
-	.profile {
+	#profile {
 		<!-- border-bottom: 1px solid #ddd; -->
 		padding: 10px;
 		padding-bottom: 20px;
@@ -108,53 +129,39 @@ $taskNum = $_SESSION['taskNum'];
 	a:hover {
 		text-decoration: underline;
 	}
-
-	select, button {
-		width: 100%;
-		padding: 10px;
-		margin-bottom: 20px;
-		border: 1px solid #ccc;
-		border-radius: 5px;
-		box-sizing: border-box;
-		font-size: 16px;
-	}
-
-	button {
-		background-color: #007bff;
-		color: #fff;
-		cursor: pointer;
-		transition: background-color 0.3s ease;
-	}
-
-	button:hover {
-		background-color: #0056b3;
-	}
-        .container {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
         }
-
-        .profile {
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .title {
             text-align: center;
             color: #333;
         }
-
         .info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
-
-        .info p {
-            margin: 0;
-            font-size: 16px;
+        .info label {
+            font-weight: bold;
             color: #555;
         }
-
-        .bonus {
-            font-size: 24px;
+        .info span {
+            color: #333;
+        }
+        .total {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
             color: #007bff;
         }
 </style>

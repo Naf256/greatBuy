@@ -34,6 +34,7 @@ $attendances = $_SESSION['attendances'];
 			<li><a href="#"></a></li>
         </ul>
 		<a href="../controllers/employee_bonus_controller.php"><h2>Employee Bonus</h2></a>
+		<a href="../controllers/salary_sheet_controller.php"><h2>Salary Sheet</h2></a>
     </div>
     <div class="container">
 		<h1 id="profile">Attendance History</h1>
