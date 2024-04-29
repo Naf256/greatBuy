@@ -45,11 +45,13 @@ $orders = $_SESSION['orders'];
 				<th>price</th>
 			</tr>
 			<?php foreach ($orders as $order): ?>
+			<tr>
 				<td><?= $order['name'] ?></td>
 				<td><?= $order['phone_number'] ?></td>
 				<td><?= $order['address'] ?></td>
 				<td><?= $order['product_name'] ?></td>
 				<td><?= $order['price'] ?></td>
+			</tr>
 			<?php endforeach; ?>
 		</table>
     </div>
