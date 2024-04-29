@@ -219,13 +219,6 @@ VALUES (21, 20, 6);
 INSERT INTO promotions (product_id, discount_percentage, delivery_charge)
 VALUES (22, 25, 4);
 
-CREATE TABLE expenses (
-    expense_id INT AUTO_INCREMENT PRIMARY KEY,
-    expense_type VARCHAR(50),
-    amount DECIMAL(10,2) NOT NULL,
-    date DATE,
-);
-
 CREATE TABLE loyaltyPrograms (
     loyalty_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -261,3 +254,16 @@ INSERT INTO performances (user_id, rating, date) VALUES
 (2, 4, '2024-04-25'),
 (3, 3, '2024-04-25'),
 (4, 5, '2024-04-25');
+
+CREATE TABLE customer_reviews (
+    review_id INT AUTO_INCREMENT PRIMARY KEY,
+    delivery_man_id INT,
+    comment TEXT,
+    rating INT,
+    FOREIGN KEY (delivery_man_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+INSERT INTO customer_reviews (delivery_man_id, comment, rating) VALUES (4, 'Great service! The delivery was prompt and the delivery man was very courteous.', 5);
+INSERT INTO customer_reviews (delivery_man_id, comment, rating) VALUES (4, 'I had a wonderful experience with delivery man 4. The package arrived safely and on time.', 4);
+INSERT INTO customer_reviews (delivery_man_id, comment, rating) VALUES (4, 'Delivery man 4 went above and beyond to ensure that my order was delivered securely. Highly recommended!', 5);
+
