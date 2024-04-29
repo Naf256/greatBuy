@@ -14,7 +14,6 @@ $users = $_SESSION['users'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -74,39 +73,51 @@ $users = $_SESSION['users'];
         </table>
     </div>
     <script>
-        $(document).ready(function() {
-            $('#user-table').on('click', '.editable', function() {
-                $(this).attr('contenteditable', 'true').focus();
+
+document.addEventListener('DOMContentLoaded', function() {
+    var userTable = document.getElementById('user-table');
+    
+    // Add event listener to make cells editable
+    userTable.addEventListener('click', function(event) {
+        var target = event.target;
+        if (target.classList.contains('editable')) {
+            target.contentEditable = 'true';
+            target.focus();
+        }
+    });
+
+    // Add event listener to save changes
+    userTable.addEventListener('click', function(event) {
+        var target = event.target;
+        if (target.classList.contains('save-btn')) {
+            var row = target.closest('tr');
+            var userId = row.dataset.userId;
+            var updatedValues = {};
+            row.querySelectorAll('.editable').forEach(function(cell) {
+                var fieldName = cell.dataset.field;
+                var editedValue = cell.textContent;
+                updatedValues[fieldName] = editedValue;
             });
 
-            $('#user-table').on('click', '.save-btn', function() {
-                var $row = $(this).closest('tr');
-                var userId = $row.data('user-id');
-                var updatedValues = {};
-                $row.find('.editable').each(function() {
-                    var fieldName = $(this).data('field');
-                    var editedValue = $(this).text();
-                    updatedValues[fieldName] = editedValue;
-                });
-
-                var jsonData = JSON.stringify(updatedValues);
-                $.ajax({
-                    url: '../controllers/AdminController.php',
-                    type: 'POST',
-                    data: {
-                        action: 'update_user',
-                        user_id: userId,
-                        updated_values: jsonData
-                    },
-                    success: function(response) {
-                        console.log('User updated successfully.');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error updating user:', error);
-                    }
-                });
-            });
-        });
+            var jsonData = JSON.stringify(updatedValues);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../controllers/AdminController.php');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log('User updated successfully.');
+                } else {
+                    console.error('Error updating user:', xhr.statusText);
+                }
+            };
+            xhr.onerror = function() {
+                console.error('An error occurred.');
+            };
+            var params = 'action=update_user&user_id=' + userId + '&updated_values=' + encodeURIComponent(jsonData);
+            xhr.send(params);
+        }
+    });
+});
     </script>
 <style>
 	table {
@@ -173,7 +184,7 @@ $users = $_SESSION['users'];
 	}
 
 	.save-btn {
-		background-color: #4caf50; /* Green */
+		background-color: #4caf50;
 		border: none;
 		color: white;
 		padding: 10px 20px;
@@ -186,7 +197,7 @@ $users = $_SESSION['users'];
 	}
 
 	.save-btn:hover {
-		background-color: #45a049; /* Darker green */
+		background-color: #45a049; 
 	}
 </style>
 

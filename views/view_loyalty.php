@@ -17,14 +17,11 @@ $loyaltyInfo = $_SESSION['loyaltyInfo'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Ecommerce Store</title>
-    <!-- CSS stylesheets -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header section -->
     <header>
         <h1>Great Buy</h1>
-        <!-- Navigation menu -->
         <nav>
             <ul>
                 <li><a href="../controllers/home_page_controller.php">Home</a></li>
@@ -47,20 +44,17 @@ $loyaltyInfo = $_SESSION['loyaltyInfo'];
 </body>
 <style>
 
-/* Reset default browser styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
 }
 
-/* Header styles */
 header {
     background-color: #333;
     color: #fff;

@@ -1,4 +1,3 @@
-
 <?php
 // Include AuthenticationController
 require_once('../controllers/AuthenticationController.php');

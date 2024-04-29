@@ -17,11 +17,9 @@ $products = $_SESSION['products'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Ecommerce Store</title>
-    <!-- CSS stylesheets -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header section -->
 
     <header>
         <h1>Great Buy</h1>
@@ -46,10 +44,9 @@ $products = $_SESSION['products'];
 				<button type="submit">Filter</button>
 			</form>
 		</section>
-        <!-- Product search section -->
 		<section id="product-search">
 			<h2>Product Search</h2>
-			<!-- Search form -->
+
 			<form id="search-form" action="#" method="GET">
 				<input type="text" id="search-input" name="search" placeholder="Search products...">
 				<button type="submit">Search</button>
@@ -60,7 +57,7 @@ $products = $_SESSION['products'];
             <h2><a href="../controllers/view_cart_controller.php">Shopping Cart</a></h2>
         </section>
 
-        <!-- Product review and question section -->
+
         <section id="product-feedback" class="section-header">
             <h2><a href="../controllers/view_review_controller.php">Product Reviews</a></h2>
         </section>
@@ -107,7 +104,6 @@ $products = $_SESSION['products'];
 
 <style>
 
-/* Reset default browser styles */
 * {
     margin: 0;
     padding: 0;
@@ -118,13 +114,13 @@ $products = $_SESSION['products'];
 	margin-left: auto;
 	margin-right: auto;
 }
-/* Body styles */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
 }
 
-/* Header styles */
+
 header {
     background-color: #333;
     color: #fff;
@@ -154,7 +150,6 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 
-/* Main content styles */
 main {
     padding: 20px;
     display: flex;
@@ -162,7 +157,6 @@ main {
     justify-content: space-between;
 }
 
-/* Section styles */
 section {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -176,7 +170,6 @@ section h2 {
     margin-bottom: 10px;
 }
 
-/* Product search form styles */
 #product-search form {
     display: flex;
 }
@@ -201,7 +194,6 @@ section h2 {
     background-color: #555;
 }
 
-/* Footer styles */
 footer {
     background-color: #333;
     color: #fff;
@@ -209,15 +201,14 @@ footer {
     text-align: center;
 }
 
-/* Product card styles */
 .product {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
-    width: calc(33.333% - 40px); /* Adjust the width as needed */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    width: calc(33.333% - 40px); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .product h2 {
@@ -228,7 +219,6 @@ footer {
     margin-bottom: 15px;
 }
 
-/* Add to Cart button styles */
 .product form {
     display: flex;
     align-items: center;
@@ -241,21 +231,14 @@ footer {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition */
+    transition: background-color 0.3s ease; 
 }
 
 .product button:hover {
     background-color: #555;
 }
 
-<!-- .section-header h2 { -->
-<!--             background-color: #333; -->
-<!--             color: #fff; -->
-<!--             padding: 10px 20px; -->
-<!--             margin-bottom: 20px; -->
-<!--         } -->
 
-        /* Table styles */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -275,7 +258,7 @@ footer {
             background-color: #f2f2f2;
         }
 a {
-    color: inherit; /* Use the color of the parent element (white) */
+    color: inherit; 
     text-decoration: none;
 }
 

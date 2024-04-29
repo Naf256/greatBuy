@@ -37,19 +37,17 @@ $errorMessage = isset($_SESSION['error']) ? $_SESSION['error'] : '';
         var newPasswordValue = newPasswordInput.value.trim();
         var usernameValue = usernameInput.value.trim();
 
-        // Reset previous error message
         passwordError.textContent = '';
         usernameError.textContent = '';
 
         if (usernameValue === '') {
-          event.preventDefault(); // Prevent form submission
+          event.preventDefault(); 
           usernameError.textContent = 'username is required';
           return;
         }
 
-		// Check if new password is empty
         if (newPasswordValue === '') {
-          event.preventDefault(); // Prevent form submission
+          event.preventDefault(); 
           passwordError.textContent = 'New password is required';
           return;
         }

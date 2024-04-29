@@ -68,31 +68,36 @@ $tasks = $_SESSION['tasks'];
     </div>
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-	$(document).ready(function() {
-		$('#tasks-table').on('click', '.save-btn', function() {
-			var $row = $(this).closest('tr');
-			var taskId = $row.data('task-id');
-			var newStatus = $row.find('select').val();
 
-			$.ajax({
-				url: '../controllers/EmployeeController.php',
-				type: 'POST',
-				data: {
-					action: 'update_task_status',
-					task_id: taskId,
-					new_status: newStatus
-				},
-				success: function(response) {
-					console.log('Task status updated successfully.');
-				},
-				error: function(xhr, status, error) {
-					console.error('Error updating task status:', error);
-				}
-			});
-		});
-	});
+document.addEventListener('DOMContentLoaded', function() {
+    var tasksTable = document.getElementById('tasks-table');
+    
+    tasksTable.addEventListener('click', function(event) {
+        var target = event.target;
+        if (target.classList.contains('save-btn')) {
+            var row = target.closest('tr');
+            var taskId = row.dataset.taskId;
+            var newStatus = row.querySelector('select').value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../controllers/EmployeeController.php');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log('Task status updated successfully.');
+                } else {
+                    console.error('Error updating task status:', xhr.statusText);
+                }
+            };
+            xhr.onerror = function() {
+                console.error('An error occurred.');
+            };
+            var params = 'action=update_task_status&task_id=' + taskId + '&new_status=' + encodeURIComponent(newStatus);
+            xhr.send(params);
+        }
+    });
+});
 </script>
 <style>
 	table {

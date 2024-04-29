@@ -99,7 +99,7 @@ $users = $_SESSION['users'];
 				<td><?= $user['address'] ?></td>
 			</tr>
 			<?php endforeach; ?>
-		</table>       <!-- Content goes here -->
+		</table>
     </div>
 </body>
 <style>
@@ -135,10 +135,8 @@ $users = $_SESSION['users'];
 		margin-top: 5%;
 		margin-left: 20%;
 		padding: 20px;
-		<!-- background-color: red; -->
 	}
 	#heading {
-		<!-- border-bottom: 1px solid #ddd; -->
 		padding: 10px;
 		padding-bottom: 20px;
 		color: #181a1b;

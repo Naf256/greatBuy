@@ -69,7 +69,7 @@ $products = $_SESSION['products'];
 					<td><button class="save-btn">Save</button></td>
 				</tr>
 			<?php endforeach; ?>
-		</table>       <!-- Content goes here -->
+		</table>
     </div>
 
 	<script>
@@ -100,40 +100,35 @@ document.addEventListener('DOMContentLoaded', function() {
 						isValid = false;
 						console.log(fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' cannot be empty.')
 						displayErrorMessage(fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' cannot be empty.');
-						return; // Exit the loop if validation fails
+						return;
 					} 
 				} else if (fieldName === 'price' || fieldName === 'stock_quantity') {
 					if (isNaN(editedValue) || parseFloat(editedValue) <= 0) {
 						isValid = false;
 						displayErrorMessage(fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' must be a number greater than 0.');
-						return; // Exit the loop if validation fails
+						return;
 					} 
 				} else {
-					removeErrorMessage(); // Remove error message if validation passes
+					removeErrorMessage();
 				}
 
                 updatedValues[fieldName] = editedValue;
             });
 
 			function displayErrorMessage(message) {
-				// Clear existing error messages
 				document.getElementById('error').innerHTML = '';
 
-				// Create a new paragraph element for the error message
 				var errorMessage = document.createElement('p');
 				errorMessage.classList.add('error-message');
 				errorMessage.textContent = message;
 
-				// Append the error message to the error div
 				document.getElementById('error').appendChild(errorMessage);
 			}
 
-			// Function to remove error message
 			function removeErrorMessage() {
-				// Clear error messages
 				document.getElementById('error').innerHTML = '';
 			}
-            // If all fields are valid, proceed with AJAX request
+
             if (isValid) {
 				const formData = new FormData();
 				formData.append('action', 'update_product');
@@ -153,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (response.ok) {
                         console.log('Product updated successfully.');
                     } else {
-                        // Handle error response
+
                         console.error('Error updating product:', response.statusText);
                     }
                 })
@@ -231,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	.save-btn {
-		background-color: #4caf50; /* Green */
+		background-color: #4caf50;
 		border: none;
 		color: white;
 		padding: 10px 20px;
@@ -244,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	.save-btn:hover {
-		background-color: #45a049; /* Darker green */
+		background-color: #45a049;
 	}
 	.error-message {
 		color: red;	

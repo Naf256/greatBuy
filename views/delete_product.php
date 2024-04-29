@@ -163,17 +163,17 @@ $products = $_SESSION['products'];
 		text-decoration: underline;
 	}
 	.delete-btn {
-        background-color: #dc3545; /* Red background color */
-        color: #fff; /* White text color */
-        border: none; /* Remove border */
-        padding: 8px 16px; /* Add padding */
-        border-radius: 4px; /* Add rounded corners */
-        cursor: pointer; /* Add pointer cursor on hover */
-        transition: background-color 0.3s ease; /* Add smooth transition for background color */
+        background-color: #dc3545; 
+        color: #fff; 
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
     }
 
     .delete-btn:hover {
-        background-color: #c82333; /* Darker red background color on hover */
+        background-color: #c82333; 
     }
 </style>
 </html>

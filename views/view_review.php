@@ -11,10 +11,9 @@ $products = $_SESSION['products'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Ecommerce Store</title>
-    <!-- CSS stylesheets -->
+
 </head>
 <body>
-    <!-- Header section -->
 
     <header>
         <h1>Great Buy</h1>
@@ -39,10 +38,8 @@ $products = $_SESSION['products'];
 				<button type="submit">Filter</button>
 			</form>
 		</section>
-        <!-- Product search section -->
 		<section id="product-search">
 			<h2>Product Search</h2>
-			<!-- Search form -->
 			<form id="search-form" action="#" method="GET">
 				<input type="text" id="search-input" name="search" placeholder="Search products...">
 				<button type="submit">Search</button>
@@ -53,12 +50,10 @@ $products = $_SESSION['products'];
             <h2><a href="../controllers/view_cart_controller.php">Shopping Cart</a></h2>
         </section>
 
-        <!-- Product review and question section -->
         <section id="productFeedback" class="section-header">
             <h2><a href="../controllers/view_review_controller.php">Product Reviews</a></h2>
         </section>
 
-        <!-- Previous orders section -->
         <section id="previous-orders" class="section-header">
             <h2><a href="../controllers/view_previous_orders_controller.php">Previous Orders</a></h2>
         </section>
@@ -73,12 +68,9 @@ $products = $_SESSION['products'];
 			<h2>Product Reviews & Questions</h2>
 
 			<div id="error"></div>
-			<!-- Review form -->
 			<form id="review-form" novalidate>
-				<!-- <h3>Write a Review</h3> -->
 				<textarea id="review-text" placeholder="Write your review here..."></textarea>
 				<select id="product-id">
-					<!-- Populate this dropdown with product IDs -->
 					<?php foreach ($products as $product): ?>
 						<option value="<?= $product['product_id'] ?>"><?= $product['name'] ?></option>
 					<?php endforeach; ?>
@@ -94,9 +86,7 @@ $products = $_SESSION['products'];
 				<button type="submit">Submit Review</button>
 
 			</form>
-			<!-- Display product reviews -->
 			<div id="reviews-container">
-				<!-- Reviews will be dynamically added here -->
 			</div>
 		</div>
 		</div>
@@ -106,7 +96,6 @@ $products = $_SESSION['products'];
 
 <script>
 
-// Function to handle review form submission
 
 document.addEventListener('DOMContentLoaded', () => {
     const productIdDropDown = document.getElementById('product-id');
@@ -157,15 +146,14 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 document.getElementById('review-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault(); 
 
     const reviewText = document.getElementById('review-text').value.trim();
     const productId = document.getElementById('product-id').value;
 	const rating = document.getElementById('rating').value;
 
     if (reviewText !== '') {
-        // Code to submit review to backend
-        // After successful submission, add the review to the DOM
+
 		removeErrorMessage();
         const formData = new FormData();
         formData.append('product_id', productId);
@@ -180,14 +168,14 @@ document.getElementById('review-form').addEventListener('submit', function(event
         })
         .then(response => response.json())
         .then(data => {
-            // Assuming the backend returns the newly added review data
+
             const reviewElement = document.createElement('div');
             reviewElement.classList.add('review');
             reviewElement.textContent = data.comment;
 
             document.getElementById('reviews-container').appendChild(reviewElement);
 
-            // Clear the review text area
+
             document.getElementById('review-text').value = '';
             document.getElementById('rating').value = '';
         })
@@ -211,20 +199,17 @@ function displayErrorMessage() {
 </script>
 <style>
 
-/* Reset default browser styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
 }
 
-/* Header styles */
 header {
     background-color: #333;
     color: #fff;
@@ -254,7 +239,6 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 
-/* Main content styles */
 main {
     padding: 20px;
     display: flex;
@@ -262,7 +246,6 @@ main {
     justify-content: space-between;
 }
 
-/* Section styles */
 section {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -276,7 +259,6 @@ section h2 {
     margin-bottom: 10px;
 }
 
-/* Product search form styles */
 #product-search form {
     display: flex;
 }
@@ -301,7 +283,6 @@ section h2 {
     background-color: #555;
 }
 
-/* Footer styles */
 footer {
     background-color: #333;
     color: #fff;
@@ -309,15 +290,14 @@ footer {
     text-align: center;
 }
 
-/* Product card styles */
 .product {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
-    width: calc(33.333% - 40px); /* Adjust the width as needed */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    width: calc(33.333% - 40px); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .product h2 {
@@ -328,7 +308,6 @@ footer {
     margin-bottom: 15px;
 }
 
-/* Add to Cart button styles */
 .product form {
     display: flex;
     align-items: center;
@@ -341,7 +320,7 @@ footer {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition */
+    transition: background-color 0.3s ease; 
 }
 
 .product button:hover {
@@ -365,7 +344,7 @@ section {
 }
 
 a {
-    color: inherit; /* Use the color of the parent element (white) */
+    color: inherit; 
     text-decoration: none;
 }
 
@@ -377,14 +356,12 @@ a:hover {
     justify-content: center;
 }
 
-/* Centered content */
 #product-feedback {
     width: 900px; 
 	height: 400px;
 	margin-top: 20px;
-    margin-left: 50%; /* Center horizontally */
-    text-align: center; /* Center the text inside the div */
-	<!-- background-color: red; -->
+    margin-left: 50%; 
+    text-align: center;
 }
 
 #product-feedback h2 {
@@ -412,7 +389,7 @@ a:hover {
     padding: 20px;
     margin-bottom: 20px;
     max-width: 500px;
-    margin: 0 auto; /* Center the form horizontally */
+    margin: 0 auto; 
 }
 
 #review-form textarea,
@@ -429,7 +406,7 @@ a:hover {
 }
 
 #review-form textarea {
-    resize: vertical; /* Allow vertical resizing of textarea */
+    resize: vertical; 
 }
 
 #review-form button {

@@ -66,7 +66,7 @@ $products = $_SESSION['products'];
 				<td><?= $product['stock_quantity'] ?></td>
 			</tr>
 			<?php endforeach; ?>
-		</table>       <!-- Content goes here -->
+		</table>
     </div>
 </body>
 <style>
@@ -102,7 +102,6 @@ $products = $_SESSION['products'];
 		margin-top: 5%;
 		margin-left: 20%;
 		padding: 20px;
-		<!-- background-color: red; -->
 	}
 	#heading {
 		<!-- border-bottom: 1px solid #ddd; -->

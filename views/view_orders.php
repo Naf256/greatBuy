@@ -179,7 +179,7 @@ $products = $_SESSION['products'];
 	}
 
 	.save-btn {
-		background-color: #4caf50; /* Green */
+		background-color: #4caf50; 
 		border: none;
 		color: white;
 		padding: 10px 20px;
@@ -192,7 +192,7 @@ $products = $_SESSION['products'];
 	}
 
 	.save-btn:hover {
-		background-color: #45a049; /* Darker green */
+		background-color: #45a049;
 	}
 </style>
 </html>

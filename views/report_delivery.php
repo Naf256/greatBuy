@@ -7,7 +7,6 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'delivery Man' ) {
 
 $delivs = $_SESSION['delivs'];
 
-// var_dump($delivs);
 ?>
 
 <!DOCTYPE html>

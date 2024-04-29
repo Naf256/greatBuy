@@ -40,10 +40,10 @@ $products = $_SESSION['products'];
 				<button type="submit">Filter</button>
 			</form>
 		</section>
-        <!-- Product search section -->
+
 		<section id="product-search">
 			<h2>Product Search</h2>
-			<!-- Search form -->
+
 			<form id="search-form" action="#" method="GET">
 				<input type="text" id="search-input" name="search" placeholder="Search products...">
 				<button type="submit">Search</button>
@@ -54,7 +54,7 @@ $products = $_SESSION['products'];
             <h2><a href="../controllers/view_cart_controller.php">Shopping Cart</a></h2>
         </section>
 
-        <!-- Product review and question section -->
+
         <section id="product-feedback" class="section-header">
             <h2><a href="../controllers/view_review_controller.php">Product Reviews</a></h2>
         </section>
@@ -74,7 +74,7 @@ $products = $_SESSION['products'];
 				<p class="price">Price: $<?= $product['price'] ?></p>
 				<p>Category: <?= $product['category'] ?></p>
 				<p class="stock-quantity">Stock Quantity: <?= $product['stock_quantity'] ?></p>
-				<!-- Add to cart button -->
+
 				<form action="#" method="post">
 					<input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
 					<button type="submit" name="add_to_cart">Add to Cart</button>
@@ -95,7 +95,7 @@ $products = $_SESSION['products'];
         const products = document.querySelectorAll('.product');
 
         priceFilterForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission behavior
+            event.preventDefault(); 
 
 			const minPrice = isNaN(parseFloat(document.getElementById('min-price').value)) 
 								? 0 
@@ -115,12 +115,12 @@ $products = $_SESSION['products'];
 					productPrice: productPrice
 				})
 
-                // Reset display style for all products
+
                 product.style.display = 'block';
 
-                // Apply filter based on price range
+
                 if (productPrice < minPrice || productPrice > maxPrice) {
-                    product.style.display = 'none'; // Hide product if it falls outside the price range
+                    product.style.display = 'none'; 
                 }
             });
         });
@@ -129,32 +129,31 @@ $products = $_SESSION['products'];
         const searchInput = document.getElementById('search-input');
 
         searchForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission behavior
+            event.preventDefault(); 
 
-            const searchQuery = searchInput.value.toLowerCase(); // Get search query and convert to lowercase
+            const searchQuery = searchInput.value.toLowerCase(); 
 
             products.forEach(function(product) {
-                const productName = product.querySelector('h2').textContent.toLowerCase(); // Get product name and convert to lowercase
+                const productName = product.querySelector('h2').textContent.toLowerCase(); 
 
                 if (productName.includes(searchQuery)) {
-                    product.style.display = 'block'; // Show product if it matches the search query
+                    product.style.display = 'block'; 
                 } else {
-                    product.style.display = 'none'; // Hide product if it does not match the search query
+                    product.style.display = 'none'; 
                 }
             });
         });
 
 		document.querySelectorAll('button[name="add_to_cart"]').forEach(function(button) {
             button.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default form submission behavior
+                event.preventDefault(); 
 
                 const productContainer = event.target.closest('.product');
                 const productId = productContainer.querySelector('input[name="product_id"]').value;
                 const username = '<?php echo $_SESSION["username"]; ?>';
 
-                // Update stock quantity in the DOM
                 const stockQuantityElement = productContainer.querySelector('.stock-quantity');
-				// console.log(stockQuantityElement);
+
                 if (stockQuantityElement) {
                     let stockQuantity = parseInt(stockQuantityElement.textContent.replace("Stock Quantity: ", ""));
                     if (!isNaN(stockQuantity) && stockQuantity > 0) {
@@ -175,7 +174,7 @@ $products = $_SESSION['products'];
 				.then(response => response.text())
 				.then(data => {
 					console.log('Response:', data);
-					// Handle response here
+
 				})
 				.catch(error => {
 					console.error('Error:', error);
@@ -186,20 +185,17 @@ $products = $_SESSION['products'];
 </script>
 <style>
 
-/* Reset default browser styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
 }
 
-/* Header styles */
 header {
     background-color: #333;
     color: #fff;
@@ -229,7 +225,6 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 
-/* Main content styles */
 main {
     padding: 20px;
     display: flex;
@@ -237,7 +232,6 @@ main {
     justify-content: space-between;
 }
 
-/* Section styles */
 section {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -251,7 +245,6 @@ section h2 {
     margin-bottom: 10px;
 }
 
-/* Product search form styles */
 #product-search form {
     display: flex;
 }
@@ -276,7 +269,6 @@ section h2 {
     background-color: #555;
 }
 
-/* Footer styles */
 footer {
     background-color: #333;
     color: #fff;
@@ -284,15 +276,14 @@ footer {
     text-align: center;
 }
 
-/* Product card styles */
 .product {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
-    width: calc(33.333% - 40px); /* Adjust the width as needed */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    width: calc(33.333% - 40px); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .product h2 {
@@ -303,7 +294,6 @@ footer {
     margin-bottom: 15px;
 }
 
-/* Add to Cart button styles */
 .product form {
     display: flex;
     align-items: center;
@@ -316,7 +306,7 @@ footer {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition */
+    transition: background-color 0.3s ease; 
 }
 
 .product button:hover {
@@ -340,7 +330,7 @@ section {
 }
 
 a {
-    color: inherit; /* Use the color of the parent element (white) */
+    color: inherit; 
     text-decoration: none;
 }
 

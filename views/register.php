@@ -59,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var isValid = true;
 
-    // Reset previous error messages
     var errorMessages = document.querySelectorAll('.error-message');
     errorMessages.forEach(function(errorMessage) {
       errorMessage.textContent = '';

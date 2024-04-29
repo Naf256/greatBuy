@@ -28,48 +28,41 @@ $errorMessage = isset($_SESSION['error_login']) ? $_SESSION['error_login'] : nul
 </body>
 <script>
 function validateForm(event) {
-    // Prevent the form from submitting
     event.preventDefault();
 
-    // Get the form elements
     var usernameInput = document.getElementById('username');
     var passwordInput = document.getElementById('password');
 
-    // Get the values of the inputs
     var usernameValue = usernameInput.value.trim();
     var passwordValue = passwordInput.value.trim();
 
-    // Get the error message elements
     var usernameError = document.getElementById('username-error');
     var passwordError = document.getElementById('password-error');
 
-    // Clear previous error messages
     usernameError.textContent = '';
     passwordError.textContent = '';
 
-    // Check if username is empty
     if (usernameValue === '') {
       usernameError.textContent = 'Please enter a username';
-      usernameInput.focus(); // Focus on the username input field
-      return false; // Prevent form submission
+      usernameInput.focus(); 
+      return false; 
     }
 
     // Check if password is empty
     if (passwordValue === '') {
       passwordError.textContent = 'Please enter a password';
-      passwordInput.focus(); // Focus on the password input field
-      return false; // Prevent form submission
+      passwordInput.focus(); 
+      return false; 
     }
 
-    // If all validations pass, submit the form
+
     event.target.submit();
   }
 
-  // Add event listener to the form's submit event
+
   document.querySelector('form').addEventListener('submit', validateForm);
 </script>
 <style>
-/* Style for the form container */
 h1 {
   margin-top: 100px;
   margin-left: 40%;
@@ -87,14 +80,12 @@ h1 {
   border-radius: 5px;
 }
 
-/* Style for form labels */
 label {
   display: block;
   margin-left: 40%;
   margin-bottom: 5px;
 }
 
-/* Style for form inputs */
 input[type="text"],
 input[type="password"],
 select {
@@ -106,7 +97,6 @@ select {
   border-radius: 4px;
 }
 
-/* Style for submit button */
 button[type="submit"] {
   width: 15%;
   padding: 10px;
@@ -118,7 +108,6 @@ button[type="submit"] {
   cursor: pointer;
 }
 
-/* Hover effect for submit button */
 button[type="submit"]:hover {
   background-color: #0056b3;
 }
