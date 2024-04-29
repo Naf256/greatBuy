@@ -6,6 +6,30 @@ class DeliveryModel {
         $this->db = new mysqli('localhost', 'root', '', 'ecommerce');
     }
 
+	public function totalDelivery($userId) {
+		$query = "select * from delivery
+				 join orders on orders.order_id = delivery.order_id
+				 where orders.status = 'delivered' and order_date like CONCAT(?, '%')
+				 and delivery.user_id = ?";
+
+		$dt = date('Y-m');
+
+		$stmt = $this->db->prepare($query);
+		$stmt->bind_param("ss", $dt, $userId);
+
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+		
+		$rows = [];
+		
+		while($row = $result->fetch_assoc()) {
+			$rows[] = $row;
+		}
+
+		return count($rows);
+	}
+
 	public function deliveryManPendingOrders($userId) {
 		$query = "select users.name, users.phone_number, users.address,
 				 products.name as product_name, products.price from orders 
