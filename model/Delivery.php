@@ -6,6 +6,42 @@ class DeliveryModel {
         $this->db = new mysqli('localhost', 'root', '', 'ecommerce');
     }
 	
+	public function changeStatus($delivery_id, $status) {
+		$query = "update orders
+				 set status = ?
+				 where order_id = (
+					select order_id from delivery
+					where delivery_id = ?
+				 )";
+
+		$stmt = $this->db->prepare($query);
+		$stmt->bind_param("ss", $status, $delivery_id);
+		$stmt->execute();
+		
+	}
+   // retrives deliveries which are pending to report delivery page
+	public function findAllReportingByUserId($userId) {
+		$query = "select products.name as product_name, delivery.delivery_id,
+				 orders.status from delivery
+				 join orders on orders.order_id = delivery.order_id
+				 join products on products.product_id = orders.product_id
+				 where delivery.user_id = ? and orders.status = 'shipped'";
+
+		$stmt = $this->db->prepare($query);
+		$stmt->bind_param("s", $userId);
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+
+		$rows = [];
+
+		while ($row = $result->fetch_assoc()) {
+			$rows[] = $row;
+		}
+
+		return $rows;
+	}
+
 	public function insertNewDelivery($orderId, $userId) {
 		$query = "insert into delivery (user_id, order_id) values (?, ?)";
 		$stmt = $this->db->prepare($query);
