@@ -34,6 +34,7 @@ $delivs = $_SESSION['delivs'];
         <ul>
             <li><a href="../controllers/report_delivery_controller.php">report delivery</a></li>
         </ul>
+        <a href="../controllers/customer_review_controller.php"><h2>Customer Reviews</h2></a>
     </div>
     <div class="container">
 	<h1 id="profile">Shipping Deliveries</h1>

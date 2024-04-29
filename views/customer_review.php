@@ -5,9 +5,9 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'delivery Man' ) {
 	exit();
 }
 
-$delivNum = $_SESSION['delivNum'];
-$earningsPerDelivery = 30;
-$totalEarnings = $delivNum * $earningsPerDelivery;
+$reviews = isset($_SESSION['reviews']) ? $_SESSION['reviews'] : null;
+
+$avg = isset($_SESSION['avg']) ? $_SESSION['avg'] : null;
 
 ?>
 
@@ -37,20 +37,32 @@ $totalEarnings = $delivNum * $earningsPerDelivery;
         </ul>
         <a href="../controllers/customer_review_controller.php"><h2>Customer Reviews</h2></a>
     </div>
-	<div class="container">
-        <h1 class="profile">Today's Earnings</h1>
-        <div class="info">
-            <p>Total Delivery:</p>
-            <p><?= $delivNum ?></p>
-        </div>
-        <div class="info">
-            <p>Earnings per Delivery:</p>
-            <p>$<?= $earningsPerDelivery ?></p>
-        </div>
-        <div>
-            <p>Total Earnings:</p>
-            <p class="bonus">$<?= $totalEarnings ?></p>
-        </div>
+    <div class="container">
+    <h1 id="profile">Customer Reviews</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Review ID</th>
+            <th>Delivery Man ID</th>
+            <th>Comment</th>
+            <th>Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+		<?php foreach ($reviews as $review): ?>
+			<tr>
+				<td><?= $review['review_id'] ?></td>
+				<td><?= $review['delivery_man_id'] ?></td>
+				<td><?= $review['comment'] ?></td>
+				<td><?= $review['rating'] ?></td>
+			</tr>
+		<?php endforeach; ?>
+        <tr class="average-row">
+            <td colspan="3" style="text-align: right;">Average Rating:</td>
+			<td><?= $avg ?></td>
+        </tr>
+    </tbody>
+</table>
     </div>
 </body>
 <style>
@@ -104,30 +116,23 @@ $totalEarnings = $delivNum * $earningsPerDelivery;
 	a:hover {
 		text-decoration: underline;
 	}
-	.container {
-            width: 400px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 2px solid #ddd;
         }
-        .profile {
-            text-align: center;
-            color: #333;
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
         }
-        .info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
+        th {
+            background-color: #f2f2f2;
         }
-        .info p {
-            margin: 0;
-            font-size: 16px;
-            color: #555;
-        }
-        .bonus {
-            font-size: 24px;
-            color: #007bff;
+        .average-row td {
+            background-color: #f2f2f2;
+            font-weight: bold;
         }
 </style>
 </html>
