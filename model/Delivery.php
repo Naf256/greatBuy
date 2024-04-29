@@ -5,7 +5,29 @@ class DeliveryModel {
     public function __construct() {
         $this->db = new mysqli('localhost', 'root', '', 'ecommerce');
     }
-	
+
+	public function deliveryManPendingOrders($userId) {
+		$query = "select users.name, users.phone_number, users.address,
+				 products.name as product_name, products.price from orders 
+				 join products on orders.product_id = products.product_id
+				 join users on orders.user_id = users.user_id 
+				 join delivery on delivery.order_id = orders.order_id 
+			 	 where orders.status = 'shipped' and delivery.user_id = ?";
+
+		$stmt = $this->db->prepare($query);
+		$stmt->bind_param("s", $userId);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		
+		$rows = [];
+		
+		while($row = $result->fetch_assoc()) {
+			$rows[] = $row;
+		}
+
+		return $rows;
+	}
+
 	public function changeStatus($delivery_id, $status) {
 		$query = "update orders
 				 set status = ?
