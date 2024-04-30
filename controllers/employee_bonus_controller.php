@@ -9,7 +9,7 @@ require_once('../controllers/EmployeeController.php');
 
 $employee = new EmployeeController();
 
-$taskNum = $employee->findNumbeOfCompletedTask($_SESSION['user_id']);
+$taskNum = $employee->findNumberOfCompletedTask($_SESSION['user_id']);
 
 $_SESSION['taskNum'] = $taskNum;
 

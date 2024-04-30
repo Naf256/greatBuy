@@ -16,7 +16,7 @@ class EmployeeController {
 		return $tasks;
 	}
 
-	public function findNumbeOfCompletedTask($userId) {
+	public function findNumberOfCompletedTask($userId) {
 		$tasks = $this->taskModel->getCompletedTasksByUserId($userId);
 		return count($tasks);
 	}

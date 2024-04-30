@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS expenses;
 DROP TABLE IF EXISTS loyaltyPrograms;
 DROP TABLE IF EXISTS delivery;
 DROP TABLE IF EXISTS performances;
+DROP TABLE IF EXISTS customer_reviews;
+DROP TABLE IF EXISTS notifications;
 
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,20 +24,6 @@ CREATE TABLE users (
     address VARCHAR(255)
 );
 
-INSERT INTO users (username, password, role, email, name, phone_number, address) 
-VALUES ('foo', 'fjfj', 'admin', 'foo@example.com', 'Foo User', '+1234567890', '123 Main St, City');
-
-INSERT INTO users (username, password, role, email, name, phone_number, address) 
-VALUES ('bar', 'fjfj', 'employee', 'bar@example.com', 'Bar Employee', '+9876543210', '456 Elm St, Town');
-
-INSERT INTO users (username, password, role, email, name, phone_number, address) 
-VALUES ('tokyo', 'fjfj', 'customer', 'tokyo@example.com', 'Tokyo Customer', '+1122334455', '789 Oak St, Village');
-
-INSERT INTO users (username, password, role, email, name, phone_number, address) 
-VALUES ('ramen', 'fjfj', 'delivery Man', 'ramen@example.com', 'Ramen Delivery Man', '+9988776655', '321 Pine St, County');
-
-INSERT INTO users (username, password, role, email, name, phone_number, address) 
-VALUES ('soju', 'fjfj', 'delivery Man', 'soju@example.com', 'Soju Delivery Man', '+9988776656', '321 Gomez St, Japan');
 
 CREATE TABLE products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -45,16 +33,6 @@ CREATE TABLE products (
     category VARCHAR(50),
     stock_quantity INT NOT NULL DEFAULT 0
 );
-
-INSERT INTO products (name, description, price, category, stock_quantity) VALUES ('Laptop', 'High-performance laptop with 15-inch display', 999.99, 'Electronics', 50);
-
-INSERT INTO products (name, description, price, category, stock_quantity) VALUES ('Wireless Mouse', 'Ergonomic wireless mouse with adjustable DPI', 19.99, 'Electronics', 100);
-
-INSERT INTO products (name, description, price, category, stock_quantity) VALUES ('Yoga Mat', 'Eco-friendly yoga mat made from natural rubber', 29.99, 'Fitness', 200);
-
-INSERT INTO products (name, description, price, category, stock_quantity) VALUES ('Running Shoes', 'Breathable running shoes with cushioned sole', 69.99, 'Footwear', 150);
-
-INSERT INTO products (name, description, price, category, stock_quantity) VALUES ('Water Bottle', 'Stainless steel water bottle with vacuum insulation', 14.99, 'Outdoor', 300);
 
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -68,25 +46,6 @@ CREATE TABLE orders (
 );
 
 
-INSERT INTO orders (user_id, product_id, total_amount)
-VALUES (3, 19, 50.00);
-
-INSERT INTO orders (user_id, product_id, total_amount)
-VALUES (3, 19, 65.75);
-
-INSERT INTO orders (user_id, product_id, total_amount)
-VALUES (3, 19, 42.99);
-
-INSERT INTO orders (user_id, product_id, total_amount)
-VALUES (3, 19, 75.50);
-
-INSERT INTO orders (user_id, product_id, total_amount)
-VALUES (3, 19, 89.25);
-
-INSERT INTO orders (user_id, product_id, total_amount)
-VALUES (3, 19, 55.00);
-
-
 CREATE TABLE productFeedback (
     feedback_id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT,
@@ -98,53 +57,6 @@ CREATE TABLE productFeedback (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (19, 1, 5, 'Excellent product, highly recommended.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (20, 2, 4, 'Good product, satisfied with the purchase.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (21, 3, 3, 'Average product, could be better.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (22, 4, 2, 'Below average quality, not satisfied.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (19, 2, 4, 'Great value for money.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (20, 3, 5, 'Amazing product, exceeded expectations.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (21, 4, 3, 'Decent product, but delivery was slow.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (22, 1, 1, 'Poor quality, wouldn''t recommend.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (19, 3, 3, 'Not bad, but could improve.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (20, 4, 2, 'Disappointed with the product.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (21, 1, 5, 'Excellent quality and fast delivery.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (22, 2, 4, 'Satisfied with the product.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (19, 4, 5, 'Very happy with my purchase.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (20, 1, 3, 'Average product, nothing special.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (21, 2, 2, 'Not satisfied, expected better quality.');
-
-INSERT INTO productFeedback (product_id, user_id, rating, comment)
-VALUES (22, 3, 4, 'Good product, met my expectations.');
 
 
 CREATE TABLE tasks (
@@ -157,19 +69,6 @@ CREATE TABLE tasks (
 );
 
 
-INSERT INTO tasks (assigned_to, task_description, due_date, status) 
-VALUES (1, 'Complete project proposal', '2024-05-01', 'pending');
-
-INSERT INTO tasks (assigned_to, task_description, due_date, status) 
-VALUES (2, 'Review code changes', '2024-04-25', 'pending');
-
-INSERT INTO tasks (assigned_to, task_description, due_date, status) 
-VALUES (3, 'Prepare presentation slides', '2024-04-30', 'pending');
-
-INSERT INTO tasks (assigned_to, task_description, due_date, status) 
-VALUES (4, 'Test new software feature', '2024-04-28', 'pending');
-
-
 CREATE TABLE attendance (
     attendance_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -178,10 +77,6 @@ CREATE TABLE attendance (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-INSERT INTO attendance (user_id, status) VALUES (1, 'present');
-INSERT INTO attendance (user_id, status) VALUES (2, 'absent');
-INSERT INTO attendance (user_id, status) VALUES (3, 'present');
-INSERT INTO attendance (user_id, status) VALUES (4, 'absent');
 
 CREATE TABLE IF NOT EXISTS salary (
     salary_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -191,13 +86,6 @@ CREATE TABLE IF NOT EXISTS salary (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-INSERT INTO salary (user_id, salary_amount) VALUES (2, 15000.00);
-
-select year, month, salary_amount from salary
-where user_id = 2 and month = 4
-
-select COUNT(*) from tasks
-where assigned_to = 2
 
 CREATE TABLE promotions (
     promotion_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -207,17 +95,6 @@ CREATE TABLE promotions (
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
 
-INSERT INTO promotions (product_id, discount_percentage, delivery_charge)
-VALUES (19, 10, 5);
-
-INSERT INTO promotions (product_id, discount_percentage, delivery_charge)
-VALUES (20, 15, 3);
-
-INSERT INTO promotions (product_id, discount_percentage, delivery_charge)
-VALUES (21, 20, 6);
-
-INSERT INTO promotions (product_id, discount_percentage, delivery_charge)
-VALUES (22, 25, 4);
 
 CREATE TABLE loyaltyPrograms (
     loyalty_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -227,11 +104,6 @@ CREATE TABLE loyaltyPrograms (
     expiration_date DATE,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
-
-INSERT INTO loyaltyPrograms (user_id, loyalty_points, discount_percentage, expiration_date) VALUES (1, 100, 10, '2024-12-31');
-INSERT INTO loyaltyPrograms (user_id, loyalty_points, discount_percentage, expiration_date) VALUES (2, 150, 15, '2024-12-31');
-INSERT INTO loyaltyPrograms (user_id, loyalty_points, discount_percentage, expiration_date) VALUES (3, 200, 20, '2024-12-31');
-INSERT INTO loyaltyPrograms (user_id, loyalty_points, discount_percentage, expiration_date) VALUES (4, 250, 25, '2024-12-31');
 
 
 CREATE TABLE delivery (
@@ -250,10 +122,6 @@ CREATE TABLE performances (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-INSERT INTO performances (user_id, rating, date) VALUES
-(2, 4, '2024-04-25'),
-(3, 3, '2024-04-25'),
-(4, 5, '2024-04-25');
 
 CREATE TABLE customer_reviews (
     review_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -263,9 +131,6 @@ CREATE TABLE customer_reviews (
     FOREIGN KEY (delivery_man_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-INSERT INTO customer_reviews (delivery_man_id, comment, rating) VALUES (4, 'Great service! The delivery was prompt and the delivery man was very courteous.', 5);
-INSERT INTO customer_reviews (delivery_man_id, comment, rating) VALUES (4, 'I had a wonderful experience with delivery man 4. The package arrived safely and on time.', 4);
-INSERT INTO customer_reviews (delivery_man_id, comment, rating) VALUES (4, 'Delivery man 4 went above and beyond to ensure that my order was delivered securely. Highly recommended!', 5);
 
 
 CREATE TABLE notifications (
@@ -275,10 +140,102 @@ CREATE TABLE notifications (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-INSERT INTO notifications (user_id, message) VALUES (2, 'Notification 1 for user 2');
-INSERT INTO notifications (user_id, message) VALUES (2, 'Notification 2 for user 2');
-INSERT INTO notifications (user_id, message) VALUES (2, 'Notification 3 for user 2');
+
+INSERT INTO users (username, password, role, email, name, phone_number, address) VALUES
+('foo', 'fjfj', 'admin', 'admin1@example.com', 'Admin User 1', '1234567890', '123 Admin St'),
+('bar', 'fjfj', 'employee', 'employee1@example.com', 'Employee User 1', '9876543210', '456 Employee St'),
+('tokyo', 'fjfj', 'customer', 'customer1@example.com', 'Customer User 1', '5551234567', '789 Customer St'),
+('ramen', 'fjfj', 'delivery Man', 'delivery1@example.com', 'Delivery Man 1', '9995554321', '101 Delivery St');
 
 
-INSERT INTO notifications (user_id, message) VALUES (4, 'Notification 1 for user 4');
-INSERT INTO notifications (user_id, message) VALUES (4, 'Notification 2 for user 4');
+INSERT INTO products (name, description, price, category, stock_quantity) VALUES
+('Sprite', 'Description for Product 1', 29.99, 'Category 1', 100),
+('Coke', 'Description for Product 2', 39.99, 'Category 2', 50),
+('Merinda', 'Description for Product 3', 49.99, 'Category 1', 75),
+('Fanta', 'Description for Product 4', 19.99, 'Category 3', 200),
+('Rc Cola', 'Description for Product 5', 59.99, 'Category 2', 150);
+
+INSERT INTO orders (user_id, product_id, total_amount) VALUES
+(3, 1, 29.99),
+(4, 2, 39.99),
+(3, 3, 49.99),
+(4, 4, 19.99),
+(3, 5, 59.99);
+
+
+INSERT INTO productFeedback (product_id, user_id, rating, comment) VALUES
+(1, 3, 4, 'Great product!'),
+(2, 4, 5, 'Excellent service!'),
+(3, 3, 3, 'Could be better.'),
+(4, 4, 5, 'Very satisfied.'),
+(5, 3, 4, 'Fast delivery.');
+
+
+INSERT INTO tasks (assigned_to, task_description, due_date, status) VALUES
+(2, 'Task 1 description', '2024-05-10', 'pending'),
+(3, 'Task 2 description', '2024-05-15', 'completed'),
+(2, 'Task 3 description', '2024-05-20', 'pending'),
+(4, 'Task 4 description', '2024-05-25', 'completed'),
+(3, 'Task 5 description', '2024-05-30', 'pending');
+
+
+INSERT INTO attendance (user_id, status) VALUES
+(2, 'present'),
+(3, 'present'),
+(4, 'absent'),
+(2, 'present'),
+(3, 'absent');
+
+
+INSERT INTO salary (user_id, deposit_date, salary_amount) VALUES
+(2, '2024-05-01', 2000.00),
+(3, '2024-05-01', 2500.00),
+(4, '2024-05-01', 1800.00),
+(2, '2024-05-01', 2000.00),
+(3, '2024-05-01', 2500.00);
+
+
+INSERT INTO promotions (product_id, discount_percentage, delivery_charge) VALUES
+(1, 10, 5),
+(2, 15, 7),
+(3, 20, 8),
+(4, 10, 6),
+(5, 15, 7);
+
+INSERT INTO loyaltyPrograms (user_id, loyalty_points, discount_percentage, expiration_date) VALUES
+(3, 100, 10, '2024-12-31'),
+(4, 50, 5, '2024-12-31'),
+(3, 150, 15, '2024-12-31'),
+(2, 200, 20, '2024-12-31'),
+(4, 75, 7, '2024-12-31');
+
+INSERT INTO delivery (user_id, order_id) VALUES
+(4, 1),
+(4, 2),
+(4, 3),
+(4, 4),
+(4, 5);
+
+
+INSERT INTO performances (user_id, rating, date) VALUES
+(2, 4, '2024-04-30'),
+(3, 5, '2024-04-30'),
+(4, 3, '2024-04-30'),
+(2, 4, '2024-04-30'),
+(3, 5, '2024-04-30');
+
+
+INSERT INTO customer_reviews (delivery_man_id, comment, rating) VALUES
+(4, 'Great service!', 5),
+(4, 'Fast delivery, very professional.', 5),
+(4, 'Excellent communication.', 4),
+(4, 'Good job!', 5),
+(4, 'Highly recommended!', 5);
+
+
+INSERT INTO notifications (user_id, message) VALUES
+(2, 'You have a new task assigned.'),
+(3, 'Your order has been shipped.'),
+(4, 'You have a new customer review.'),
+(2, 'Your salary has been deposited.'),
+(3, 'You have a new loyalty reward.');
