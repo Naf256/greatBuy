@@ -5,9 +5,9 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'employee' ) {
 	exit();
 }
 
-$attendances = [];
+$notifications = [];
 
-$attendances = $_SESSION['attendances'];
+$notifications = isset($_SESSION['notifications']) ? $_SESSION['notifications'] : null;
 
 ?>
 
@@ -19,7 +19,6 @@ $attendances = $_SESSION['attendances'];
     <title>Employee Dashboard</title>
 </head>
 <body>
-
     <div class="sidebar">
 		<a href="../controllers/employee_dashboard_controller.php"><h1>Employee Dashboard</h1></a>
         <h2>Attendance Management</h2>
@@ -38,37 +37,17 @@ $attendances = $_SESSION['attendances'];
 		<a href="../controllers/employee_notification_controller.php"><h2>Notification</h2></a>
 		<a href="../controllers/logout.php"><h2>logout</h2></a>
     </div>
+
     <div class="container">
-		<h1 id="profile">Attendance History</h1>
-		<table>
-			<tr>
-				<th>Username</th>
-				<th>Date</th>
-				<th>Status</th>
-			</tr>
-			<?php foreach ($attendances as $attendance): ?>
-				<tr>
-					<td><?php echo $_SESSION['username'] ?></td>
-					<td><?= $attendance['date'] ?></td>
-					<td><?= $attendance['status'] ?></td>
-				</tr>
-			<?php endforeach; ?>
-		</table>
+	<h1 id="profile">Promotional Notifications</h1>
+		<?php foreach ($notifications as $notify): ?>    
+			<div class="notification">
+				<p><?= $notify['message'] ?></p>
+			</div>
+		<?php endforeach; ?>
     </div>
 </body>
 <style>
-	table {
-		width: 100%;
-		border-collapse: collapse;
-	}
-	th, td {
-		padding: 8px;
-		text-align: left;
-		border-bottom: 1px solid #ddd;
-	}
-	th {
-		background-color: #f2f2f2;
-	}
 	body {
 		font-family: Arial, sans-serif;
 		background-color: #f4f4f4;
@@ -119,33 +98,18 @@ $attendances = $_SESSION['attendances'];
 	a:hover {
 		text-decoration: underline;
 	}
+.notification {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-	table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    th, td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    tr:hover {
-        background-color: #ddd;
-    }
-
-    td:first-child {
-        font-weight: bold;
-    }
+.notification p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
 </style>
 </html>

@@ -19,7 +19,7 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 
     <div class="sidebar">
 
-        <h1>Admin Dashboard</h1>
+        <a href="../controllers/admin_dashboard_controller.php"><h1>Admin Dashboard</h1><a/>
         <h2>Product Management</h2>
         <ul>
             <li><a href="add_product.php">Add Product</a></li>
@@ -43,6 +43,7 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'admin' ) {
 		<a href="calculator.php"><h2>Calculator</h2></a>
 		<a href="../controllers/view_orders_controller.php"><h2>Orders</h2></a>
 		<a href="../controllers/review_admin_controller.php"><h2>Reviews</h2></a>
+		<a href="../controllers/logout.php"><h2>Logout</h2></a>
     </div>
     <div class="container">
         <h1 id="heading">Add New User</h1>

@@ -267,3 +267,18 @@ INSERT INTO customer_reviews (delivery_man_id, comment, rating) VALUES (4, 'Grea
 INSERT INTO customer_reviews (delivery_man_id, comment, rating) VALUES (4, 'I had a wonderful experience with delivery man 4. The package arrived safely and on time.', 4);
 INSERT INTO customer_reviews (delivery_man_id, comment, rating) VALUES (4, 'Delivery man 4 went above and beyond to ensure that my order was delivered securely. Highly recommended!', 5);
 
+
+CREATE TABLE notifications (
+    notify_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    message TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+INSERT INTO notifications (user_id, message) VALUES (2, 'Notification 1 for user 2');
+INSERT INTO notifications (user_id, message) VALUES (2, 'Notification 2 for user 2');
+INSERT INTO notifications (user_id, message) VALUES (2, 'Notification 3 for user 2');
+
+
+INSERT INTO notifications (user_id, message) VALUES (4, 'Notification 1 for user 4');
+INSERT INTO notifications (user_id, message) VALUES (4, 'Notification 2 for user 4');

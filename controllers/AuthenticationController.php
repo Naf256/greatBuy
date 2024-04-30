@@ -118,7 +118,7 @@ class AuthenticationController {
 		}
 
         // Redirect to login page
-        header('Location: login.php');
+        header('Location: ../views/login.php');
         exit();
     }
 }

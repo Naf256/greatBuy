@@ -37,6 +37,8 @@ $salary = $_SESSION['salary'];
         </ul>
 		<a href="../controllers/employee_bonus_controller.php"><h2>Employee Bonus</h2></a>
 		<a href="../controllers/salary_sheet_controller.php"><h2>Salary Sheet</h2></a>
+		<a href="../controllers/employee_notification_controller.php"><h2>Notification</h2></a>
+		<a href="../controllers/logout.php"><h2>logout</h2></a>
     </div>
 	<div class="container">
         <h1 class="title">Salary Sheet</h1>
