@@ -36,6 +36,8 @@ $totalEarnings = $delivNum * $earningsPerDelivery;
             <li><a href="../controllers/report_delivery_controller.php">report delivery</a></li>
         </ul>
         <a href="../controllers/customer_review_controller.php"><h2>Customer Reviews</h2></a>
+        <a href="../controllers/promotional_notify_controller.php"><h2>Promotional Notifications</h2></a>
+        <a href="../controllers/logout.php"><h2>Logout</h2></a>
     </div>
 	<div class="container">
         <h1 class="profile">Today's Earnings</h1>

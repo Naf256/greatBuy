@@ -5,7 +5,9 @@ if (!isset($_COOKIE['username']) || $_COOKIE['role'] != 'delivery Man' ) {
 	exit();
 }
 
-$userinfo = $_SESSION['userinfo'];
+$notifications = [];
+
+$notifications = isset($_SESSION['notifications']) ? $_SESSION['notifications'] : null;
 
 ?>
 
@@ -37,45 +39,17 @@ $userinfo = $_SESSION['userinfo'];
         <a href="../controllers/promotional_notify_controller.php"><h2>Promotional Notifications</h2></a>
         <a href="../controllers/logout.php"><h2>Logout</h2></a>
     </div>
+
     <div class="container">
-    <h1 id="profile">User Profile</h1>
-    <table>
-        <tr>
-            <th>User ID</th>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Role</th>
-            <th>Email</th>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Address</th>
-        </tr>
-        <tr>
-			<td><?= $userinfo['user_id'] ?></td>
-            <td><?= $userinfo['username'] ?></td>
-            <td><?= $userinfo['password'] ?></td>
-            <td><?= $userinfo['role'] ?></td>
-            <td><?= $userinfo['email'] ?></td>
-            <td><?= $userinfo['name'] ?></td>
-            <td><?= $userinfo['phone_number'] ?></td>
-            <td><?= $userinfo['address'] ?></td>
-        </tr>
-    </table>
+	<h1 id="profile">Promotional Notifications</h1>
+		<?php foreach ($notifications as $notify): ?>    
+			<div class="notification">
+				<p><?= $notify['message'] ?></p>
+			</div>
+		<?php endforeach; ?>
     </div>
 </body>
 <style>
-	table {
-		width: 100%;
-		border-collapse: collapse;
-	}
-	th, td {
-		padding: 8px;
-		text-align: left;
-		border-bottom: 1px solid #ddd;
-	}
-	th {
-		background-color: #f2f2f2;
-	}
 	body {
 		font-family: Arial, sans-serif;
 		background-color: #f4f4f4;
@@ -126,5 +100,19 @@ $userinfo = $_SESSION['userinfo'];
 	a:hover {
 		text-decoration: underline;
 	}
+
+.notification {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.notification p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
 </style>
 </html>
