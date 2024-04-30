@@ -57,6 +57,7 @@ class AttendanceModel {
 	}
 
 	public function isMarkedToday($userId) {
+		date_default_timezone_set('Asia/Dhaka');
 		$today = date('Y-m-d');
 		$query = "select * from attendance where date like CONCAT(?, '%') and user_id = ?";
 		$stmt = $this->db->prepare($query);		
