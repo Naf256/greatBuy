@@ -12,6 +12,7 @@ class DeliveryModel {
 				 where orders.status = 'delivered' and order_date like CONCAT(?, '%')
 				 and delivery.user_id = ?";
 
+		date_default_timezone_set('Asia/Dhaka');
 		$dt = date('Y-m');
 
 		$stmt = $this->db->prepare($query);

@@ -7,17 +7,18 @@ class AttendanceModel {
     }
 
 	public function getNumberOfAbsenceByUserId($userId) {
+		date_default_timezone_set('Asia/Dhaka');
 		$dt = date('Y-m');
-		
+
 		$query = "SELECT * 
-				 FROM attendance 
-				 WHERE user_id = ? 
-				 AND DATE_FORMAT(`date`, '%Y-%m') = ? 
-				 AND status = 'absent'";
+			FROM attendance 
+			WHERE user_id = ? 
+			AND DATE_FORMAT(`date`, '%Y-%m') = ? 
+			AND status = 'absent'";	
 
 		$stmt = $this->db->prepare($query);
 
-		$stmt->bind_param("ss", $userId, $dt);
+		$stmt->bind_param("is", $userId, $dt);
 
 		$stmt->execute();
 

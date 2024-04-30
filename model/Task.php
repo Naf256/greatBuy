@@ -8,6 +8,7 @@ class TaskModel {
 	
 	public function insertNewTask($description, $assigned_to) {
 
+		date_default_timezone_set('Asia/Dhaka');
 		$dt = date('Y-m-d'); 
 
 		$query = "insert into tasks (task_description, assigned_to, due_date) values (?, ?, ?)";
@@ -24,6 +25,7 @@ class TaskModel {
 	}
 
 	public function getCompletedTasksByUserId($userId) {
+		date_default_timezone_set('Asia/Dhaka');
 		$dt = date('Y-m');
 		$query = "select * from tasks where due_date like CONCAT(?, '%')
 				and assigned_to = ? and status = 'completed'";
