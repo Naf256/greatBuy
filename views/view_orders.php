@@ -73,13 +73,14 @@ $products = $_SESSION['products'];
 	<script>
 
 	document.addEventListener('DOMContentLoaded', function() {
-		var totalAmount = parseFloat(document.getElementById("total_amount").textContent);
 		
 		document.getElementById('product-table').addEventListener('input', function(event) {
 			if (event.target && event.target.dataset.field === 'discount_percentage') {
 				var row = event.target.closest('tr');
+                var totalAmount = parseFloat(row.querySelector('td[data-field="total_amount"]').textContent);
 				var discountPercentage = isNaN(parseFloat(event.target.textContent)) ? 0 : parseFloat(event.target.textContent);
 				var discountedAmount = totalAmount - (totalAmount * (discountPercentage / 100));
+				// console.table({ totalAmount, discountPercentage, discountedAmount });
 				row.querySelector('td[data-field="total_amount"]').textContent = discountedAmount.toFixed(2);
 			}
 		});
