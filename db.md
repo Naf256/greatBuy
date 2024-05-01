@@ -9,7 +9,6 @@ DROP TABLE IF EXISTS promotions;
 DROP TABLE IF EXISTS expenses;
 DROP TABLE IF EXISTS loyaltyPrograms;
 DROP TABLE IF EXISTS delivery;
-DROP TABLE IF EXISTS performances;
 DROP TABLE IF EXISTS customer_reviews;
 DROP TABLE IF EXISTS notifications;
 
