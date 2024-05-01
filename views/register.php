@@ -76,14 +76,25 @@ document.addEventListener('DOMContentLoaded', function() {
 	  return;
     }
 
-    if (password.value.trim() === '') {
-      showError(password, 'Password is required');
+    // Password must contain at least one lowercase letter, one uppercase letter, one special character, and be at least 8 characters long
+	var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+    // Email validation regex
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+	if (!passwordRegex.test(password.value)) {
+      showError(password, 'Password must contain at least one lowercase letter, one uppercase letter, one special character, and be at least 8 characters long');
       isValid = false;
 	  return;
     }
 
     if (role.value === '') {
       showError(role, 'Please select a role');
+      isValid = false;
+	  return;
+    }
+
+	if (!emailRegex.test(email.value)) {
+      showError(email, 'Try with a valid email');
       isValid = false;
 	  return;
     }
@@ -129,6 +140,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <style>
 body {
   font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
 }
 
 form {

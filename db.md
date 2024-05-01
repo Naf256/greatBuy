@@ -104,6 +104,8 @@ CREATE TABLE loyaltyPrograms (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
+INSERT INTO loyaltyPrograms (user_id, loyalty_points, discount_percentage) VALUES (3, 100, 10);
+INSERT INTO loyaltyPrograms (user_id, loyalty_points, discount_percentage) VALUES (7, 200, 20);
 
 CREATE TABLE delivery (
     delivery_id INT AUTO_INCREMENT PRIMARY KEY,
