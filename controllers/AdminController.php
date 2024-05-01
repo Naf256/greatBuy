@@ -8,7 +8,7 @@ require_once('../model/Review.php');
 require_once('../model/Task.php');
 require_once('../model/Attendance.php');
 require_once('../model/Delivery.php');
-require_once('../model/Rating.php');
+require_once('../model/Promotion.php');
 
 class AdminController {
     private $productModel;
@@ -18,7 +18,7 @@ class AdminController {
 	private $taskModel;
 	private $attendanceModel;
 	private $deliveryModel;
-	private $ratingModel;
+	private $promotionModel;
 
     public function __construct() {
         $this->productModel = new ProductModel();
@@ -28,17 +28,9 @@ class AdminController {
         $this->taskModel = new TaskModel();
         $this->attendanceModel = new AttendanceModel();
         $this->deliveryModel = new DeliveryModel();
-        $this->ratingModel = new RatingModel();
+		$this->promotionModel = new PromotionModel();
     }
 
-
-	public function fetchDelivsInfo() {
-		return $this->ratingModel->getDelivsRatings();
-	}
-
-	public function fetchEmployeeInfo() {
-		return $this->ratingModel->getEmployeeRatings();
-	}
 
 	public function getAllEmployees() {
 		$employees = $this->userModel->getAllEmployees();
@@ -86,6 +78,8 @@ class AdminController {
 
 	public function addProduct($name, $description, $price, $category, $stock_quantity) {
 		$success = $this->productModel->insertProduct($name, $description, $price, $category, $stock_quantity);
+
+		$setting_discount = $this->promotionModel->insertNewDiscountForProduct($name);
 
 		// echo something would write to body before setting header location
 		// if ($success) {
