@@ -114,14 +114,6 @@ CREATE TABLE delivery (
     FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
 );
 
-CREATE TABLE performances (
-    performance_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    rating INT, 
-    date DATE, 
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
-);
-
 
 CREATE TABLE customer_reviews (
     review_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -162,3 +154,13 @@ INSERT INTO products (name, description, price, category, stock_quantity) VALUES
 ('Fanta', 'Description for Product 4', 19.99, 'Category 3', 200),
 ('Rc Cola', 'Description for Product 5', 59.99, 'Category 2', 150);
 
+INSERT INTO promotions (product_id, discount_percentage, delivery_charge) VALUES
+    (1, 10, 30),
+    (2, 20, 30),
+    (3, 30, 30),
+    (4, 40, 30),
+    (5, 50, 30),
+    (6, 60, 30),
+    (7, 70, 30),
+    (8, 15, 30),
+    (9, 25, 30);
