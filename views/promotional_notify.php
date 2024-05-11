@@ -22,6 +22,7 @@ $notifications = isset($_SESSION['notifications']) ? $_SESSION['notifications'] 
     <div class="sidebar">
 
         <a href="../controllers/delivery_dashboard_controller.php"><h1>Delivery Dashboard</h1></a>
+		<a href="../controllers/update_user.php"><h2>Update Profile</h2></a>
         <h2>Order Details</h2>
         <ul>
 			<li><a href="../controllers/pending_orders_controller.php">pending orders</a></li>

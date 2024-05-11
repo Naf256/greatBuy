@@ -6,6 +6,20 @@ class UserModel {
         $this->db = new mysqli('localhost', 'root', '', 'ecommerce');
     }
 	 
+	public function updateUserInfo($user_id, $password, $email, $name, $phone_number, $address) {
+		$query = "update users set 
+				  password = ?,
+				  email = ?, 
+				  name = ?,
+				  phone_number = ?,
+				  address = ?
+				  where user_id = ?";
+
+		$stmt = $this->db->prepare($query);
+        $stmt->bind_param('ssssss', $password, $email, $name, $phone_number, $address, $user_id);
+		return $stmt->execute();
+	}
+
 	public function getAllEmployees() {
 		$query = "select user_id, username from users where role = 'employee'";
 		$stmt = $this->db->prepare($query);

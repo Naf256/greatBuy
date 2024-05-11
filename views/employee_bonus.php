@@ -20,6 +20,7 @@ $taskNum = $_SESSION['taskNum'];
 
     <div class="sidebar">
 		<a href="../controllers/employee_dashboard_controller.php"><h1>Employee Dashboard</h1></a>
+		<a href="../controllers/update_user.php"><h2>Update Profile</h2></a>
         <h2>Attendance Management</h2>
         <ul>
 			<li><a href="../controllers/mark_attendance_controller.php">Mark attendance</a></li>
